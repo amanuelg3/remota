@@ -83,22 +83,25 @@ public class Remota extends Activity {
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    	super.onCreate(savedInstanceState);
         
-        if(DBG) Log.e(TAG, "+++ ON CREATE +++");
+    	if(DBG) Log.e(TAG, "+++ ON CREATE +++");
         
-        // Set up the window layout
-        setContentView(R.layout.main);
+    	// Set up the window layout
+    	setContentView(R.layout.main);
         
-        // Get the local bluetooth adapter
-        mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+    	// Get the local bluetooth adapter
+    	mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
         
-        // If Bluetooth is not supported, the adapter is null
-        if (mBluetoothAdapter == null) {
-        	Toast.makeText(this, "Bluetooth is not supported.", Toast.LENGTH_LONG).show();
-        	finish();
+    	// If Bluetooth is not supported, the adapter is null
+    	if (mBluetoothAdapter == null) {
+    		Toast.makeText(this, "Bluetooth is not supported.", Toast.LENGTH_LONG).show();
+    		finish();
         	return;
-        }
+    	} else {
+    		mBluetoothAdapter.setName(getResources().getText(R.string.app_name).toString());
+    	}
+
     }
     
     @Override
