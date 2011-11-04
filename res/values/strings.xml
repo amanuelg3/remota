@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="hello">This is a remote touch application which can be used as an air mouse and keyboard.</string>
+    <string name="app_name">Remota</string>
+    <string name="make_discoverable">Make discoverable</string>
+    <string name="none_paired">No devices have been paired</string>
+    <string name="connect_device">Connect a device</string>
+    <string name="scan_device">Scan for devices</string>
+    <string name="scanning">Scanning for devices...</string>
+    <string name="title_new_devices">New devices</string>
+    <string name="title_paired_devices">Paired devices</string>
+    <string name="select_device">Select a device to connect</string>
+    <string name="none_found">No devices found</string>
+</resources>
