@@ -21,7 +21,7 @@ import android.widget.Toast;
 public class Remota extends Activity {
 	// Debugging
 	private static final String TAG = "Remota";
-	private static final boolean D = true;
+	private static final boolean DBG = true;
 	
 	// Message types sent from the RemotaService handler
 	/* package */ static final int MESSAGE_CONNECTION_STATE_CHANGE = 1;
@@ -44,7 +44,7 @@ public class Remota extends Activity {
 	
 	private final View.OnTouchListener mOnTouchListener = new View.OnTouchListener() {
 		public boolean onTouch(View v, MotionEvent event) {
-			if(D) Log.d(TAG, "X:" + event.getRawX() + ",Y:" + event.getRawY());
+			if(DBG) Log.d(TAG, "X:" + event.getRawX() + ",Y:" + event.getRawY());
 			return true;
 		}
 	};
@@ -55,7 +55,7 @@ public class Remota extends Activity {
         public void handleMessage(Message msg) {
             switch (msg.what) {
             case MESSAGE_CONNECTION_STATE_CHANGE:
-                if (D) Log.i(TAG, "MESSAGE_CONNECTION_STATE_CHANGE: " + msg.arg1);
+                if (DBG) Log.i(TAG, "MESSAGE_CONNECTION_STATE_CHANGE: " + msg.arg1);
                 switch (msg.arg1) {
                 case RemotaService.STATE_CONNECTED:
                 	View view = (View)findViewById(R.layout.touch_pad);
@@ -74,7 +74,7 @@ public class Remota extends Activity {
                 }
                 break;
             case MESSAGE_READ:
-            	if (D) Log.i(TAG, "Read message"); 
+            	if (DBG) Log.i(TAG, "Read message"); 
             	break;
             }
         }
@@ -85,7 +85,7 @@ public class Remota extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         
-        if(D) Log.e(TAG, "+++ ON CREATE +++");
+        if(DBG) Log.e(TAG, "+++ ON CREATE +++");
         
         // Set up the window layout
         setContentView(R.layout.main);
@@ -105,7 +105,7 @@ public class Remota extends Activity {
     public void onStart() {
     	super.onStart();
     	
-    	if(D) Log.e(TAG, "+++ ON START +++");
+    	if(DBG) Log.e(TAG, "+++ ON START +++");
     	
     	// If Bluetooth is not on, request it be enabled.
     	if (mBluetoothAdapter.isEnabled() == false) {
@@ -121,7 +121,7 @@ public class Remota extends Activity {
     public synchronized void onResume(){
     	super.onResume();
     	
-    	if(D) Log.e(TAG, "+++ ON RESUME +++");
+    	if(DBG) Log.e(TAG, "+++ ON RESUME +++");
     	
         // Performing this check in onResume() covers the case in which BT was
         // not enabled during onStart(), so we were paused to enable it...
@@ -139,21 +139,21 @@ public class Remota extends Activity {
     public void onPause(){
     	super.onPause();
     	
-    	if (D) Log.e(TAG, "+++ ON PAUSE +++");
+    	if (DBG) Log.e(TAG, "+++ ON PAUSE +++");
     }
     
     @Override
     public void onStop() {
     	super.onStop();
     	
-    	if (D) Log.e(TAG, "+++ ON STOP +++");
+    	if (DBG) Log.e(TAG, "+++ ON STOP +++");
     }
     
     @Override
     public void onDestroy() {
     	super.onDestroy();
     	
-    	if (D) Log.e(TAG, "+++ ON DESTROY +++");
+    	if (DBG) Log.e(TAG, "+++ ON DESTROY +++");
     	
     	// Stop the remota service
         if (mRemotaService != null) {
@@ -163,7 +163,7 @@ public class Remota extends Activity {
     
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-    	if (D) Log.d(TAG, "+++ ON ACTIVITY RESULT +++ :" + resultCode);
+    	if (DBG) Log.d(TAG, "+++ ON ACTIVITY RESULT +++ :" + resultCode);
     	
     	switch (requestCode) {
     	case REQUEST_ENABLE_BLUETOOTH:
@@ -206,13 +206,13 @@ public class Remota extends Activity {
     }
     
     private void setup() {
-    	if (D) Log.d(TAG, "+++ SET UP +++");
+    	if (DBG) Log.d(TAG, "+++ SET UP +++");
     	
     	mRemotaService = new RemotaService(this, mHandler);
     }
     
     private void ensureDiscoverable(){
-        if (D) Log.d(TAG, "ensure discoverable");
+        if (DBG) Log.d(TAG, "ensure discoverable");
         if (mBluetoothAdapter.getScanMode() !=
             BluetoothAdapter.SCAN_MODE_CONNECTABLE_DISCOVERABLE) {
             Intent discoverableIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_DISCOVERABLE);

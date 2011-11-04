@@ -24,7 +24,7 @@ import android.util.Log;
 public class RemotaService {
     // Debugging
     private static final String TAG = "RemotaService";
-    private static final boolean D = true;
+    private static final boolean DBG = true;
     
     // Service name for the SDP
     private static final String SERVICE_NAME = "Remota";
@@ -67,7 +67,7 @@ public class RemotaService {
      * Start the service. Specifically start AcceptThread to begin a
      * session in listening (server) mode. Called by the Activity onResume() */
     public synchronized void start() {
-        if (D) Log.d(TAG, "start");
+        if (DBG) Log.d(TAG, "start");
 
         // Cancel any thread attempting to make a connection
         if (mConnectThread != null) {
@@ -95,7 +95,7 @@ public class RemotaService {
      * @param state  An integer defining the current connection state
      */
     private synchronized void setState(int state) {
-        if (D) Log.d(TAG, "setState() " + mState + " -> " + state);
+        if (DBG) Log.d(TAG, "setState() " + mState + " -> " + state);
         mState = state;
 
         // Give the new state to the Handler so the UI Activity can update
@@ -113,7 +113,7 @@ public class RemotaService {
      * @param device  The BluetoothDevice to connect
      */
     public synchronized void connect(BluetoothDevice device) {
-        if (D) Log.d(TAG, "connect to: " + device);
+        if (DBG) Log.d(TAG, "connect to: " + device);
 
         // Cancel any thread attempting to make a connection
         if (mState == STATE_CONNECTING) {
@@ -136,7 +136,7 @@ public class RemotaService {
      */
     public synchronized void connected(BluetoothSocket socket, BluetoothDevice
             device ) {
-        if (D) Log.d(TAG, "connected" );
+        if (DBG) Log.d(TAG, "connected" );
 
         // Cancel the thread that completed the connection
         if (mConnectThread != null) {
@@ -174,7 +174,7 @@ public class RemotaService {
      * Stop all threads
      */
     public synchronized void stop() {
-        if (D) Log.d(TAG, "stop");
+        if (DBG) Log.d(TAG, "stop");
 
         if (mConnectThread != null) {
             mConnectThread.cancel();
@@ -246,7 +246,7 @@ public class RemotaService {
         }
 
         public void run() {
-            if (D) Log.d(TAG, "BEGIN mAcceptThread" + this);
+            if (DBG) Log.d(TAG, "BEGIN mAcceptThread" + this);
             setName("AcceptThread");
 
             BluetoothSocket socket = null;
@@ -284,12 +284,12 @@ public class RemotaService {
                     }
                 }
             }
-            if (D) Log.i(TAG, "END mAcceptThread");
+            if (DBG) Log.i(TAG, "END mAcceptThread");
 
         }
 
         public void cancel() {
-            if (D) Log.d(TAG, "cancel " + this);
+            if (DBG) Log.d(TAG, "cancel " + this);
             try {
                 mmServerSocket.close();
             } catch(IOException e) {
