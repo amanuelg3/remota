@@ -1,4 +1,4 @@
 
-1. ’[––‚©‚çƒI[ƒvƒ“
-2. Bluetooth¨ƒIƒvƒVƒ‡ƒ“¨‚»‚Ì‘¼¨Bluetooth Local Com¨LocalCOM Server(SerialPort)‚Åƒ|[ƒg”Ô†’²‚×‚é
-3. PC‘¤‚ÅƒI[ƒvƒ“
+1. ç«¯æœ«ã‹ã‚‰ã‚ªãƒ¼ãƒ—ãƒ³
+2. Bluetoothâ†’ã‚ªãƒ—ã‚·ãƒ§ãƒ³â†’ãã®ä»–â†’Bluetooth Local Comâ†’LocalCOM Server(SerialPort)ã§ãƒãƒ¼ãƒˆç•ªå·èª¿ã¹ã‚‹
+3. PCå´ã§ã‚ªãƒ¼ãƒ—ãƒ³
