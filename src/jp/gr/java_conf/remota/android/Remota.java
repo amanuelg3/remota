@@ -35,8 +35,8 @@ public class Remota extends Activity {
 	private static final int REQUEST_CONNECT_DEVICE   = 2;
 	
     // Key names received from the BluetoothChatService Handler
-    public static final String DEVICE_NAME = "device_name";
-    public static final String TOAST = "toast";
+	public static final String DEVICE_NAME = "device_name";
+	public static final String TOAST = "toast";
 	
 	// Member fields
 	private BluetoothAdapter mBluetoothAdapter = null; // Local bluetooth adapter
@@ -50,34 +50,34 @@ public class Remota extends Activity {
 	};
 
 	// The handler that gets information back from the RemotaService
-    private final Handler mHandler = new Handler() {
-        @Override
-        public void handleMessage(Message msg) {
-            switch (msg.what) {
-            case MESSAGE_CONNECTION_STATE_CHANGE:
-                if (DBG) Log.i(TAG, "MESSAGE_CONNECTION_STATE_CHANGE: " + msg.arg1);
-                switch (msg.arg1) {
-                case RemotaService.STATE_CONNECTED:
-                	View view = (View)findViewById(R.layout.touch_pad);
-                	if (view != null) {
-                		view.setOnTouchListener(mOnTouchListener);
+	private final Handler mHandler = new Handler() {
+		@Override
+		public void handleMessage(Message msg) {
+			switch (msg.what) {
+			case MESSAGE_CONNECTION_STATE_CHANGE:
+				if (DBG) Log.i(TAG, "MESSAGE_CONNECTION_STATE_CHANGE: " + msg.arg1);
+				switch (msg.arg1) {
+				case RemotaService.STATE_CONNECTED:
+					View view = (View)findViewById(R.layout.touch_pad);
+					if (view != null) {
+						view.setOnTouchListener(mOnTouchListener);
                 	}
-                	// Set up the window layout
-                    setContentView(R.layout.touch_pad);
-                    break;
-                case RemotaService.STATE_CONNECTING:
-                    break;
-                case RemotaService.STATE_LISTEN:
-                	break;
-                case RemotaService.STATE_IDLE:
-                    break;
-                }
-                break;
-            case MESSAGE_READ:
-            	if (DBG) Log.i(TAG, "Read message"); 
-            	break;
-            }
-        }
+					// Set up the window layout
+					setContentView(R.layout.touch_pad);
+					break;
+				case RemotaService.STATE_CONNECTING:
+					break;
+				case RemotaService.STATE_LISTEN:
+					break;
+				case RemotaService.STATE_IDLE:
+					break;
+				}
+				break;
+			case MESSAGE_READ:
+				if (DBG) Log.i(TAG, "Read message"); 
+            	break;	
+			}
+		}
     };
 	
     /** Called when the activity is first created. */
@@ -126,15 +126,15 @@ public class Remota extends Activity {
     	
     	if(DBG) Log.e(TAG, "+++ ON RESUME +++");
     	
-        // Performing this check in onResume() covers the case in which BT was
-        // not enabled during onStart(), so we were paused to enable it...
-        // onResume() will be called when ACTION_REQUEST_ENABLE activity returns.
-        if (mRemotaService != null) {
-            // Only if the state is STATE_NONE, do we know that we haven't started already
-            if (mRemotaService.getState() == RemotaService.STATE_IDLE) {
-              // Start the Bluetooth chat services
+    	// Performing this check in onResume() covers the case in which BT was
+    	// not enabled during onStart(), so we were paused to enable it...
+    	// onResume() will be called when ACTION_REQUEST_ENABLE activity returns.
+    	if (mRemotaService != null) {
+    		// Only if the state is STATE_NONE, do we know that we haven't started already
+    		if (mRemotaService.getState() == RemotaService.STATE_IDLE) {
+    			// Start the Bluetooth chat services
               mRemotaService.start();
-            }
+    		}
         }
     }
     
