@@ -4,8 +4,29 @@
 		android:id="@+id/touch_pad" 
 		android:orientation="horizontal" android:layout_height="wrap_content">
         <RelativeLayout android:id="@+id/relativeLayout1" android:layout_height="wrap_content" android:layout_width="fill_parent">
-            <View android:layout_height="0dip" android:layout_width="0dip" android:layout_centerHorizontal="true" android:id="@+id/horiz_center" android:layout_alignLeft="@+id/horiz_center"></View>
-            <Button android:layout_height="wrap_content" android:id="@+id/left_button" android:text="Button" android:layout_alignParentLeft="true" android:layout_width="wrap_content" android:layout_alignRight="@+id/horiz_center"></Button>
-            <Button android:layout_height="wrap_content" android:id="@+id/right_button" android:gravity="right|center_vertical" android:layout_alignParentRight="true" android:layout_width="wrap_content" android:layout_alignLeft="@+id/horiz_center"></Button>
+            <View 
+                android:layout_height="0dip"
+                android:layout_width="0dip"
+                android:layout_centerHorizontal="true"
+                android:id="@+id/horiz_center"
+                android:layout_alignLeft="@+id/horiz_center">
+            </View>
+
+            <Button
+                android:id="@+id/left_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignRight="@+id/horiz_center"
+                android:text="Button">
+            </Button>
+            <Button 
+                android:layout_height="wrap_content"
+                android:id="@+id/right_button"
+                android:gravity="right|center_vertical"
+                android:layout_alignParentRight="true"
+                android:layout_width="wrap_content"
+                android:layout_alignLeft="@+id/horiz_center">
+            </Button>
         </RelativeLayout>
     </LinearLayout>
