@@ -159,8 +159,8 @@ public class Remota extends Activity {
     	if (DBG) Log.e(TAG, "+++ ON DESTROY +++");
     	
     	// Stop the remota service
-        if (mRemotaService != null) {
-        	mRemotaService.stop();
+       if (mRemotaService != null) {
+       	mRemotaService.stop();
         }
     }
     
