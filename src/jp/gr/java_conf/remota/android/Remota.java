@@ -204,6 +204,9 @@ public class Remota extends Activity {
    			// Ensure this device is discoverable by others
    			ensureDiscoverable();
    			return true;
+   		case R.id.settings:
+   			//
+   			return true;
     	}
     	return false;
     }
