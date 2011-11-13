@@ -193,21 +193,21 @@ public class Remota extends Activity {
     
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        Intent serverIntent = null;
-        switch (item.getItemId()) {
-        case R.id.connect_device:
-            // Launch the DeviceListActivity to see devices and do scan
-            serverIntent = new Intent(this, RemotaDeviceListActivity.class);
-            startActivityForResult(serverIntent, REQUEST_CONNECT_DEVICE);
-            return true;
-        case R.id.make_discoverable:
-            // Ensure this device is discoverable by others
-            ensureDiscoverable();
-            return true;
-        }
-        return false;
+    	Intent serverIntent = null;
+    	switch (item.getItemId()) {
+    	case R.id.connect_device:
+    		// Launch the DeviceListActivity to see devices and do scan
+    		serverIntent = new Intent(this, RemotaDeviceListActivity.class);
+    		startActivityForResult(serverIntent, REQUEST_CONNECT_DEVICE);
+    		return true;
+   		case R.id.make_discoverable:
+   			// Ensure this device is discoverable by others
+   			ensureDiscoverable();
+   			return true;
+    	}
+    	return false;
     }
-    
+   
     private void setup() {
     	if (DBG) Log.d(TAG, "+++ SET UP +++");
     	
