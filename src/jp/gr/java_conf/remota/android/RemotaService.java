@@ -27,12 +27,12 @@ public class RemotaService {
     private static final boolean DBG = true;
     
     // Service name for the SDP
-    private static final String SERVICE_NAME = "Remota";
+    private static final String SERVICE_NAME = "Serial Port";
     
     // Unique UUID for this application
     private static final UUID UUID_SPP =
     	// 
-        //UUID.fromString("fa87c0d0-afac-11de-8a39-0800200c9a66");
+       //UUID.fromString("fa87c0d0-afac-11de-8a39-0800200c9a66");
     	// SPP
     	UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
     	// HID
