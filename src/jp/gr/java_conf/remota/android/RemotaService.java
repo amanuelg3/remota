@@ -69,25 +69,25 @@ public class RemotaService {
 	public synchronized void start() {
 		if (DBG) Log.d(TAG, "start");
 
+		// Cancel any thread currently running a connection
+		if (mConnectedThread != null) {
+			mConnectedThread.cancel();
+			mConnectedThread = null;
+		}
+		
 		// Cancel any thread attempting to make a connection
 		if (mConnectThread != null) {
 			mConnectThread.cancel();
         	mConnectThread = null;
 		}
 
-		// Cancel any thread currently running a connection
-		if (mConnectedThread != null) {
-			mConnectedThread.cancel();
-			mConnectedThread = null;
-		}
-
 		setState(STATE_LISTEN);
 
 		// Start the thread to listen on a BluetoothServerSocket
-		if (mAcceptThread == null) {
-			mAcceptThread = new AcceptThread(true);
-			mAcceptThread.start();
-		}
+		//if (mAcceptThread == null) {
+		//	mAcceptThread = new AcceptThread(true);
+		//	mAcceptThread.start();
+		//}
 	}
     
     /**
@@ -134,8 +134,7 @@ public class RemotaService {
      * @param socket  The BluetoothSocket on which the connection was made
      * @param device  The BluetoothDevice that has been connected
      */
-	public synchronized void connected(BluetoothSocket socket, BluetoothDevice
-			device ) {
+	public synchronized void connected(BluetoothSocket socket, BluetoothDevice device ) {
 		if (DBG) Log.d(TAG, "connected" );
 
 		// Cancel the thread that completed the connection
@@ -175,15 +174,15 @@ public class RemotaService {
      */
 	public synchronized void stop() {
 		if (DBG) Log.d(TAG, "stop");
+		
+		if (mConnectedThread != null) {
+			mConnectedThread.cancel();
+			mConnectedThread = null;
+		}
 
 		if (mConnectThread != null) {
 			mConnectThread.cancel();
 			mConnectThread = null;
-		}
-
-		if (mConnectedThread != null) {
-			mConnectedThread.cancel();
-			mConnectedThread = null;
 		}
 
 		if (mAcceptThread != null) {
@@ -415,24 +414,24 @@ public class RemotaService {
          * Write to the connected OutStream.
          * @param buffer  The bytes to write
          */
-        public void write(byte[] buffer) {
-        	try {
-        		mmOutStream.write(buffer);
+    	public void write(byte[] buffer) {
+    		try {
+    			mmOutStream.write(buffer);
         		
-        		// Share the sent message back to the UI Activity
+    			// Share the sent message back to the UI Activity
         		mHandler.obtainMessage(Remota.MESSAGE_WRITE, -1, -1, buffer).sendToTarget();
-        	} catch (IOException e) {
-        		Log.e(TAG, "Exception during write", e);
-        	}
-        }
+    		} catch (IOException e) {
+    			Log.e(TAG, "Exception during write", e);
+    		}
+    	}
 
-        public void cancel() {
+    	public void cancel() {
     		if (DBG) Log.d(TAG, "cancel " + this);        	
         	try {
         		mmSocket.close();
         	} catch (IOException e) {
         		Log.e(TAG, "close() of connect socket failed", e);
         	}
-        }
+    	}
     }
 }

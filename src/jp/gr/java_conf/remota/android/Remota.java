@@ -215,7 +215,9 @@ public class Remota extends Activity {
 	private void setup() {
 		if (DBG) Log.i(TAG, "+++ SET UP +++");
     	
-    	mRemotaService = new RemotaService(this, mHandler);
+		if (mRemotaService == null) {
+			mRemotaService = new RemotaService(this, mHandler);
+		}
     }
     
 	private void ensureDiscoverable(){
