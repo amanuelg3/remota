@@ -42,13 +42,6 @@ public class Remota extends Activity {
 	private BluetoothAdapter mBluetoothAdapter = null; // Local bluetooth adapter
 	private RemotaService mRemotaService = null;
 	
-	private final View.OnTouchListener mOnTouchListener = new View.OnTouchListener() {
-		public boolean onTouch(View v, MotionEvent event) {
-			if(DBG) Log.d(TAG, "X:" + event.getRawX() + ",Y:" + event.getRawY());
-			return true;	
-		}
-	};
-
 	// The handler that gets information back from the RemotaService
 	private final Handler mHandler = new Handler() {
 		@Override
@@ -58,13 +51,9 @@ public class Remota extends Activity {
 				if (DBG) Log.i(TAG, "MESSAGE_CONNECTION_STATE_CHANGE: " + msg.arg1);
 				switch (msg.arg1) {
 				case RemotaService.STATE_CONNECTED:
-					View view = (View)findViewById(R.layout.touch_pad);
-					if (view != null) {
-						if (DBG) Log.i(TAG, "setOnTouchListener");
-						view.setOnTouchListener(mOnTouchListener);
-                	} 
 					// Set up the window layout
-					setContentView(R.layout.touch_pad);
+					TouchPadView touchPadView = new TouchPadView(Remota.this, mRemotaService);
+					setContentView(touchPadView);
 					break;
 				case RemotaService.STATE_CONNECTING:
 					break;
