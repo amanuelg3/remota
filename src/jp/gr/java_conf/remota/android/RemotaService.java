@@ -354,6 +354,7 @@ public class RemotaService {
     	}
 
     	public void cancel() {
+    		if (DBG) Log.d(TAG, "cancel " + this);    		
     		try {
     			mmSocket.close();
     		} catch (IOException e) {
@@ -426,6 +427,7 @@ public class RemotaService {
         }
 
         public void cancel() {
+    		if (DBG) Log.d(TAG, "cancel " + this);        	
         	try {
         		mmSocket.close();
         	} catch (IOException e) {
