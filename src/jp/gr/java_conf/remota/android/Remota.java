@@ -34,7 +34,7 @@ public class Remota extends Activity {
 	private static final int REQUEST_ENABLE_BLUETOOTH = 1;
 	private static final int REQUEST_CONNECT_DEVICE   = 2;
 	
-    // Key names received from the BluetoothChatService Handler
+	// Key names received from the BluetoothChatService Handler
 	public static final String DEVICE_NAME = "device_name";
 	public static final String TOAST = "toast";
 	
@@ -45,7 +45,7 @@ public class Remota extends Activity {
 	private final View.OnTouchListener mOnTouchListener = new View.OnTouchListener() {
 		public boolean onTouch(View v, MotionEvent event) {
 			if(DBG) Log.d(TAG, "X:" + event.getRawX() + ",Y:" + event.getRawY());
-			return true;
+			return true;	
 		}
 	};
 
@@ -79,12 +79,12 @@ public class Remota extends Activity {
             	break;	
 			}
 		}
-    };
+	};
 	
-    /** Called when the activity is first created. */
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-    	super.onCreate(savedInstanceState);
+	/** Called when the activity is first created. */
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
         
     	if(DBG) Log.i(TAG, "+++ ON CREATE +++");
         
@@ -103,13 +103,13 @@ public class Remota extends Activity {
     		mBluetoothAdapter.setName(getResources().getText(R.string.app_name).toString());
     	}
 
-    }
+	}
     
-    @Override
-    public void onStart() {
-    	super.onStart();
+	@Override
+	public void onStart() {
+		super.onStart();
     	
-    	if(DBG) Log.i(TAG, "+++ ON START +++");
+		if(DBG) Log.i(TAG, "+++ ON START +++");
     	
     	// If Bluetooth is not on, request it be enabled.
     	if (mBluetoothAdapter.isEnabled() == false) {
@@ -119,11 +119,11 @@ public class Remota extends Activity {
     	else{
     		setup();
     	}
-    }
+	}
     
-    @Override
-    public synchronized void onResume(){
-    	super.onResume();
+	@Override
+	public synchronized void onResume(){
+		super.onResume();
     	
     	if(DBG) Log.i(TAG, "+++ ON RESUME +++");
     	
@@ -137,25 +137,25 @@ public class Remota extends Activity {
               mRemotaService.start();
     		}
         }
-    }
+	}
     
-    @Override
-    public void onPause(){
-    	super.onPause();
+	@Override
+	public void onPause(){
+		super.onPause();
     	
     	if (DBG) Log.i(TAG, "+++ ON PAUSE +++");
-    }
+	}
     
-    @Override
-    public void onStop() {
-    	super.onStop();
+	@Override
+	public void onStop() {
+		super.onStop();
     	
     	if (DBG) Log.i(TAG, "+++ ON STOP +++");
     }
     
-    @Override
-    public void onDestroy() {
-    	super.onDestroy();
+	@Override
+	public void onDestroy() {
+		super.onDestroy();
     	
     	if (DBG) Log.i(TAG, "+++ ON DESTROY +++");
     	
@@ -163,11 +163,11 @@ public class Remota extends Activity {
        if (mRemotaService != null) {
        	mRemotaService.stop();
         }
-    }
+	}
     
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-    	if (DBG) Log.i(TAG, "+++ ON ACTIVITY RESULT +++ :" + resultCode);
+	@Override
+	public void onActivityResult(int requestCode, int resultCode, Intent data) {
+		if (DBG) Log.i(TAG, "+++ ON ACTIVITY RESULT +++ :" + resultCode);
     	
     	switch (requestCode) {
     	case REQUEST_ENABLE_BLUETOOTH:
@@ -185,16 +185,16 @@ public class Remota extends Activity {
     	}
     }
     
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.option_menu, menu);
-        return true;
-    }
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		MenuInflater inflater = getMenuInflater();
+		inflater.inflate(R.menu.option_menu, menu);
+		return true;
+	}
     
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-    	Intent serverIntent = null;
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		Intent serverIntent = null;
     	switch (item.getItemId()) {
     	case R.id.connect_device:
     		// Launch the DeviceListActivity to see devices and do scan
@@ -210,31 +210,30 @@ public class Remota extends Activity {
    			return true;
     	}
     	return false;
-    }
+	}
    
-    private void setup() {
-    	if (DBG) Log.i(TAG, "+++ SET UP +++");
+	private void setup() {
+		if (DBG) Log.i(TAG, "+++ SET UP +++");
     	
     	mRemotaService = new RemotaService(this, mHandler);
     }
     
-    private void ensureDiscoverable(){
-        if (DBG) Log.i(TAG, "ensure discoverable");
-        if (mBluetoothAdapter.getScanMode() !=
-            BluetoothAdapter.SCAN_MODE_CONNECTABLE_DISCOVERABLE) {
-            Intent discoverableIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_DISCOVERABLE);
-            discoverableIntent.putExtra(BluetoothAdapter.EXTRA_DISCOVERABLE_DURATION, 300);
-            startActivity(discoverableIntent);
-        }
-    }
+	private void ensureDiscoverable(){
+		if (DBG) Log.i(TAG, "ensure discoverable");
+		if (mBluetoothAdapter.getScanMode() !=
+			BluetoothAdapter.SCAN_MODE_CONNECTABLE_DISCOVERABLE) {
+			Intent discoverableIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_DISCOVERABLE);
+			discoverableIntent.putExtra(BluetoothAdapter.EXTRA_DISCOVERABLE_DURATION, 300);
+			startActivity(discoverableIntent);
+		}
+	}
     
-    private void connectDevice(Intent data) {
-        // Get the device MAC address
-        String address = data.getExtras()
-            .getString(RemotaDeviceListActivity.EXTRA_DEVICE_ADDRESS);
-        // Get the BLuetoothDevice object
-        BluetoothDevice device = mBluetoothAdapter.getRemoteDevice(address);
-        // Attempt to connect to the device
-        mRemotaService.connect(device);
-    }
+	private void connectDevice(Intent data) {
+		// Get the device MAC address
+		String address = data.getExtras().getString(RemotaDeviceListActivity.EXTRA_DEVICE_ADDRESS);
+		// Get the BLuetoothDevice object
+		BluetoothDevice device = mBluetoothAdapter.getRemoteDevice(address);
+		// Attempt to connect to the device
+		mRemotaService.connect(device);
+	}
 }
