@@ -90,7 +90,7 @@ public class RemotaDeviceListActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         
-        if(DBG) Log.e(TAG, "+++ ON CREATE +++");
+        if(DBG) Log.i(TAG, "+++ ON CREATE +++");
 
         // Setup the window
         requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
@@ -152,7 +152,7 @@ public class RemotaDeviceListActivity extends Activity {
     protected void onDestroy() {
         super.onDestroy();
         
-        if(DBG) Log.e(TAG, "+++ ON DESTROY +++");
+        if(DBG) Log.i(TAG, "+++ ON DESTROY +++");
 
         // Make sure we're not doing discovery anymore
         if (mBluetoothAdapter != null) {
@@ -167,7 +167,7 @@ public class RemotaDeviceListActivity extends Activity {
      * Start device discover with the BluetoothAdapter
      */
     private void doDiscovery() {
-        if (DBG) Log.d(TAG, "doDiscovery()");
+        if (DBG) Log.i(TAG, "doDiscovery()");
 
         // Indicate scanning in the title
         setProgressBarIndeterminateVisibility(true);

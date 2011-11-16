@@ -60,8 +60,9 @@ public class Remota extends Activity {
 				case RemotaService.STATE_CONNECTED:
 					View view = (View)findViewById(R.layout.touch_pad);
 					if (view != null) {
+						if (DBG) Log.i(TAG, "setOnTouchListener");
 						view.setOnTouchListener(mOnTouchListener);
-                	}
+                	} 
 					// Set up the window layout
 					setContentView(R.layout.touch_pad);
 					break;
@@ -85,7 +86,7 @@ public class Remota extends Activity {
     public void onCreate(Bundle savedInstanceState) {
     	super.onCreate(savedInstanceState);
         
-    	if(DBG) Log.e(TAG, "+++ ON CREATE +++");
+    	if(DBG) Log.i(TAG, "+++ ON CREATE +++");
         
     	// Set up the window layout
     	setContentView(R.layout.main);
@@ -108,7 +109,7 @@ public class Remota extends Activity {
     public void onStart() {
     	super.onStart();
     	
-    	if(DBG) Log.e(TAG, "+++ ON START +++");
+    	if(DBG) Log.i(TAG, "+++ ON START +++");
     	
     	// If Bluetooth is not on, request it be enabled.
     	if (mBluetoothAdapter.isEnabled() == false) {
@@ -124,7 +125,7 @@ public class Remota extends Activity {
     public synchronized void onResume(){
     	super.onResume();
     	
-    	if(DBG) Log.e(TAG, "+++ ON RESUME +++");
+    	if(DBG) Log.i(TAG, "+++ ON RESUME +++");
     	
     	// Performing this check in onResume() covers the case in which BT was
     	// not enabled during onStart(), so we were paused to enable it...
@@ -142,21 +143,21 @@ public class Remota extends Activity {
     public void onPause(){
     	super.onPause();
     	
-    	if (DBG) Log.e(TAG, "+++ ON PAUSE +++");
+    	if (DBG) Log.i(TAG, "+++ ON PAUSE +++");
     }
     
     @Override
     public void onStop() {
     	super.onStop();
     	
-    	if (DBG) Log.e(TAG, "+++ ON STOP +++");
+    	if (DBG) Log.i(TAG, "+++ ON STOP +++");
     }
     
     @Override
     public void onDestroy() {
     	super.onDestroy();
     	
-    	if (DBG) Log.e(TAG, "+++ ON DESTROY +++");
+    	if (DBG) Log.i(TAG, "+++ ON DESTROY +++");
     	
     	// Stop the remota service
        if (mRemotaService != null) {
@@ -166,7 +167,7 @@ public class Remota extends Activity {
     
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-    	if (DBG) Log.d(TAG, "+++ ON ACTIVITY RESULT +++ :" + resultCode);
+    	if (DBG) Log.i(TAG, "+++ ON ACTIVITY RESULT +++ :" + resultCode);
     	
     	switch (requestCode) {
     	case REQUEST_ENABLE_BLUETOOTH:
@@ -212,13 +213,13 @@ public class Remota extends Activity {
     }
    
     private void setup() {
-    	if (DBG) Log.d(TAG, "+++ SET UP +++");
+    	if (DBG) Log.i(TAG, "+++ SET UP +++");
     	
     	mRemotaService = new RemotaService(this, mHandler);
     }
     
     private void ensureDiscoverable(){
-        if (DBG) Log.d(TAG, "ensure discoverable");
+        if (DBG) Log.i(TAG, "ensure discoverable");
         if (mBluetoothAdapter.getScanMode() !=
             BluetoothAdapter.SCAN_MODE_CONNECTABLE_DISCOVERABLE) {
             Intent discoverableIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_DISCOVERABLE);
