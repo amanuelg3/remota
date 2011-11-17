@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -158,6 +159,12 @@ public class Remota extends Activity {
        if (mRemotaService != null) {
        	mRemotaService.stop();
         }
+	}
+	
+	@Override
+	public void onConfigurationChanged(Configuration newConfig) {
+		if (DBG) Log.i(TAG, "+++ ON CONFIGURATION CHANGED +++");
+		super.onConfigurationChanged(newConfig);
 	}
     
 	@Override
