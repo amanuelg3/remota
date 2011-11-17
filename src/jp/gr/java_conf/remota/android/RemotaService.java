@@ -84,10 +84,10 @@ public class RemotaService {
 		setState(STATE_LISTEN);
 
 		// Start the thread to listen on a BluetoothServerSocket
-		//if (mAcceptThread == null) {
-		//	mAcceptThread = new AcceptThread(true);
-		//	mAcceptThread.start();
-		//}
+		if (mAcceptThread == null) {
+			mAcceptThread = new AcceptThread(true);
+			mAcceptThread.start();
+		}
 	}
     
     /**

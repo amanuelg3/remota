@@ -56,7 +56,6 @@ public class Remota extends Activity {
 				case RemotaService.STATE_CONNECTED:
 					// To full screen
 					getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
-					requestWindowFeature(Window.FEATURE_NO_TITLE);
 
 					// Set up the window layout
 					TouchPadView touchPadView = new TouchPadView(Remota.this, mRemotaService);
