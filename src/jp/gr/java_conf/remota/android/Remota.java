@@ -13,6 +13,8 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Toast;
 
 /** 
@@ -51,6 +53,10 @@ public class Remota extends Activity {
 				if (DBG) Log.i(TAG, "MESSAGE_CONNECTION_STATE_CHANGE: " + msg.arg1);
 				switch (msg.arg1) {
 				case RemotaService.STATE_CONNECTED:
+					// To full screen
+					getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
+					requestWindowFeature(Window.FEATURE_NO_TITLE);
+
 					// Set up the window layout
 					TouchPadView touchPadView = new TouchPadView(Remota.this, mRemotaService);
 					setContentView(touchPadView);
