@@ -1,6 +1,7 @@
 package jp.gr.java_conf.remota.android;
 
 import android.content.Context;
+import android.graphics.Canvas;
 import android.provider.Settings.SettingNotFoundException;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -28,8 +29,12 @@ public class TouchPadView extends SurfaceView implements View.OnTouchListener, S
 		super(context);
 		
 		mRemotaService = remotaService;
-		
+
+		// Set up to receive touch events
 		setOnTouchListener(this);
+		
+		// Set up to receive surface events
+		getHolder().addCallback(this);
 	}
 	
 	/**
@@ -37,6 +42,10 @@ public class TouchPadView extends SurfaceView implements View.OnTouchListener, S
 	 */
 	public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
 		if (DBG) Log.i(TAG, "+++ SERFACE CHANGED +++");
+		
+		Canvas canvas = holder.lockCanvas();
+		if (DBG) Log.i(TAG, "height:" + canvas.getHeight() + ", width:" + canvas.getWidth());
+		holder.unlockCanvasAndPost(canvas);
 	}
 	
 	/**
@@ -44,6 +53,10 @@ public class TouchPadView extends SurfaceView implements View.OnTouchListener, S
 	 */
 	public void surfaceCreated(SurfaceHolder holder) {
 		if (DBG) Log.i(TAG, "+++ SERFACE CREATED +++");
+		
+		Canvas canvas = holder.lockCanvas();
+		if (DBG) Log.i(TAG, "height:" + canvas.getHeight() + ", width:" + canvas.getWidth());
+		holder.unlockCanvasAndPost(canvas);
 	}
 	
 	/**
