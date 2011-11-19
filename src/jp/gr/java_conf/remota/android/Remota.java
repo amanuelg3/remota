@@ -36,6 +36,7 @@ public class Remota extends Activity {
 	// Intent request codes
 	private static final int REQUEST_ENABLE_BLUETOOTH = 1;
 	private static final int REQUEST_CONNECT_DEVICE   = 2;
+	private static final int REQUEST_VIEW_TOUCH_PAD   = 3;
 	
 	// Key names received from the BluetoothChatService Handler
 	public static final String DEVICE_NAME = "device_name";
@@ -54,12 +55,9 @@ public class Remota extends Activity {
 				if (DBG) Log.i(TAG, "MESSAGE_CONNECTION_STATE_CHANGE: " + msg.arg1);
 				switch (msg.arg1) {
 				case RemotaService.STATE_CONNECTED:
-					// To full screen
-					getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
-
-					// Set up the window layout
-					TouchPadView touchPadView = new TouchPadView(Remota.this, mRemotaService);
-					setContentView(touchPadView);
+					// Launch the TouchPadActivity
+					Intent serverIntent = new Intent(Remota.this, TouchPadActivity.class);
+					startActivityForResult(serverIntent, REQUEST_VIEW_TOUCH_PAD);
 					break;
 				case RemotaService.STATE_CONNECTING:
 					break;
@@ -154,10 +152,12 @@ public class Remota extends Activity {
     	
     	if (DBG) Log.i(TAG, "+++ ON DESTROY +++");
     	
-    	// Stop the remota service
-       if (mRemotaService != null) {
-       	mRemotaService.stop();
-        }
+    	if (isFinishing()) {
+    		// Stop the remota service
+    		if (mRemotaService != null) {
+    			mRemotaService.stop();
+    		}
+    	}
 	}
 	
 	@Override
@@ -183,6 +183,15 @@ public class Remota extends Activity {
     		if (resultCode == Activity.RESULT_OK) {
     			connectDevice(data);
     		}
+    		break;
+    	case REQUEST_VIEW_TOUCH_PAD:
+    		// When the request to view the touch pad.
+    		if (resultCode == Activity.RESULT_OK) {
+    			// Stop the remota service
+        		if (mRemotaService != null) {
+        			mRemotaService.stop();
+        		}
+    		}
     	}
     }
     
@@ -199,7 +208,7 @@ public class Remota extends Activity {
     	switch (item.getItemId()) {
     	case R.id.connect_device:
     		// Launch the DeviceListActivity to see devices and do scan
-    		serverIntent = new Intent(this, RemotaDeviceListActivity.class);
+    		serverIntent = new Intent(this, DeviceListActivity.class);
     		startActivityForResult(serverIntent, REQUEST_CONNECT_DEVICE);
     		return true;
    		case R.id.make_discoverable:
@@ -233,7 +242,7 @@ public class Remota extends Activity {
     
 	private void connectDevice(Intent data) {
 		// Get the device MAC address
-		String address = data.getExtras().getString(RemotaDeviceListActivity.EXTRA_DEVICE_ADDRESS);
+		String address = data.getExtras().getString(DeviceListActivity.EXTRA_DEVICE_ADDRESS);
 		// Get the BLuetoothDevice object
 		BluetoothDevice device = mBluetoothAdapter.getRemoteDevice(address);
 		// Attempt to connect to the device
