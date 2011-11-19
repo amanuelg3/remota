@@ -26,9 +26,9 @@ import android.widget.AdapterView.OnItemClickListener;
  * When a device is chosen by the user, the MAC address of the device 
  * is sent back to the parent Activity in the result Intent.
  */
-public class RemotaDeviceListActivity extends Activity {
+public class DeviceListActivity extends Activity {
 	// Debugging
-	private static final String TAG = "RemotaDeviceListActivity";
+	private static final String TAG = "DeviceListActivity";
 	private static final boolean DBG = true;
 
 	// Return Intent extra
