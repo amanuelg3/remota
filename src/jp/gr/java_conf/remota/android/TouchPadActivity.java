@@ -23,7 +23,7 @@ public class TouchPadActivity extends Activity {
 		if(DBG) Log.i(TAG, "+++ ON CREATE +++");
 		
 		// To full screen
-		getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
+		//getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
 		// Set up the window layout
 		TouchPadView touchPadView = new TouchPadView(this);
