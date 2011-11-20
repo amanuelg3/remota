@@ -4,7 +4,7 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.Rect;
+import android.graphics.PointF;
 import android.graphics.RectF;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -57,10 +57,10 @@ public class TouchPadView extends SurfaceView implements View.OnTouchListener, S
 		Paint paint = new Paint();
 		paint.setColor(Color.WHITE);
 		paint.setStyle(Paint.Style.STROKE);
-		canvas.drawRect(getLeftButtonRect(), paint);
-		canvas.drawRect(getRightButtonRect(), paint);
-		canvas.drawRect(getScrollBarRect(), paint);
-		canvas.drawRect(getKeyboardButtonRect(), paint);
+		canvas.drawRect(getLeftButtonRectF(), paint);
+		canvas.drawRect(getRightButtonRectF(), paint);
+		canvas.drawRect(getScrollBarRectF(), paint);
+		canvas.drawRect(getKeyboardButtonRectF(), paint);
 		if (DBG) Log.i(TAG, "height:" + canvas.getHeight() + ", width:" + canvas.getWidth());
 		holder.unlockCanvasAndPost(canvas);
 	}
@@ -78,10 +78,10 @@ public class TouchPadView extends SurfaceView implements View.OnTouchListener, S
 		Paint paint = new Paint();
 		paint.setColor(Color.WHITE);
 		paint.setStyle(Paint.Style.STROKE);
-		canvas.drawRect(getLeftButtonRect(), paint);
-		canvas.drawRect(getRightButtonRect(), paint);
-		canvas.drawRect(getScrollBarRect(), paint);
-		canvas.drawRect(getKeyboardButtonRect(), paint);
+		canvas.drawRect(getLeftButtonRectF(), paint);
+		canvas.drawRect(getRightButtonRectF(), paint);
+		canvas.drawRect(getScrollBarRectF(), paint);
+		canvas.drawRect(getKeyboardButtonRectF(), paint);
 		if (DBG) Log.i(TAG, "height:" + mCanvasHeight + ", width:" + mCanvasWidth);
 		holder.unlockCanvasAndPost(canvas);
 	}
@@ -99,15 +99,33 @@ public class TouchPadView extends SurfaceView implements View.OnTouchListener, S
 	public boolean onTouch(View view, MotionEvent event) {
 		if (DBG) Log.d(TAG, "Pointer count:" + event.getPointerCount());
 		int c = event.getPointerCount();
-		
-		for (int i = 0; i < c; i++){ 
-			if (DBG) Log.d(TAG, "X" + i + ":" + event.getX(i) + ",Y" + i + ":" + event.getY(i));
+
+		float x, y;
+		String str = "";
+		for (int i = 0; i < c; i++){
+			x = event.getX(i);
+			y = event.getY(i);
+			PointF point = new PointF(x,y);
+			if (pointFIsInRectF(point, getLeftButtonRectF())) {
+				str = "left";
+			}
+			else if (pointFIsInRectF(point, getRightButtonRectF())) {
+				str = "right";
+			}
+			else if (pointFIsInRectF(point, getScrollBarRectF())) {
+				str = "scroll";
+			}
+			else if (pointFIsInRectF(point, getKeyboardButtonRectF())) {
+				str = "keyboard";
+			}
+			if (DBG) Log.d(TAG, "X" + i + ":" + x + ",Y" + i + ":" + y + "," + str);
 		}
 		
 		return true;
 	}
 	
-	private RectF getLeftButtonRect() {
+	// Return the left button rectangle.
+	private RectF getLeftButtonRectF() {
 		RectF rectf = new RectF(
 				0.0f,
 				0.0f,
@@ -118,7 +136,8 @@ public class TouchPadView extends SurfaceView implements View.OnTouchListener, S
 		return rectf;
 	}
 	
-	private RectF getRightButtonRect() {
+	// Return the right button rectangle.
+	private RectF getRightButtonRectF() {
 		RectF rectf = new RectF(
 				mCanvasWidth * (0.5f - (SCROLLBAR_WIDTH_RATIO / 2.0f)),
 				0.0f,
@@ -129,7 +148,8 @@ public class TouchPadView extends SurfaceView implements View.OnTouchListener, S
 		return rectf;
 	}
 	
-	private RectF getScrollBarRect() {
+	// Return the Scroll rectangle.
+	private RectF getScrollBarRectF() {
 		RectF rectf = new RectF(
 				mCanvasWidth * (1.0f - SCROLLBAR_WIDTH_RATIO),
 				0.0f,
@@ -140,7 +160,8 @@ public class TouchPadView extends SurfaceView implements View.OnTouchListener, S
 		return rectf;
 	}
 	
-	private RectF getKeyboardButtonRect() {
+	// Return the keyboard button rectangle.
+	private RectF getKeyboardButtonRectF() {
 		RectF rectf = new RectF(
 				0.0f,
 				mCanvasHeight * (1.0f - KEYBOARD_BUTTON_HEIGHT_RATIO),
@@ -149,5 +170,15 @@ public class TouchPadView extends SurfaceView implements View.OnTouchListener, S
 		);
 		
 		return rectf;
+	}
+	
+	// Return true if the point is in the rectangle.
+	private boolean pointFIsInRectF(PointF point, RectF rect) {
+		if (rect.left <= point.x && point.x <= rect.right) {
+			if (rect.top <= point.y && point.y <= rect.bottom) { 
+				return true;
+			}
+		}
+		return false;
 	}
 }
