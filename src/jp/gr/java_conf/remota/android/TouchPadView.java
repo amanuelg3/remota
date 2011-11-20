@@ -45,10 +45,10 @@ public class TouchPadView extends SurfaceView implements View.OnTouchListener, S
 	}
 	
 	/**
-	 * 
+	 * Called when the surface is changed.
 	 */
 	public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
-		if (DBG) Log.i(TAG, "+++ SERFACE CHANGED +++");
+		if (DBG) Log.i(TAG, "+++ SURFACE CHANGED +++");
 		
 		Canvas canvas = holder.lockCanvas();
 		mCanvasHeight = canvas.getHeight();
@@ -66,10 +66,10 @@ public class TouchPadView extends SurfaceView implements View.OnTouchListener, S
 	}
 	
 	/**
-	 * 
+	 * Called when the surface is created.
 	 */
 	public void surfaceCreated(SurfaceHolder holder) {
-		if (DBG) Log.i(TAG, "+++ SERFACE CREATED +++");
+		if (DBG) Log.i(TAG, "+++ SURFACE CREATED +++");
 		
 		Canvas canvas = holder.lockCanvas();
 		mCanvasHeight = canvas.getHeight();
@@ -87,14 +87,14 @@ public class TouchPadView extends SurfaceView implements View.OnTouchListener, S
 	}
 	
 	/**
-	 * 
+	 * Called when the surface is destroyed. 
 	 */
 	public void surfaceDestroyed(SurfaceHolder holder) {
-		if (DBG) Log.i(TAG, "+++ SERFACE DESTROYED +++");	
+		if (DBG) Log.i(TAG, "+++ SURFACE DESTROYED +++");	
 	}
 	
 	/**
-	 * 
+	 * Called when the view is touched.
 	 */
 	public boolean onTouch(View view, MotionEvent event) {
 		if (DBG) Log.d(TAG, "Pointer count:" + event.getPointerCount());
