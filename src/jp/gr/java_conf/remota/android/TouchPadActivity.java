@@ -16,9 +16,6 @@ public class TouchPadActivity extends Activity {
 	private static final String TAG = "TouchPadActivity";
 	private static final boolean DBG = true;
 	
-	// Member fields
-	private RemotaService mRemotaService = null;
-	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -29,7 +26,7 @@ public class TouchPadActivity extends Activity {
 		getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
 		// Set up the window layout
-		TouchPadView touchPadView = new TouchPadView(this, mRemotaService);
+		TouchPadView touchPadView = new TouchPadView(this);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(touchPadView);
 		

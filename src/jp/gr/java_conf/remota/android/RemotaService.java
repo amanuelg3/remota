@@ -43,26 +43,50 @@ public class RemotaService {
 	public static final int STATE_LISTEN = 1;     // now listening for incoming connections
 	public static final int STATE_CONNECTING = 2; // now initiating an outgoing connection
 	public static final int STATE_CONNECTED = 3;  // now connected to a remote device
+	
+	// Class variables for Singleton
+	private static RemotaService sRemotaService = null;
     
 	// Member fields
 	private final BluetoothAdapter mBluetoothAdapter;
-	private final Handler mHandler;
+	private Handler mHandler;
 	private AcceptThread mAcceptThread;
 	private ConnectThread mConnectThread;
 	private ConnectedThread mConnectedThread;
 	private int mState;
+	
+	/**
+	 * 
+	 * @param context
+	 * @param handler
+	 * @return
+	 */
+	public static RemotaService getInstance() {
+		if (sRemotaService == null) {
+			sRemotaService = new RemotaService();
+		}
+		
+		return sRemotaService;
+	}
+	
+	/**
+	 * 
+	 * @param handler
+	 */
+	public void setHandler(Handler handler) {
+		mHandler = handler;
+	}
 
 	/**
      * Constructor
      * @param context
      * @param handler
      */
-	public RemotaService(Context context, Handler handler) {
+	private RemotaService() {
 		mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
-		mHandler = handler;
-    	mState = STATE_IDLE;
+		mState = STATE_IDLE;
 	}
-    
+
     /**
      * Start the service. Specifically start AcceptThread to begin a
      * session in listening (server) mode. Called by the Activity onResume() */

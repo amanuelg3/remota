@@ -12,10 +12,6 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.MotionEvent;
-import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.Toast;
 
 /** 
@@ -226,7 +222,8 @@ public class Remota extends Activity {
 		if (DBG) Log.i(TAG, "+++ SET UP +++");
     	
 		if (mRemotaService == null) {
-			mRemotaService = new RemotaService(this, mHandler);
+			mRemotaService = RemotaService.getInstance();
+			mRemotaService.setHandler(mHandler);
 		}
     }
     

@@ -2,7 +2,6 @@ package jp.gr.java_conf.remota.android;
 
 import android.content.Context;
 import android.graphics.Canvas;
-import android.provider.Settings.SettingNotFoundException;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
@@ -17,19 +16,14 @@ public class TouchPadView extends SurfaceView implements View.OnTouchListener, S
 	private static final String TAG = "TouchPadView";
 	private static final boolean DBG = true;
 	
-	// Member fields
-	private RemotaService mRemotaService;
-	
 	/**
      * Constructor
      * @param context
      * @param remotaService
      */
-	public TouchPadView(Context context, RemotaService remotaService) {
+	public TouchPadView(Context context) {
 		super(context);
 		
-		mRemotaService = remotaService;
-
 		// Set up to receive touch events
 		setOnTouchListener(this);
 		
