@@ -1,5 +1,7 @@
 package jp.gr.java_conf.remota.android;
 
+import java.io.ByteArrayOutputStream;
+import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -215,6 +217,27 @@ public class RemotaService {
 		}
 
 		setState(STATE_IDLE);
+	}
+	
+	/**
+	 * Send a mouse event
+	 * @param mouseEvent
+	 */
+	public void sendMouseEvent(MouseEvent mouseEvent) {
+		if (mState == STATE_CONNECTED) {
+			ByteArrayOutputStream bout = new ByteArrayOutputStream();
+			DataOutputStream out = new DataOutputStream(bout);
+			try{
+				out.write(mouseEvent.getFlag());
+				out.write(mouseEvent.getX());
+				out.write(mouseEvent.getY());
+				byte[] buffer = bout.toByteArray();
+			
+				mConnectedThread.write(buffer);
+			} catch (IOException e) {
+				Log.e(TAG, "SendMouseEvent:", e);
+			}
+		}
 	}
     
     /**
@@ -443,7 +466,7 @@ public class RemotaService {
     			mmOutStream.write(buffer);
         		
     			// Share the sent message back to the UI Activity
-        		mHandler.obtainMessage(Remota.MESSAGE_WRITE, -1, -1, buffer).sendToTarget();
+        		//mHandler.obtainMessage(Remota.MESSAGE_WRITE, -1, -1, buffer).sendToTarget();
     		} catch (IOException e) {
     			Log.e(TAG, "Exception during write", e);
     		}

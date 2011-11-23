@@ -1,11 +1,15 @@
 package jp.gr.java_conf.remota.android;
 
+import java.util.ArrayList;
+
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.LinearGradient;
 import android.graphics.Paint;
 import android.graphics.PointF;
 import android.graphics.RectF;
+import android.graphics.Shader.TileMode;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
@@ -24,10 +28,16 @@ public class TouchPadView extends SurfaceView implements View.OnTouchListener, S
 	private static final float BUTTON_HEIGHT_RATIO = 0.2f;
 	private static final float SCROLLBAR_WIDTH_RATIO = 0.08f;
 	private static final float KEYBOARD_BUTTON_HEIGHT_RATIO = 0.05f;
+	private static final int NOT_PRESSED = -1;
 	
 	// Member fields
 	private float mCanvasHeight = 0.0f;
 	private float mCanvasWidth  = 0.0f;
+	
+	private int mLeftButtonPressed     = NOT_PRESSED;
+	private int mRightButtonPressed    = NOT_PRESSED;
+	private int mScrollBarPressed      = NOT_PRESSED;
+	private int mKeyboardButtonPressed = NOT_PRESSED;
 	
 	/**
      * Constructor
@@ -88,31 +98,60 @@ public class TouchPadView extends SurfaceView implements View.OnTouchListener, S
 	 */
 	public boolean onTouch(View view, MotionEvent event) {
 		if (DBG) Log.d(TAG, "Pointer count:" + event.getPointerCount());
-		int c = event.getPointerCount();
 
+		RemotaService service = RemotaService.getInstance();
+		int c = event.getPointerCount();
 		float x, y;
+		int id, action, actionId;
+		ArrayList<Integer> idList = new ArrayList<Integer>();
 		String str = "";
 		for (int i = 0; i < c; i++){
 			x = event.getX(i);
 			y = event.getY(i);
+			action = event.getAction();
+			actionId = event.getActionIndex();
+			id = event.getPointerId(i);
+			idList.add(new Integer(id));
 			PointF point = new PointF(x,y);
+			
+			// Check whether a button is down.
 			if (pointFIsInRectF(point, getLeftButtonRectF())) {
 				str = "left";
+				if (mLeftButtonPressed == NOT_PRESSED) {
+					mLeftButtonPressed = id;
+					service.sendMouseEvent(
+							new MouseEvent(MouseEvent.FLAG_LEFT_DOWN, (int)x, (int)y)
+					);
+				}
 			}
 			else if (pointFIsInRectF(point, getRightButtonRectF())) {
 				str = "right";
+				if (mRightButtonPressed == NOT_PRESSED) {
+					mRightButtonPressed = id;
+				}
 			}
 			else if (pointFIsInRectF(point, getScrollBarRectF())) {
 				str = "scroll";
+				if (mScrollBarPressed == NOT_PRESSED) {
+					mScrollBarPressed = id;
+				}
 			}
 			else if (pointFIsInRectF(point, getKeyboardButtonRectF())) {
 				str = "keyboard";
+				if (mKeyboardButtonPressed == NOT_PRESSED) {
+					mKeyboardButtonPressed = id;
+				}
 			}
+			
+			// Check whether a button up.
+			
 			if (DBG) {
 				Log.d(TAG, 
 						"X" + i + ":" + x +
 						",Y" + i + ":" + y +
-						", id:" + event.getPointerId(i) +
+						", id:" + id +
+						", action:" + action +
+						", actionId:" + actionId +
 						"," + str);
 			}
 		}
@@ -169,7 +208,7 @@ public class TouchPadView extends SurfaceView implements View.OnTouchListener, S
 	}
 	
 	// Return true if the point is in the rectangle.
-	private boolean pointFIsInRectF(PointF point, RectF rect) {
+	private static boolean pointFIsInRectF(PointF point, RectF rect) {
 		if (rect.left <= point.x && point.x <= rect.right) {
 			if (rect.top <= point.y && point.y <= rect.bottom) { 
 				return true;
