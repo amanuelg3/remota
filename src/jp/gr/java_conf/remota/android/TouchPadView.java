@@ -54,13 +54,8 @@ public class TouchPadView extends SurfaceView implements View.OnTouchListener, S
 		mCanvasHeight = canvas.getHeight();
 		mCanvasWidth  = canvas.getWidth();
 		
-		Paint paint = new Paint();
-		paint.setColor(Color.WHITE);
-		paint.setStyle(Paint.Style.STROKE);
-		canvas.drawRect(getLeftButtonRectF(), paint);
-		canvas.drawRect(getRightButtonRectF(), paint);
-		canvas.drawRect(getScrollBarRectF(), paint);
-		canvas.drawRect(getKeyboardButtonRectF(), paint);
+		drawAll(canvas);
+		
 		if (DBG) Log.i(TAG, "height:" + canvas.getHeight() + ", width:" + canvas.getWidth());
 		holder.unlockCanvasAndPost(canvas);
 	}
@@ -75,14 +70,9 @@ public class TouchPadView extends SurfaceView implements View.OnTouchListener, S
 		mCanvasHeight = canvas.getHeight();
 		mCanvasWidth  = canvas.getWidth();
 		
-		Paint paint = new Paint();
-		paint.setColor(Color.WHITE);
-		paint.setStyle(Paint.Style.STROKE);
-		canvas.drawRect(getLeftButtonRectF(), paint);
-		canvas.drawRect(getRightButtonRectF(), paint);
-		canvas.drawRect(getScrollBarRectF(), paint);
-		canvas.drawRect(getKeyboardButtonRectF(), paint);
-		if (DBG) Log.i(TAG, "height:" + mCanvasHeight + ", width:" + mCanvasWidth);
+		drawAll(canvas);
+		
+		if (DBG) Log.i(TAG, "height:" + canvas.getHeight() + ", width:" + canvas.getWidth());
 		holder.unlockCanvasAndPost(canvas);
 	}
 	
@@ -118,7 +108,13 @@ public class TouchPadView extends SurfaceView implements View.OnTouchListener, S
 			else if (pointFIsInRectF(point, getKeyboardButtonRectF())) {
 				str = "keyboard";
 			}
-			if (DBG) Log.d(TAG, "X" + i + ":" + x + ",Y" + i + ":" + y + "," + str);
+			if (DBG) {
+				Log.d(TAG, 
+						"X" + i + ":" + x +
+						",Y" + i + ":" + y +
+						", id:" + event.getPointerId(i) +
+						"," + str);
+			}
 		}
 		
 		return true;
@@ -180,5 +176,16 @@ public class TouchPadView extends SurfaceView implements View.OnTouchListener, S
 			}
 		}
 		return false;
+	}
+	
+	// Draw all components
+	private void drawAll(Canvas canvas) {
+		Paint paint = new Paint();
+		paint.setColor(Color.WHITE);
+		paint.setStyle(Paint.Style.STROKE);
+		canvas.drawRect(getLeftButtonRectF(), paint);
+		canvas.drawRect(getRightButtonRectF(), paint);
+		canvas.drawRect(getScrollBarRectF(), paint);
+		canvas.drawRect(getKeyboardButtonRectF(), paint);
 	}
 }
