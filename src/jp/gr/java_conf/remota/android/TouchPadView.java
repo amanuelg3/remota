@@ -102,45 +102,101 @@ public class TouchPadView extends SurfaceView implements View.OnTouchListener, S
 		RemotaService service = RemotaService.getInstance();
 		int c = event.getPointerCount();
 		float x, y;
-		int id, action, actionId;
+		int id, action, actionMasked, actionId;
 		ArrayList<Integer> idList = new ArrayList<Integer>();
 		String str = "";
-		for (int i = 0; i < c; i++){
-			x = event.getX(i);
-			y = event.getY(i);
-			action = event.getAction();
-			actionId = event.getActionIndex();
-			id = event.getPointerId(i);
-			idList.add(new Integer(id));
-			PointF point = new PointF(x,y);
-			
-			// Check whether a button is down.
+		action = event.getAction();
+		actionMasked = event.getActionMasked();
+		actionId = event.getActionIndex();
+		
+		if (DBG) {
+			Log.d(TAG, 
+					", action:" + action +
+					", actionMasked:" + actionMasked +
+					", actionId:" + actionId
+			);
+		}
+		
+		x = event.getX(actionId);
+		y = event.getY(actionId);
+		id = event.getPointerId(actionId);
+		PointF point = new PointF(x, y);
+
+		if (actionMasked == MotionEvent.ACTION_DOWN || actionMasked == MotionEvent.ACTION_POINTER_1_DOWN) {
 			if (pointFIsInRectF(point, getLeftButtonRectF())) {
-				str = "left";
 				if (mLeftButtonPressed == NOT_PRESSED) {
 					mLeftButtonPressed = id;
 					service.sendMouseEvent(
 							new MouseEvent(MouseEvent.FLAG_LEFT_DOWN, (int)x, (int)y)
 					);
 				}
-			}
-			else if (pointFIsInRectF(point, getRightButtonRectF())) {
-				str = "right";
+			} else if (pointFIsInRectF(point, getRightButtonRectF())) {
 				if (mRightButtonPressed == NOT_PRESSED) {
 					mRightButtonPressed = id;
+					service.sendMouseEvent(
+							new MouseEvent(MouseEvent.FLAG_RIGHT_DOWN, (int)x, (int)y)
+					);
 				}
-			}
-			else if (pointFIsInRectF(point, getScrollBarRectF())) {
-				str = "scroll";
+			} else if (pointFIsInRectF(point, getScrollBarRectF())) { 
 				if (mScrollBarPressed == NOT_PRESSED) {
 					mScrollBarPressed = id;
+					service.sendMouseEvent(
+							new MouseEvent(MouseEvent.FLAG_WHELL, (int)x, (int)y)
+					);
 				}
-			}
-			else if (pointFIsInRectF(point, getKeyboardButtonRectF())) {
-				str = "keyboard";
+			} else if (pointFIsInRectF(point, getKeyboardButtonRectF())) { 
 				if (mKeyboardButtonPressed == NOT_PRESSED) {
 					mKeyboardButtonPressed = id;
 				}
+			}
+		} else if (actionMasked == MotionEvent.ACTION_UP || actionMasked == MotionEvent.ACTION_POINTER_1_UP) {
+			if (pointFIsInRectF(point, getLeftButtonRectF())) {
+				if (mLeftButtonPressed == id) {
+					mLeftButtonPressed = NOT_PRESSED;
+					service.sendMouseEvent(
+							new MouseEvent(MouseEvent.FLAG_LEFT_UP, (int)x, (int)y)
+					);
+				}
+			} else if (pointFIsInRectF(point, getRightButtonRectF())) {
+				if (mRightButtonPressed == id) {
+					mRightButtonPressed = NOT_PRESSED;
+					service.sendMouseEvent(
+							new MouseEvent(MouseEvent.FLAG_RIGHT_UP, (int)x, (int)y)
+					);
+				}
+			} else if (pointFIsInRectF(point, getScrollBarRectF())) { 
+				if (mScrollBarPressed == id) {
+					mScrollBarPressed = NOT_PRESSED;
+					service.sendMouseEvent(
+							new MouseEvent(MouseEvent.FLAG_WHELL, (int)x, (int)y)
+					);
+				}
+			} else if (pointFIsInRectF(point, getKeyboardButtonRectF())) { 
+				if (mKeyboardButtonPressed == id) {
+					mKeyboardButtonPressed = NOT_PRESSED;
+				}
+			}
+		}
+
+		for (int i = 0; i < c; i++){
+			x = event.getX(i);
+			y = event.getY(i);
+			id = event.getPointerId(i);
+			idList.add(new Integer(id));
+			point = new PointF(x, y);
+			
+			// Check whether a button is down.
+			if (pointFIsInRectF(point, getLeftButtonRectF())) {
+				str = "left";
+			}
+			else if (pointFIsInRectF(point, getRightButtonRectF())) {
+				str = "right";
+			}
+			else if (pointFIsInRectF(point, getScrollBarRectF())) {
+				str = "scroll";
+			}
+			else if (pointFIsInRectF(point, getKeyboardButtonRectF())) {
+				str = "keyboard";
 			}
 			
 			// Check whether a button up.
@@ -150,8 +206,6 @@ public class TouchPadView extends SurfaceView implements View.OnTouchListener, S
 						"X" + i + ":" + x +
 						",Y" + i + ":" + y +
 						", id:" + id +
-						", action:" + action +
-						", actionId:" + actionId +
 						"," + str);
 			}
 		}

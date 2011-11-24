@@ -464,6 +464,7 @@ public class RemotaService {
     	public void write(byte[] buffer) {
     		try {
     			mmOutStream.write(buffer);
+    			mmOutStream.flush();
         		
     			// Share the sent message back to the UI Activity
         		//mHandler.obtainMessage(Remota.MESSAGE_WRITE, -1, -1, buffer).sendToTarget();
