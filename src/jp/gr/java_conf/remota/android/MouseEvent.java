@@ -3,7 +3,7 @@ package jp.gr.java_conf.remota.android;
 /**
  * This is the mouse event class
  */
-public class MouseEvent {
+public class MouseEvent extends InputEvent {
 	// Constants that indicate the mouse event flags
 	public static final int FLAG_MOVE = 0x01;
 	public static final int FLAG_WHELL = 0x80;
@@ -29,6 +29,7 @@ public class MouseEvent {
 	 * @param y
 	 */
 	public MouseEvent(int flag, int x, int y) {
+		super(InputEvent.TYPE_MOUSE);
 		mFlag = flag;
 		mX = x;
 		mY = y;

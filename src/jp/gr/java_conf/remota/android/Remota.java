@@ -5,6 +5,7 @@ import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -89,7 +90,7 @@ public class Remota extends Activity {
     		finish();
         	return;
     	} else {
-    		mBluetoothAdapter.setName(getResources().getText(R.string.app_name).toString());
+    		mBluetoothAdapter.setName(getResources().getText(R.string.app_name).toString() + Build.MODEL);
     	}
 
 	}
