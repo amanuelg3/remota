@@ -3,14 +3,14 @@ package jp.gr.java_conf.remota.android;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.LinearGradient;
 import android.graphics.Paint;
 import android.graphics.PointF;
 import android.graphics.RectF;
+import android.graphics.Shader.TileMode;
 import android.util.Log;
-import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
-import android.view.View;
 
 /** 
  * This is the SurfaceView like a touch pad.
@@ -150,16 +150,102 @@ public class TouchPadView extends SurfaceView implements SurfaceHolder.Callback 
 		return false;
 	}
 	
-	// Draw all components
-	private void drawAll(Canvas canvas) {
+	// Return the left button paint
+	private Paint getLeftButtonPaint() {
 		Paint paint = new Paint();
 		paint.setColor(Color.WHITE);
-		paint.setStyle(Paint.Style.STROKE);
-		canvas.drawRect(getLeftButtonRectF(), paint);
-		canvas.drawRect(getRightButtonRectF(), paint);
-		canvas.drawRect(getScrollBarRectF(), paint);
-		canvas.drawRect(getKeyboardButtonRectF(), paint);
 		paint.setStyle(Paint.Style.FILL);
-		canvas.drawRect(getTouchPadRectF(), paint);
+		RectF rectf = getLeftButtonRectF();
+		LinearGradient shader = new LinearGradient(
+				rectf.left, rectf.top, 
+				rectf.left, rectf.bottom,
+				Color.DKGRAY, Color.BLACK, TileMode.REPEAT
+		);
+		paint.setShader(shader);
+		
+		return paint;
+	}
+	
+	// Return the right button paint
+	private Paint getRightButtonPaint() {
+		Paint paint = new Paint();
+		paint.setColor(Color.WHITE);
+		paint.setStyle(Paint.Style.FILL);
+		RectF rectf = getRightButtonRectF();
+		LinearGradient shader = new LinearGradient(
+				rectf.left, rectf.top, 
+				rectf.left, rectf.bottom,
+				Color.DKGRAY, Color.BLACK, TileMode.REPEAT
+		);
+		paint.setShader(shader);
+		
+		return paint;
+	}
+	
+	// Return the scroll button paint
+	private Paint getScrollBarPaint() {
+		Paint paint = new Paint();
+		paint.setColor(Color.WHITE);
+		paint.setStyle(Paint.Style.FILL);
+		RectF rectf = getScrollBarRectF();
+		LinearGradient shader = new LinearGradient(
+				rectf.left, rectf.top, 
+				rectf.left, rectf.bottom,
+				Color.DKGRAY, Color.BLACK, TileMode.REPEAT
+		);
+		paint.setShader(shader);
+		
+		return paint;
+	}
+	
+	// Return the keyboard button paint
+	private Paint getKeyboardButtonPaint() {
+		Paint paint = new Paint();
+		paint.setColor(Color.WHITE);
+		paint.setStyle(Paint.Style.FILL);
+		RectF rectf = getKeyboardButtonRectF();
+		LinearGradient shader = new LinearGradient(
+				rectf.left, rectf.top, 
+				rectf.left, rectf.bottom,
+				Color.DKGRAY, Color.BLACK, TileMode.REPEAT
+		);
+		paint.setShader(shader);
+		
+		return paint;
+	}
+	
+	// Return the touch pad paint
+	private Paint getTouchPadPaint() {
+		Paint paint = new Paint();
+		paint.setColor(Color.BLACK);
+		paint.setStyle(Paint.Style.FILL);
+		
+		return paint;
+	}
+	
+	// Return the stroke paint
+	private Paint getStrokePaint() {
+		Paint paint = new Paint();
+		paint.setColor(Color.DKGRAY);
+		paint.setStyle(Paint.Style.STROKE);
+		paint.setStrokeWidth(2.0f);
+		
+		return paint;
+	}
+	
+	// Draw all components
+	private void drawAll(Canvas canvas) {
+		canvas.drawRect(getLeftButtonRectF(), getLeftButtonPaint());
+		canvas.drawRect(getRightButtonRectF(), getRightButtonPaint());
+		canvas.drawRect(getScrollBarRectF(), getScrollBarPaint());
+		canvas.drawRect(getKeyboardButtonRectF(), getKeyboardButtonPaint());
+		canvas.drawRect(getTouchPadRectF(), getTouchPadPaint());
+		
+		Paint paintS = getStrokePaint();
+		canvas.drawRect(getLeftButtonRectF(), paintS);
+		canvas.drawRect(getRightButtonRectF(), paintS);
+		canvas.drawRect(getScrollBarRectF(), paintS);
+		canvas.drawRect(getKeyboardButtonRectF(), paintS);
+		canvas.drawRect(getTouchPadRectF(), paintS);
 	}
 }
