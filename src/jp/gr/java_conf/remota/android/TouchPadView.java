@@ -28,6 +28,7 @@ public class TouchPadView extends SurfaceView implements SurfaceHolder.Callback 
 	// Member fields
 	private float mCanvasHeight = 0.0f;
 	private float mCanvasWidth  = 0.0f;
+	private TouchState mTouchState = null;
 
 	/**
      * Constructor
@@ -63,6 +64,8 @@ public class TouchPadView extends SurfaceView implements SurfaceHolder.Callback 
 	public void surfaceCreated(SurfaceHolder holder) {
 		if (DBG) Log.i(TAG, "+++ SURFACE CREATED +++");
 		
+		mTouchState = TouchState.getInstance();
+		
 		Canvas canvas = holder.lockCanvas();
 		mCanvasHeight = canvas.getHeight();
 		mCanvasWidth  = canvas.getWidth();
@@ -78,6 +81,19 @@ public class TouchPadView extends SurfaceView implements SurfaceHolder.Callback 
 	 */
 	public void surfaceDestroyed(SurfaceHolder holder) {
 		if (DBG) Log.i(TAG, "+++ SURFACE DESTROYED +++");	
+	}
+	
+	public void doDraw(SurfaceHolder holder) {
+		Canvas canvas = holder.lockCanvas();
+		onDraw(canvas);
+		holder.unlockCanvasAndPost(canvas);
+	}
+	
+	@Override
+	public void onDraw(Canvas canvas) {
+		super.onDraw(canvas);
+		
+		drawAll(canvas);
 	}
 	
 	// Return the left button rectangle.
@@ -156,11 +172,20 @@ public class TouchPadView extends SurfaceView implements SurfaceHolder.Callback 
 		paint.setColor(Color.WHITE);
 		paint.setStyle(Paint.Style.FILL);
 		RectF rectf = getLeftButtonRectF();
-		LinearGradient shader = new LinearGradient(
-				rectf.left, rectf.top, 
-				rectf.left, rectf.bottom,
-				Color.DKGRAY, Color.BLACK, TileMode.REPEAT
-		);
+		LinearGradient shader;
+		if (mTouchState.getLeftButtonState() == TouchState.NOT_PRESSED) {
+			shader = new LinearGradient(
+					rectf.left, rectf.top, 
+					rectf.left, rectf.bottom,
+					Color.DKGRAY, Color.BLACK, TileMode.REPEAT
+			);
+		} else {
+			shader = new LinearGradient(
+					rectf.left, rectf.top, 
+					rectf.left, rectf.bottom,
+					Color.BLACK, Color.DKGRAY, TileMode.REPEAT
+			);
+		}
 		paint.setShader(shader);
 		
 		return paint;
@@ -172,11 +197,20 @@ public class TouchPadView extends SurfaceView implements SurfaceHolder.Callback 
 		paint.setColor(Color.WHITE);
 		paint.setStyle(Paint.Style.FILL);
 		RectF rectf = getRightButtonRectF();
-		LinearGradient shader = new LinearGradient(
-				rectf.left, rectf.top, 
-				rectf.left, rectf.bottom,
-				Color.DKGRAY, Color.BLACK, TileMode.REPEAT
-		);
+		LinearGradient shader;
+		if (mTouchState.getRightButtonState() == TouchState.NOT_PRESSED) {
+			shader = new LinearGradient(
+					rectf.left, rectf.top, 
+					rectf.left, rectf.bottom,
+					Color.DKGRAY, Color.BLACK, TileMode.REPEAT
+			);
+		} else {
+			shader = new LinearGradient(
+					rectf.left, rectf.top, 
+					rectf.left, rectf.bottom,
+					Color.BLACK, Color.DKGRAY, TileMode.REPEAT
+			);
+		}
 		paint.setShader(shader);
 		
 		return paint;
@@ -188,11 +222,20 @@ public class TouchPadView extends SurfaceView implements SurfaceHolder.Callback 
 		paint.setColor(Color.WHITE);
 		paint.setStyle(Paint.Style.FILL);
 		RectF rectf = getScrollBarRectF();
-		LinearGradient shader = new LinearGradient(
-				rectf.left, rectf.top, 
-				rectf.left, rectf.bottom,
-				Color.DKGRAY, Color.BLACK, TileMode.REPEAT
-		);
+		LinearGradient shader;
+		if (mTouchState.getScrollBarState() == TouchState.NOT_PRESSED) {
+			shader = new LinearGradient(
+					rectf.left, rectf.top, 
+					rectf.left, rectf.bottom,
+					Color.DKGRAY, Color.BLACK, TileMode.REPEAT
+			);
+		} else {
+			shader = new LinearGradient(
+					rectf.left, rectf.top, 
+					rectf.left, rectf.bottom,
+					Color.BLACK, Color.DKGRAY, TileMode.REPEAT
+			);
+		}
 		paint.setShader(shader);
 		
 		return paint;
@@ -204,11 +247,20 @@ public class TouchPadView extends SurfaceView implements SurfaceHolder.Callback 
 		paint.setColor(Color.WHITE);
 		paint.setStyle(Paint.Style.FILL);
 		RectF rectf = getKeyboardButtonRectF();
-		LinearGradient shader = new LinearGradient(
-				rectf.left, rectf.top, 
-				rectf.left, rectf.bottom,
-				Color.DKGRAY, Color.BLACK, TileMode.REPEAT
-		);
+		LinearGradient shader;
+		if (mTouchState.getKeyboardButtonState() == TouchState.NOT_PRESSED) {
+			shader = new LinearGradient(
+					rectf.left, rectf.top, 
+					rectf.left, rectf.bottom,
+					Color.DKGRAY, Color.BLACK, TileMode.REPEAT
+			);
+		} else {
+			shader = new LinearGradient(
+					rectf.left, rectf.top, 
+					rectf.left, rectf.bottom,
+					Color.BLACK, Color.DKGRAY, TileMode.REPEAT
+			);
+		}
 		paint.setShader(shader);
 		
 		return paint;
