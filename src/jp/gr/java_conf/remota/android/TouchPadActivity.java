@@ -2,6 +2,8 @@ package jp.gr.java_conf.remota.android;
 
 import android.app.Activity;
 import android.graphics.PointF;
+import android.inputmethodservice.Keyboard;
+import android.inputmethodservice.KeyboardView;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -21,6 +23,7 @@ public class TouchPadActivity extends Activity implements View.OnTouchListener {
 	
 	// Member fields
 	private TouchPadView mTouchPadView;
+	private KeyboardView mKeyboardView;
 	
 	private int mLeftButtonPressed     = NOT_PRESSED;
 	private int mRightButtonPressed    = NOT_PRESSED;
@@ -38,13 +41,17 @@ public class TouchPadActivity extends Activity implements View.OnTouchListener {
 		//getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
 		mTouchPadView = new TouchPadView(this);
-		
+		Keyboard keyboard = new Keyboard(this, R.xml.qwerty);
+		mKeyboardView = new KeyboardView(this, null);
+		mKeyboardView.setKeyboard(keyboard);
+
 		// Set up to receive touch events
 		mTouchPadView.setOnTouchListener(this);
 		
 		// Set up the window layout
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(mTouchPadView);
+		//setContentView(mKeyboardView);
 		
 		setResult(Activity.RESULT_OK);
 	}
@@ -216,7 +223,7 @@ public class TouchPadActivity extends Activity implements View.OnTouchListener {
 			}
 		}
 		
+		
 		return true;
 	}
 }
-
