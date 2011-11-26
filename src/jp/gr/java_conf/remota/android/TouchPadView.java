@@ -226,14 +226,14 @@ public class TouchPadView extends SurfaceView implements SurfaceHolder.Callback 
 		if (mTouchState.getScrollBarState() == TouchState.NOT_PRESSED) {
 			shader = new LinearGradient(
 					rectf.left, rectf.top, 
-					rectf.left, rectf.bottom,
-					Color.DKGRAY, Color.BLACK, TileMode.REPEAT
+					rectf.left, rectf.bottom / 2.0f,
+					Color.BLACK, Color.DKGRAY, TileMode.MIRROR
 			);
 		} else {
 			shader = new LinearGradient(
 					rectf.left, rectf.top, 
-					rectf.left, rectf.bottom,
-					Color.BLACK, Color.DKGRAY, TileMode.REPEAT
+					rectf.left, rectf.bottom / 2.0f,
+					Color.DKGRAY, Color.BLACK, TileMode.MIRROR
 			);
 		}
 		paint.setShader(shader);
