@@ -133,38 +133,28 @@ public class TouchPadActivity extends Activity implements View.OnTouchListener {
 			} else if (actionMasked == MotionEvent.ACTION_UP ||
 					actionMasked == MotionEvent.ACTION_POINTER_1_UP ||
 					actionMasked == MotionEvent.ACTION_POINTER_UP) {
-				if (TouchPadView.pointFIsInRectF(point, mTouchPadView.getLeftButtonRectF())) {
-					if (mTouchState.getLeftButtonState()== id) {
-						mTouchState.setLeftButtonState(TouchState.NOT_PRESSED);
-						service.sendMouseEvent(
-								new MouseEvent(MouseEvent.FLAG_LEFT_UP, (int)x, (int)y)
-						);
-					}
-				} else if (TouchPadView.pointFIsInRectF(point, mTouchPadView.getRightButtonRectF())) {
-					if (mTouchState.getRightButtonState() == id) {
-						mTouchState.setRightButtonState(TouchState.NOT_PRESSED);
-						service.sendMouseEvent(
-								new MouseEvent(MouseEvent.FLAG_RIGHT_UP, (int)x, (int)y)
-						);
-					}
-				} else if (TouchPadView.pointFIsInRectF(point, mTouchPadView.getScrollBarRectF())) { 
-					if (mTouchState.getScrollBarState() == id) {
-						mTouchState.setScrollBarState(TouchState.NOT_PRESSED);
-						service.sendMouseEvent(
-								new MouseEvent(MouseEvent.FLAG_WHELL, (int)x, (int)y)
-						);
-					}
-				} else if (TouchPadView.pointFIsInRectF(point, mTouchPadView.getKeyboardButtonRectF())) { 
-					if (mTouchState.getKeyboardButtonState() == id) {
-						mTouchState.setKeyboardButtonState(TouchState.NOT_PRESSED);
-					}
-				} else if (TouchPadView.pointFIsInRectF(point, mTouchPadView.getTouchPadRectF())) {
-					if (mTouchState.getMovePadState() == id) {
-						mTouchState.setMovePadState(TouchState.NOT_PRESSED);
-						service.sendMouseEvent(
-								new MouseEvent(MouseEvent.FLAG_MOVE, (int)x, (int)y)
-						);
-					}
+				if (mTouchState.getLeftButtonState()== id) {
+					mTouchState.setLeftButtonState(TouchState.NOT_PRESSED);
+					service.sendMouseEvent(
+							new MouseEvent(MouseEvent.FLAG_LEFT_UP, (int)x, (int)y)
+					);
+				} else if (mTouchState.getRightButtonState() == id) {
+					mTouchState.setRightButtonState(TouchState.NOT_PRESSED);
+					service.sendMouseEvent(
+							new MouseEvent(MouseEvent.FLAG_RIGHT_UP, (int)x, (int)y)
+					);
+				} else if (mTouchState.getScrollBarState() == id) {
+					mTouchState.setScrollBarState(TouchState.NOT_PRESSED);
+					service.sendMouseEvent(
+							new MouseEvent(MouseEvent.FLAG_WHELL, (int)x, (int)y)
+					);
+				} else	if (mTouchState.getKeyboardButtonState() == id) {
+					mTouchState.setKeyboardButtonState(TouchState.NOT_PRESSED);
+				} else if (mTouchState.getMovePadState() == id) {
+					mTouchState.setMovePadState(TouchState.NOT_PRESSED);
+					service.sendMouseEvent(
+							new MouseEvent(MouseEvent.FLAG_MOVE, (int)x, (int)y)
+					);
 				}
 			} else if (actionMasked == MotionEvent.ACTION_MOVE) {
 				if (TouchPadView.pointFIsInRectF(point, mTouchPadView.getTouchPadRectF())) {
