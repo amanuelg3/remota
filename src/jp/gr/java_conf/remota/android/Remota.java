@@ -34,6 +34,8 @@ public class Remota extends Activity {
 	private static final int REQUEST_ENABLE_BLUETOOTH = 1;
 	private static final int REQUEST_CONNECT_DEVICE   = 2;
 	private static final int REQUEST_VIEW_TOUCH_PAD   = 3;
+	private static final int REQUEST_SET_PREFERENCE  = 4;
+	private static final int REQUEST_SHOW_INFOMATION  = 5;
 	
 	// Key names received from the BluetoothChatService Handler
 	public static final String DEVICE_NAME = "device_name";
@@ -213,7 +215,14 @@ public class Remota extends Activity {
    			ensureDiscoverable();
    			return true;
    		case R.id.settings:
-   			//
+   			// Launch the SettingsActivity to set preferences
+   			Intent settingIntent = new Intent(this, SettingsActivity.class);
+   			startActivityForResult(settingIntent, REQUEST_SET_PREFERENCE);
+   			return true;
+   		case R.id.information:
+   			// Show information
+   			Intent infoIntent = new Intent(this, InformationActivity.class);
+   			startActivityForResult(infoIntent, REQUEST_SHOW_INFOMATION);
    			return true;
     	}
     	return false;

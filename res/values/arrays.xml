@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="mode_list_entries">
+        <item >@string/touch_pad_mode</item>
+        <item >@string/motion_mode</item>
+    </string-array>
+
+    
+</resources>
