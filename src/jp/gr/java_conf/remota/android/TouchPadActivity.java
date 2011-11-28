@@ -2,6 +2,7 @@ package jp.gr.java_conf.remota.android;
 
 import android.app.Activity;
 import android.content.SharedPreferences;
+import android.content.pm.ActivityInfo;
 import android.graphics.PointF;
 import android.inputmethodservice.Keyboard;
 import android.inputmethodservice.KeyboardView;
@@ -36,6 +37,14 @@ public class TouchPadActivity extends Activity implements View.OnTouchListener {
 		SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
 		if (sp.getBoolean(getString(R.string.fullscreen_key), false)) {
 			getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
+		}
+		
+		// Set the screen orientation
+		String orientation = sp.getString(getString(R.string.orientation_key), getString(R.string.orientation_system));
+		if (orientation.equals(getString(R.string.orientation_portrait))) {
+			setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+		} else if (orientation.equals(getString(R.string.orientation_landscape))) {
+			setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 		}
 
 		mTouchPadView = new TouchPadView(this);

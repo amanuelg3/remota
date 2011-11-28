@@ -19,10 +19,16 @@
     <string name="touch_pad_mode">Touch Pad Mode</string>
     <string name="motion_mode">Motion Mode</string>
     
+    <string name="orientation_portrait">Portrait</string>
+    <string name="orientation_landscape">Landscape</string>
+    <string name="orientation_system">Depend on the system setting</string>
+    
     <string name="pref_mode">Mode</string>
     <string name="pref_mode_summery">Select a user interface mode: the Touch Pad mode, the Motion mode like Wii Motion Plus</string>
     <string name="pref_fullscreen">Full Screen</string>
     <string name="pref_fullscreen_summery">Set the full screen flag</string>
+    <string name="pref_orientation">Screen orientation</string>
+    <string name="pref_orientation_summery">Set the screen orientation: portrait/landscape/depend on the system setting</string>
     
     <string name="help_introduction">
        &lt;h1>Introduction&lt;/h1>
