@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="hello">This is a remote touch application which can be used as an air mouse and keyboard.</string>
+    <string name="hello">This is an application which can be used as an air mouse and an air keyboard. First, go "help" menu item.</string>
     <string name="app_name">Remota</string>
     <string name="make_discoverable">Make discoverable</string>
     <string name="none_paired">No devices have been paired</string>
@@ -15,8 +15,43 @@
     <string name="information">Information</string>
     <string name="help">Help</string>
     <string name="support_url">http://hogehoge.com</string>
+    
     <string name="touch_pad_mode">Touch Pad Mode</string>
     <string name="motion_mode">Motion Mode</string>
+    
     <string name="pref_mode">Mode</string>
-    <string name="pref_mode_summery">Select user interfaces: the Touch Pad mode, the Motion mode like Wii Motion Plus</string>
+    <string name="pref_mode_summery">Select a user interface mode: the Touch Pad mode, the Motion mode like Wii Motion Plus</string>
+    <string name="pref_fullscreen">Full Screen</string>
+    <string name="pref_fullscreen_summery">Set the full screen flag</string>
+    
+    <string name="help_introduction">
+       &lt;h1>Introduction&lt;/h1>
+		Remota is an application which can be used as an air mouse and an air keyboard.
+		You can remote control your host PC with simple user interfaces like a touch pad or Wii motion plus.
+    </string>
+    <string name="help_first_use">
+        &lt;h1>For first use&lt;/h1>
+        For first use, you need preparation. Please go to the menu Help.
+    </string>
+    <string name="help_requirements">
+		&lt;h1>Requirements&lt;/h1>
+		&lt;ul>
+		&lt;li>A Bluetooth dongle on your host PC&lt;/li>
+		&lt;li>A host application on your host PC&lt;/li>
+		&lt;/ul>
+		
+		Remota runs on the Bluetooth Serial Port Profile(SPP), so you need a Bluetooth dongle.
+		Packets from your phone to your host PC go on the Bluetooth serial port as general data,
+		so your host PC needs a application for analyze this data.
+    </string>
+    <string name="help_preparation">	
+		&lt;h1>Preparation&lt;/h1>
+		First, you need pairing your mobile phone to your host PC with following steps.
+		
+		Second, install the host application from following URL to your host PC.
+    </string>
+    <string name="help_how_to_use">
+		&lt;h1>How to use&lt;/h1>
+    </string> 
 </resources>
+
