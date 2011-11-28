@@ -1,14 +1,17 @@
 package jp.gr.java_conf.remota.android;
 
 import android.app.Activity;
+import android.content.SharedPreferences;
 import android.graphics.PointF;
 import android.inputmethodservice.Keyboard;
 import android.inputmethodservice.KeyboardView;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
+import android.view.WindowManager;
 
 /**
  * 
@@ -30,7 +33,10 @@ public class TouchPadActivity extends Activity implements View.OnTouchListener {
 		if(DBG) Log.i(TAG, "+++ ON CREATE +++");
 		
 		// To full screen
-		//getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
+		SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
+		if (sp.getBoolean(getString(R.string.fullscreen_key), false)) {
+			getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
+		}
 
 		mTouchPadView = new TouchPadView(this);
 		Keyboard keyboard = new Keyboard(this, R.xml.qwerty);

@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.webkit.WebView;
 import android.widget.Toast;
 
 /** 
@@ -36,6 +37,7 @@ public class Remota extends Activity {
 	private static final int REQUEST_VIEW_TOUCH_PAD   = 3;
 	private static final int REQUEST_SET_PREFERENCE  = 4;
 	private static final int REQUEST_SHOW_INFOMATION  = 5;
+	private static final int REQUEST_SHOW_HELP        = 6;
 	
 	// Key names received from the BluetoothChatService Handler
 	public static final String DEVICE_NAME = "device_name";
@@ -81,7 +83,18 @@ public class Remota extends Activity {
     	if(DBG) Log.i(TAG, "+++ ON CREATE +++");
         
     	// Set up the window layout
-    	setContentView(R.layout.main);
+    	//setContentView(R.layout.main);
+    	
+    	WebView webView = new WebView(this);
+		String html = 
+			"<html><head><body bgcolor=\"black\" text=\"white\">" +
+			getString(R.string.help_introduction) +
+			getString(R.string.help_first_use) +
+			getString(R.string.help_how_to_use) +
+			"</body></head></html>";
+		webView.loadData(html, "text/html", "UTF-8");
+		
+		setContentView(webView);
         
     	// Get the local bluetooth adapter
     	mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
@@ -224,6 +237,10 @@ public class Remota extends Activity {
    			Intent infoIntent = new Intent(this, InformationActivity.class);
    			startActivityForResult(infoIntent, REQUEST_SHOW_INFOMATION);
    			return true;
+   		case R.id.help:
+   			// Show help
+   			Intent helpIntent = new Intent(this, HelpActivity.class);
+   			startActivityForResult(helpIntent, REQUEST_SHOW_HELP);
     	}
     	return false;
 	}

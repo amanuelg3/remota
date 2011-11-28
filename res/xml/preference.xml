@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
     <ListPreference android:entryValues="@array/mode_list_entries" android:entries="@array/mode_list_entries" android:key="@string/mode_key" android:defaultValue="@string/touch_pad_mode" android:title="@string/pref_mode" android:summary="@string/pref_mode_summery"/>
+    <CheckBoxPreference android:key="@string/fullscreen_key" android:defaultValue="false" android:summary="@string/pref_fullscreen_summery" android:title="@string/pref_fullscreen"/>
 
     
 

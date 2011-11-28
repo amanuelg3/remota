@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="mode_key">MODE_KEY</string>
+    <string name="fullscreen_key">FULLSCREEN_KEY</string>
 
     
 </resources>
