@@ -178,6 +178,12 @@ public class TouchPadActivity extends Activity implements View.OnTouchListener {
 								new MouseEvent(MouseEvent.FLAG_MOVE, (int)x, (int)y)
 						);
 					}
+				} else if (TouchPadView.pointFIsInRectF(point, mTouchPadView.getScrollBarRectF())) {
+					if (mTouchState.getScrollBarState() == id) {
+						service.sendMouseEvent(
+								new MouseEvent(MouseEvent.FLAG_WHELL, (int)x, (int)y)
+						);
+					}
 				}
 			}
 		

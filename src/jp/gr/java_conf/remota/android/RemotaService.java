@@ -38,6 +38,9 @@ public class RemotaService {
 		UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
     	// HID
     	//UUID.fromString("00001124-0000-1000-8000-00805F9B34FB");
+	
+	// End Of Frame
+	private static final int EOF = 0xC1;
     
 	// Constants that indicate the current state
 	public static final int STATE_IDLE = 0;       // now nothing to do
@@ -231,6 +234,8 @@ public class RemotaService {
 				out.write(mouseEvent.getFlag());
 				out.write(mouseEvent.getX());
 				out.write(mouseEvent.getY());
+				out.write(EOF);
+				
 				byte[] buffer = bout.toByteArray();
 			
 				mConnectedThread.write(buffer);
