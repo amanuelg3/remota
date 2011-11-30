@@ -1,6 +1,11 @@
 package jp.gr.java_conf.remota.android;
 
 import android.app.Activity;
+import android.bluetooth.BluetoothDevice;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.graphics.PointF;
@@ -26,6 +31,19 @@ public class TouchPadActivity extends Activity implements View.OnTouchListener {
 	private TouchPadView mTouchPadView;
 	private KeyboardView mKeyboardView;
 	private TouchState mTouchState;
+	
+	// The BroadcastReceiver that listens for disconnection
+	private final BroadcastReceiver mReceiver = new BroadcastReceiver() {
+		@Override
+		public void onReceive(Context context, Intent intent) {
+			String action = intent.getAction();
+			
+			if (BluetoothDevice.ACTION_ACL_DISCONNECTED.equals(action)) {
+				Log.d(TAG, "disconnect!");
+				TouchPadActivity.this.finish();
+			}
+		}
+	};
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +79,10 @@ public class TouchPadActivity extends Activity implements View.OnTouchListener {
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(mTouchPadView);
 		//setContentView(mKeyboardView);
+		
+		// Register for broadcasts when device is disconnected
+		IntentFilter filter = new IntentFilter(BluetoothDevice.ACTION_ACL_DISCONNECTED);
+		registerReceiver(mReceiver, filter);
 		
 		setResult(Activity.RESULT_OK);
 	}
