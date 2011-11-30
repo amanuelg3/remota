@@ -39,7 +39,7 @@ public class TouchPadActivity extends Activity implements View.OnTouchListener {
 			String action = intent.getAction();
 			
 			if (BluetoothDevice.ACTION_ACL_DISCONNECTED.equals(action)) {
-				Log.d(TAG, "disconnect!");
+				if (DBG) Log.d(TAG, "disconnect!");
 				TouchPadActivity.this.finish();
 			}
 		}
@@ -49,7 +49,7 @@ public class TouchPadActivity extends Activity implements View.OnTouchListener {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		
-		if(DBG) Log.i(TAG, "+++ ON CREATE +++");
+		if (DBG) Log.i(TAG, "+++ ON CREATE +++");
 		
 		// To full screen
 		SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
