@@ -5,22 +5,25 @@ package jp.gr.java_conf.remota.android;
  */
 public class MouseEvent extends InputEvent {
 	// Constants that indicate the mouse event flags
-	public static final int FLAG_MOVE = 0x01;
-	public static final int FLAG_WHELL = 0x80;
-	public static final int FLAG_LEFT_UP = 0x04;
-	public static final int FLAG_LEFT_DOWN = 0x02;
-	public static final int FLAG_RIGHT_UP = 0x10;
-	public static final int FLAG_RIGHT_DOWN = 0x08;
-	public static final int FLAG_MIDDLE_UP = 0x40;
-	public static final int FLAG_MIDDLE_DOWN = 0x20;
-	public static final int FLAG_X_UP = 0x200;
-	public static final int FLAG_X_DOWN = 0x100;
-	public static final int FLAG_ABSOLUTE = 0x8000;
+	public static final int FLAG_MOVE        = 0x0001;
+	public static final int FLAG_WHELL       = 0x0800;
+	public static final int FLAG_LEFT_UP     = 0x0004;
+	public static final int FLAG_LEFT_DOWN   = 0x0002;
+	public static final int FLAG_RIGHT_UP    = 0x0010;
+	public static final int FLAG_RIGHT_DOWN  = 0x0008;
+	public static final int FLAG_MIDDLE_UP   = 0x0040;
+	public static final int FLAG_MIDDLE_DOWN = 0x0020;
+	public static final int FLAG_X_UP        = 0x0100;
+	public static final int FLAG_X_DOWN      = 0x0080;
+	public static final int FLAG_ABSOLUTE    = 0x8000;
+	public static final int FLAG_VIRTUALDESK = 0x4000;
+	public static final int FLAG_HWHEEL      = 0x1000;
 	
 	// Member fields
 	private int mFlag;
 	private int mX;
 	private int mY;
+	private int mWheel;
 	
 	/**
 	 * 
@@ -28,11 +31,12 @@ public class MouseEvent extends InputEvent {
 	 * @param x 
 	 * @param y
 	 */
-	public MouseEvent(int flag, int x, int y) {
+	public MouseEvent(int flag, int x, int y, int wheel) {
 		super(InputEvent.TYPE_MOUSE);
 		mFlag = flag;
 		mX = x;
 		mY = y;
+		mWheel = wheel;
 	}
 
 	/**
@@ -57,5 +61,13 @@ public class MouseEvent extends InputEvent {
 	 */
 	public int getY() {
 		return mY;
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public int getWheel() {
+		return mWheel;
 	}
 }

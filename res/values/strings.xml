@@ -43,12 +43,12 @@
 		&lt;h1>Requirements&lt;/h1>
 		&lt;ul>
 		&lt;li>A Bluetooth dongle on your host PC&lt;/li>
-		&lt;li>A host application on your host PC&lt;/li>
+		&lt;li>An application on your host PC&lt;/li>
 		&lt;/ul>
 		
 		Remota runs on the Bluetooth Serial Port Profile(SPP), so you need a Bluetooth dongle.
 		Packets from your phone to your host PC go on the Bluetooth serial port as general data,
-		so your host PC needs a application for analyze this data.
+		so your host PC needs an application for analyze this data.
     </string>
     <string name="help_preparation">	
 		&lt;h1>Preparation&lt;/h1>

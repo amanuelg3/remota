@@ -17,6 +17,10 @@ public class TouchState {
 	private int mKeyboardButtonState = NOT_PRESSED;
 	private int mMovePadState        = NOT_PRESSED;
 	
+	private int mPrevX;
+	private int mPrevY;
+	private int mPrevWheelY;
+	
 	private TouchState() {
 		
 	}
@@ -112,4 +116,53 @@ public class TouchState {
 	public synchronized void setMovePadState(int state) {
 		mMovePadState = state;
 	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public int getPrevX() {
+		return mPrevX;
+	}
+	
+	/**
+	 * 
+	 * @param prevX
+	 */
+	public synchronized void setPrevX(int prevX) {
+		mPrevX = prevX;
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public int getPrevY() {
+		return mPrevY;
+	}
+	
+	/**
+	 * 
+	 * @param prevY
+	 */
+	public synchronized void setPrevY(int prevY) {
+		mPrevY = prevY;
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public int getPrevWheelY() {
+		return mPrevWheelY;
+	}
+	
+	/**
+	 * 
+	 * @param prevY
+	 */
+	public synchronized void setPrevWheelY(int prevWheelY) {
+		mPrevWheelY = prevWheelY;
+	}
+
 }

@@ -21,9 +21,9 @@ public class TouchPadView extends SurfaceView implements SurfaceHolder.Callback 
 	private static final boolean DBG = true;
 	
 	// Constants
-	private static final float BUTTON_HEIGHT_RATIO = 0.2f;
-	private static final float SCROLLBAR_WIDTH_RATIO = 0.08f;
-	private static final float KEYBOARD_BUTTON_HEIGHT_RATIO = 0.05f;
+	private static final float BUTTON_HEIGHT_RATIO = 0.25f;
+	private static final float SCROLLBAR_WIDTH_RATIO = 0.10f;
+	private static final float KEYBOARD_BUTTON_HEIGHT_RATIO = 0.10f;
 	
 	// Member fields
 	private float mCanvasHeight = 0.0f;

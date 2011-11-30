@@ -231,9 +231,10 @@ public class RemotaService {
 			DataOutputStream out = new DataOutputStream(bout);
 			try{
 				out.writeShort(mouseEvent.getType());
-				out.writeShort(mouseEvent.getFlag());
+				out.writeInt(mouseEvent.getFlag());
 				out.writeInt(mouseEvent.getX());
 				out.writeInt(mouseEvent.getY());
+				out.writeInt(mouseEvent.getWheel());
 				out.write(EOF);
 				
 				byte[] buffer = bout.toByteArray();

@@ -77,10 +77,11 @@ public class TouchPadActivity extends Activity implements View.OnTouchListener {
 	public boolean onTouch(View view, MotionEvent event) {
 		if (view == mTouchPadView) {
 			if (DBG) Log.d(TAG, "Pointer count:" + event.getPointerCount());
-
+			
 			RemotaService service = RemotaService.getInstance();
 			int c = event.getPointerCount();
-			float x, y;
+			int x, y;
+			float fx, fy;
 			int id, action, actionMasked, actionId;
 			String str = "";
 		
@@ -102,11 +103,13 @@ public class TouchPadActivity extends Activity implements View.OnTouchListener {
 						", history:" + event.getHistorySize()
 				);
 			}
-		
-			x = event.getX(actionId);
-			y = event.getY(actionId);
+
+			fx = event.getX(actionId);
+			fy = event.getY(actionId);
+			x = (int)(fx * event.getXPrecision());
+			y = (int)(fy * event.getYPrecision());
 			id = event.getPointerId(actionId);
-			PointF point = new PointF(x, y);
+			PointF point = new PointF(fx, fy);
 
 			// Check whether a button is down or up.
 			if (actionMasked == MotionEvent.ACTION_DOWN ||
@@ -116,22 +119,20 @@ public class TouchPadActivity extends Activity implements View.OnTouchListener {
 					if (mTouchState.getLeftButtonState() == TouchState.NOT_PRESSED) {
 						mTouchState.setLeftButtonState(id);
 						service.sendMouseEvent(
-								new MouseEvent(MouseEvent.FLAG_LEFT_DOWN, (int)x, (int)y)
+								new MouseEvent(MouseEvent.FLAG_LEFT_DOWN, 0, 0, 0)
 						);
 					}
 				} else if (TouchPadView.pointFIsInRectF(point, mTouchPadView.getRightButtonRectF())) {
 					if (mTouchState.getRightButtonState() == TouchState.NOT_PRESSED) {
 						mTouchState.setRightButtonState(id);
 						service.sendMouseEvent(
-								new MouseEvent(MouseEvent.FLAG_RIGHT_DOWN, (int)x, (int)y)
+								new MouseEvent(MouseEvent.FLAG_RIGHT_DOWN, 0, 0, 0)
 						);
 					}
 				} else if (TouchPadView.pointFIsInRectF(point, mTouchPadView.getScrollBarRectF())) { 
 					if (mTouchState.getScrollBarState() == TouchState.NOT_PRESSED) {
 						mTouchState.setScrollBarState(id);
-						service.sendMouseEvent(
-								new MouseEvent(MouseEvent.FLAG_WHELL, (int)x, (int)y)
-						);
+						mTouchState.setPrevWheelY(y);
 					}
 				} else if (TouchPadView.pointFIsInRectF(point, mTouchPadView.getKeyboardButtonRectF())) { 
 					if (mTouchState.getKeyboardButtonState() == TouchState.NOT_PRESSED) {
@@ -140,9 +141,8 @@ public class TouchPadActivity extends Activity implements View.OnTouchListener {
 				} else if (TouchPadView.pointFIsInRectF(point, mTouchPadView.getTouchPadRectF())) {
 					if (mTouchState.getMovePadState() == TouchState.NOT_PRESSED) {
 						mTouchState.setMovePadState(id);
-						service.sendMouseEvent(
-								new MouseEvent(MouseEvent.FLAG_MOVE, (int)x, (int)y)
-						);
+						mTouchState.setPrevX(x);
+						mTouchState.setPrevY(y);
 					}
 				}
 			} else if (actionMasked == MotionEvent.ACTION_UP ||
@@ -151,38 +151,45 @@ public class TouchPadActivity extends Activity implements View.OnTouchListener {
 				if (mTouchState.getLeftButtonState()== id) {
 					mTouchState.setLeftButtonState(TouchState.NOT_PRESSED);
 					service.sendMouseEvent(
-							new MouseEvent(MouseEvent.FLAG_LEFT_UP, (int)x, (int)y)
+							new MouseEvent(MouseEvent.FLAG_LEFT_UP, 0, 0, 0)
 					);
 				} else if (mTouchState.getRightButtonState() == id) {
 					mTouchState.setRightButtonState(TouchState.NOT_PRESSED);
 					service.sendMouseEvent(
-							new MouseEvent(MouseEvent.FLAG_RIGHT_UP, (int)x, (int)y)
+							new MouseEvent(MouseEvent.FLAG_RIGHT_UP, 0, 0, 0)
 					);
 				} else if (mTouchState.getScrollBarState() == id) {
 					mTouchState.setScrollBarState(TouchState.NOT_PRESSED);
-					service.sendMouseEvent(
-							new MouseEvent(MouseEvent.FLAG_WHELL, (int)x, (int)y)
-					);
 				} else	if (mTouchState.getKeyboardButtonState() == id) {
 					mTouchState.setKeyboardButtonState(TouchState.NOT_PRESSED);
 				} else if (mTouchState.getMovePadState() == id) {
 					mTouchState.setMovePadState(TouchState.NOT_PRESSED);
-					service.sendMouseEvent(
-							new MouseEvent(MouseEvent.FLAG_MOVE, (int)x, (int)y)
-					);
 				}
 			} else if (actionMasked == MotionEvent.ACTION_MOVE) {
 				if (TouchPadView.pointFIsInRectF(point, mTouchPadView.getTouchPadRectF())) {
 					if (mTouchState.getMovePadState() == id) {
 						service.sendMouseEvent(
-								new MouseEvent(MouseEvent.FLAG_MOVE, (int)x, (int)y)
+								new MouseEvent(
+										MouseEvent.FLAG_MOVE,
+										x - mTouchState.getPrevX(),
+										y - mTouchState.getPrevY(),
+										0
+								)
 						);
+						mTouchState.setPrevX(x);
+						mTouchState.setPrevY(y);
 					}
 				} else if (TouchPadView.pointFIsInRectF(point, mTouchPadView.getScrollBarRectF())) {
 					if (mTouchState.getScrollBarState() == id) {
 						service.sendMouseEvent(
-								new MouseEvent(MouseEvent.FLAG_WHELL, (int)x, (int)y)
+								new MouseEvent(
+										MouseEvent.FLAG_WHELL,
+										0, 
+										0, 
+										y - mTouchState.getPrevWheelY()
+								)
 						);
+						mTouchState.setPrevWheelY(y);
 					}
 				}
 			}
@@ -190,8 +197,8 @@ public class TouchPadActivity extends Activity implements View.OnTouchListener {
 			// For debugging
 			float hx, hy;
 			for (int i = 0; i < c; i++){
-				x = event.getX(i);
-				y = event.getY(i);
+				fx = event.getX(i);
+				fy = event.getY(i);
 				id = event.getPointerId(i);
 				point = new PointF(x, y);
 			
@@ -210,8 +217,8 @@ public class TouchPadActivity extends Activity implements View.OnTouchListener {
 				
 				if (DBG) {
 					Log.d(TAG, 
-							"X" + i + ":" + x +
-							",Y" + i + ":" + y +
+							"X" + i + ":" + fx +
+							",Y" + i + ":" + fy +
 							", id:" + id +
 							"," + str);
 				}
