@@ -37,7 +37,7 @@
     </string>
     <string name="help_first_use">
         &lt;h1>For first use&lt;/h1>
-        For first use, you need preparation. Please go to the menu Help.
+        For first use, you need some preparations. Please go to the Help page.
     </string>
     <string name="help_requirements">
 		&lt;h1>Requirements&lt;/h1>
@@ -47,14 +47,14 @@
 		&lt;/ul>
 		
 		Remota runs on the Bluetooth Serial Port Profile(SPP), so you need a Bluetooth dongle.
-		Packets from your phone to your host PC go on the Bluetooth serial port as general data,
+		Packets from your phone to your host PC go on a Bluetooth serial port as general data,
 		so your host PC needs an application for analyze this data.
     </string>
-    <string name="help_preparation">	
-		&lt;h1>Preparation&lt;/h1>
-		First, you need pairing your mobile phone to your host PC with following steps.
+    <string name="help_preparations">
+		&lt;h1>Preparations&lt;/h1>
+		First, you need pairing your mobile phone to your host PC with the following steps.
 		
-		Second, install the host application from following URL to your host PC.
+		Second, install the host application from the following URL to your host PC.
     </string>
     <string name="help_how_to_use">
 		&lt;h1>How to use&lt;/h1>
