@@ -35,7 +35,7 @@ public class Remota extends Activity {
 	private static final int REQUEST_ENABLE_BLUETOOTH = 1;
 	private static final int REQUEST_CONNECT_DEVICE   = 2;
 	private static final int REQUEST_VIEW_TOUCH_PAD   = 3;
-	private static final int REQUEST_SET_PREFERENCE  = 4;
+	private static final int REQUEST_SET_PREFERENCE   = 4;
 	private static final int REQUEST_SHOW_INFOMATION  = 5;
 	private static final int REQUEST_SHOW_HELP        = 6;
 	
@@ -105,7 +105,7 @@ public class Remota extends Activity {
     		finish();
         	return;
     	} else {
-    		mBluetoothAdapter.setName(getResources().getText(R.string.app_name).toString() + Build.MODEL);
+    		//mBluetoothAdapter.setName(getResources().getText(R.string.app_name).toString() + Build.MODEL);
     	}
 
 	}
