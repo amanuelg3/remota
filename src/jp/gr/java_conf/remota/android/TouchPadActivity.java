@@ -9,8 +9,6 @@ import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.graphics.PointF;
-import android.inputmethodservice.Keyboard;
-import android.inputmethodservice.KeyboardView;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
@@ -25,11 +23,13 @@ import android.view.WindowManager;
 public class TouchPadActivity extends Activity implements View.OnTouchListener {
 	// Debugging
 	private static final String TAG = "TouchPadActivity";
-	private static final boolean DBG = true;
+	private static final boolean DBG = false;
+	
+	// Intent request codes
+	private static final int REQUEST_SHOW_KEYBOARD = 1;
 	
 	// Member fields
 	private TouchPadView mTouchPadView;
-	private KeyboardView mKeyboardView;
 	private TouchState mTouchState;
 	
 	// The BroadcastReceiver that listens for disconnection
@@ -66,9 +66,6 @@ public class TouchPadActivity extends Activity implements View.OnTouchListener {
 		}
 
 		mTouchPadView = new TouchPadView(this);
-		Keyboard keyboard = new Keyboard(this, R.xml.qwerty);
-		mKeyboardView = new KeyboardView(this, null);
-		mKeyboardView.setKeyboard(keyboard);
 		
 		mTouchState = TouchState.getInstance();
 
@@ -78,7 +75,6 @@ public class TouchPadActivity extends Activity implements View.OnTouchListener {
 		// Set up the window layout
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(mTouchPadView);
-		//setContentView(mKeyboardView);
 		
 		// Register for broadcasts when device is disconnected
 		IntentFilter filter = new IntentFilter(BluetoothDevice.ACTION_ACL_DISCONNECTED);
@@ -87,7 +83,8 @@ public class TouchPadActivity extends Activity implements View.OnTouchListener {
 		setResult(Activity.RESULT_OK);
 	}
 	
-	@Override	protected void onDestroy() {
+	@Override
+	protected void onDestroy() {
 		super.onDestroy();
         
 		if(DBG) Log.i(TAG, "+++ ON DESTROY +++");
@@ -133,10 +130,11 @@ public class TouchPadActivity extends Activity implements View.OnTouchListener {
 			id = event.getPointerId(actionId);
 			PointF point = new PointF(fx, fy);
 
-			// Check whether a button is down or up.
+			// Check whether a touch down event occurs 
 			if (actionMasked == MotionEvent.ACTION_DOWN ||
 					actionMasked == MotionEvent.ACTION_POINTER_1_DOWN ||
 					actionMasked == MotionEvent.ACTION_POINTER_DOWN) {
+				// Check where the touch down event occurs
 				if (TouchPadView.pointFIsInRectF(point, mTouchPadView.getLeftButtonRectF())) {
 					if (mTouchState.getLeftButtonState() == TouchState.NOT_PRESSED) {
 						mTouchState.setLeftButtonState(id);
@@ -158,7 +156,9 @@ public class TouchPadActivity extends Activity implements View.OnTouchListener {
 					}
 				} else if (TouchPadView.pointFIsInRectF(point, mTouchPadView.getKeyboardButtonRectF())) { 
 					if (mTouchState.getKeyboardButtonState() == TouchState.NOT_PRESSED) {
-						mTouchState.setKeyboardButtonState(id);
+						//mTouchState.setKeyboardButtonState(id);
+						Intent intent = new Intent(this, KeyboardActivity.class);
+						startActivityForResult(intent, REQUEST_SHOW_KEYBOARD);
 					}
 				} else if (TouchPadView.pointFIsInRectF(point, mTouchPadView.getTouchPadRectF())) {
 					if (mTouchState.getMovePadState() == TouchState.NOT_PRESSED) {
@@ -167,9 +167,11 @@ public class TouchPadActivity extends Activity implements View.OnTouchListener {
 						mTouchState.setPrevY(y);
 					}
 				}
+			// Check whether a touch up event occurs
 			} else if (actionMasked == MotionEvent.ACTION_UP ||
 					actionMasked == MotionEvent.ACTION_POINTER_1_UP ||
 					actionMasked == MotionEvent.ACTION_POINTER_UP) {
+				// Check where the touch up event occurs
 				if (mTouchState.getLeftButtonState()== id) {
 					mTouchState.setLeftButtonState(TouchState.NOT_PRESSED);
 					service.sendMouseEvent(
@@ -187,32 +189,29 @@ public class TouchPadActivity extends Activity implements View.OnTouchListener {
 				} else if (mTouchState.getMovePadState() == id) {
 					mTouchState.setMovePadState(TouchState.NOT_PRESSED);
 				}
+			// Check whether a touch move event occurs
 			} else if (actionMasked == MotionEvent.ACTION_MOVE) {
-				if (TouchPadView.pointFIsInRectF(point, mTouchPadView.getTouchPadRectF())) {
-					if (mTouchState.getMovePadState() == id) {
-						service.sendMouseEvent(
-								new MouseEvent(
-										MouseEvent.FLAG_MOVE,
-										x - mTouchState.getPrevX(),
-										y - mTouchState.getPrevY(),
-										0
-								)
-						);
-						mTouchState.setPrevX(x);
-						mTouchState.setPrevY(y);
-					}
-				} else if (TouchPadView.pointFIsInRectF(point, mTouchPadView.getScrollBarRectF())) {
-					if (mTouchState.getScrollBarState() == id) {
-						service.sendMouseEvent(
-								new MouseEvent(
-										MouseEvent.FLAG_WHELL,
-										0, 
-										0, 
-										y - mTouchState.getPrevWheelY()
-								)
-						);
-						mTouchState.setPrevWheelY(y);
-					}
+				if (mTouchState.getMovePadState() == id) {
+					service.sendMouseEvent(
+							new MouseEvent(
+									MouseEvent.FLAG_MOVE,
+									x - mTouchState.getPrevX(),
+									y - mTouchState.getPrevY(),
+									0
+							)
+					);
+					mTouchState.setPrevX(x);
+					mTouchState.setPrevY(y);
+				} else if (mTouchState.getScrollBarState() == id) {
+					service.sendMouseEvent(
+							new MouseEvent(
+									MouseEvent.FLAG_WHELL,
+									0, 
+									0, 
+									-(y - mTouchState.getPrevWheelY())
+							)
+					);
+					mTouchState.setPrevWheelY(y);
 				}
 			}
 		
@@ -259,5 +258,10 @@ public class TouchPadActivity extends Activity implements View.OnTouchListener {
 		
 		mTouchPadView.doDraw(mTouchPadView.getHolder());
 		return true;
+	}
+	
+	@Override
+	public void onActivityResult(int requestCode, int resultCode, Intent data) {
+		if (DBG) Log.i(TAG, "+++ ON ACTIVITY RESULT +++ :" + resultCode);
 	}
 }

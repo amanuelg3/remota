@@ -245,7 +245,26 @@ public class RemotaService {
 			}
 		}
 	}
-    
+	
+	public void sendKeyboardEvent(KeyboardEvent keyboardEvent) {
+		if (mState == STATE_CONNECTED) {
+			ByteArrayOutputStream bout = new ByteArrayOutputStream();
+			DataOutputStream out = new DataOutputStream(bout);
+			try{
+				out.writeShort(keyboardEvent.getType());
+				out.writeInt(keyboardEvent.getFlag());
+				out.writeInt(keyboardEvent.getScanCode());
+				out.write(EOF);
+				
+				byte[] buffer = bout.toByteArray();
+				
+				mConnectedThread.write(buffer);
+			} catch (IOException e) {
+				Log.e(TAG, "SendKeyboardEvent:", e);
+			}
+		}
+	}
+
     /**
      * Indicate that the connection attempt failed and notify the UI Activity.
      */

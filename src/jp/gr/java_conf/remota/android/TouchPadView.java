@@ -177,13 +177,17 @@ public class TouchPadView extends SurfaceView implements SurfaceHolder.Callback 
 			shader = new LinearGradient(
 					rectf.left, rectf.top, 
 					rectf.left, rectf.bottom,
-					Color.DKGRAY, Color.BLACK, TileMode.REPEAT
+					getResources().getColor(R.color.button0),
+					getResources().getColor(R.color.button1),
+					TileMode.REPEAT
 			);
 		} else {
 			shader = new LinearGradient(
 					rectf.left, rectf.top, 
 					rectf.left, rectf.bottom,
-					Color.BLACK, Color.DKGRAY, TileMode.REPEAT
+					getResources().getColor(R.color.button1),
+					getResources().getColor(R.color.button0),
+					TileMode.REPEAT
 			);
 		}
 		paint.setShader(shader);
@@ -202,13 +206,17 @@ public class TouchPadView extends SurfaceView implements SurfaceHolder.Callback 
 			shader = new LinearGradient(
 					rectf.left, rectf.top, 
 					rectf.left, rectf.bottom,
-					Color.DKGRAY, Color.BLACK, TileMode.REPEAT
+					getResources().getColor(R.color.button0),
+					getResources().getColor(R.color.button1),
+					TileMode.REPEAT
 			);
 		} else {
 			shader = new LinearGradient(
 					rectf.left, rectf.top, 
 					rectf.left, rectf.bottom,
-					Color.BLACK, Color.DKGRAY, TileMode.REPEAT
+					getResources().getColor(R.color.button1), 
+					getResources().getColor(R.color.button0),
+					TileMode.REPEAT
 			);
 		}
 		paint.setShader(shader);
@@ -227,13 +235,17 @@ public class TouchPadView extends SurfaceView implements SurfaceHolder.Callback 
 			shader = new LinearGradient(
 					rectf.left, rectf.top, 
 					rectf.left, rectf.bottom / 2.0f,
-					Color.BLACK, Color.DKGRAY, TileMode.MIRROR
+					getResources().getColor(R.color.button1),
+					getResources().getColor(R.color.button0),
+					TileMode.MIRROR
 			);
 		} else {
 			shader = new LinearGradient(
 					rectf.left, rectf.top, 
 					rectf.left, rectf.bottom / 2.0f,
-					Color.DKGRAY, Color.BLACK, TileMode.MIRROR
+					getResources().getColor(R.color.button0), 
+					getResources().getColor(R.color.button1),
+					TileMode.MIRROR
 			);
 		}
 		paint.setShader(shader);
@@ -252,13 +264,17 @@ public class TouchPadView extends SurfaceView implements SurfaceHolder.Callback 
 			shader = new LinearGradient(
 					rectf.left, rectf.top, 
 					rectf.left, rectf.bottom,
-					Color.DKGRAY, Color.BLACK, TileMode.REPEAT
+					getResources().getColor(R.color.button0),
+					getResources().getColor(R.color.button1),
+					TileMode.REPEAT
 			);
 		} else {
 			shader = new LinearGradient(
 					rectf.left, rectf.top, 
 					rectf.left, rectf.bottom,
-					Color.BLACK, Color.DKGRAY, TileMode.REPEAT
+					getResources().getColor(R.color.button1),
+					getResources().getColor(R.color.button0),
+					TileMode.REPEAT
 			);
 		}
 		paint.setShader(shader);
@@ -269,7 +285,7 @@ public class TouchPadView extends SurfaceView implements SurfaceHolder.Callback 
 	// Return the touch pad paint
 	private Paint getTouchPadPaint() {
 		Paint paint = new Paint();
-		paint.setColor(Color.BLACK);
+		paint.setColor(getResources().getColor(R.color.touchpad));
 		paint.setStyle(Paint.Style.FILL);
 		
 		return paint;
@@ -278,7 +294,7 @@ public class TouchPadView extends SurfaceView implements SurfaceHolder.Callback 
 	// Return the stroke paint
 	private Paint getStrokePaint() {
 		Paint paint = new Paint();
-		paint.setColor(Color.DKGRAY);
+		paint.setColor(getResources().getColor(R.color.stroke));
 		paint.setStyle(Paint.Style.STROKE);
 		paint.setStrokeWidth(2.0f);
 		
