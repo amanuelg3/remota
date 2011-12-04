@@ -17,7 +17,7 @@ public class HelpActivity extends Activity {
 			"<html><head><body bgcolor=\"black\" text=\"white\">" + 
 			getString(R.string.help_introduction) +
 			getString(R.string.help_requirements) +
-			getString(R.string.help_preparation) +
+			getString(R.string.help_preparations) +
 			getString(R.string.help_how_to_use) +
 			"</body></head></html>";
 		webView.loadData(html, "text/html", "UTF-8");
