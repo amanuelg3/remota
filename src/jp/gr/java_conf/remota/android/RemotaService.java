@@ -5,6 +5,7 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.ArrayList;
 import java.util.UUID;
 
 import android.bluetooth.BluetoothAdapter;
@@ -246,20 +247,25 @@ public class RemotaService {
 		}
 	}
 	
-	public void sendKeyboardEvent(KeyboardEvent keyboardEvent) {
+	public void sendKeyboardEvent(ArrayList<KeyboardEvent> keyboardEvents) {
 		if (mState == STATE_CONNECTED) {
 			ByteArrayOutputStream bout = new ByteArrayOutputStream();
 			DataOutputStream out = new DataOutputStream(bout);
 			try{
-				out.writeShort(keyboardEvent.getType());
-				out.writeInt(keyboardEvent.getFlag());
-				out.writeInt(keyboardEvent.getScanCode());
+				out.writeShort(keyboardEvents.get(0).getType());
+				out.writeShort(keyboardEvents.size());
+				for (KeyboardEvent ke : keyboardEvents) {
+					out.writeInt(ke.getFlag());
+					out.writeShort(ke.getScanCode());
+				}
 				out.write(EOF);
 				
 				byte[] buffer = bout.toByteArray();
 				
 				mConnectedThread.write(buffer);
 			} catch (IOException e) {
+				Log.e(TAG, "SendKeyboardEvent:", e);
+			} catch (NullPointerException e) {
 				Log.e(TAG, "SendKeyboardEvent:", e);
 			}
 		}

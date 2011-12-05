@@ -8,6 +8,12 @@ public class KeyboardEvent extends InputEvent {
 	public static final int FLAG_KEYDOWN = 0x0000;
 	public static final int FLAG_kEYUP   = 0x0002;
 	
+	// Constants that indicate the scancode
+	public static final int SCANCODE_SHIFT = 42;
+	public static final int SCANCODE_CTRL  = 29;
+	public static final int SCANCODE_ALT   = 56;
+	public static final int SCANCODE_DONE  = -3;
+	
 	// Member fields
 	private int mFlag;
 	private int mScanCode;
