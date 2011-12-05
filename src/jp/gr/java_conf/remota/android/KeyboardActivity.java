@@ -3,6 +3,11 @@ package jp.gr.java_conf.remota.android;
 import java.util.ArrayList;
 
 import android.app.Activity;
+import android.bluetooth.BluetoothDevice;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.inputmethodservice.Keyboard;
 import android.inputmethodservice.KeyboardView;
 import android.os.Bundle;
@@ -17,6 +22,19 @@ public class KeyboardActivity extends Activity implements KeyboardView.OnKeyboar
 	private Keyboard mKeyboard;
 	private KeyboardView mKeyboardView;
 	
+	// The BroadcastReceiver that listens for disconnection
+	private final BroadcastReceiver mReceiver = new BroadcastReceiver() {
+		@Override
+		public void onReceive(Context context, Intent intent) {
+			String action = intent.getAction();
+			
+			if (BluetoothDevice.ACTION_ACL_DISCONNECTED.equals(action)) {
+				if (DBG) Log.d(TAG, "disconnect!");
+				KeyboardActivity.this.finish();
+			}
+		}
+	};
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -30,6 +48,10 @@ public class KeyboardActivity extends Activity implements KeyboardView.OnKeyboar
 		mKeyboardView.setOnKeyboardActionListener(this);
 		
 		setContentView(mKeyboardView);
+		
+		// Register for broadcasts when device is disconnected
+		IntentFilter filter = new IntentFilter(BluetoothDevice.ACTION_ACL_DISCONNECTED);
+		registerReceiver(mReceiver, filter);
 
 		setResult(Activity.RESULT_OK);
 	}
