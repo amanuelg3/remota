@@ -8,12 +8,13 @@ import android.graphics.RectF;
 import android.graphics.Shader.TileMode;
 
 /** 
- * This is the SurfaceView like a touch pad.
+ * This is the SurfaceView like a gyro mouse.
  */
-public class TouchPadView extends PadView {
+public class MotionPadView extends PadView {
 	// Constants
-	private static final float BUTTON_HEIGHT_RATIO = 0.25f;
-	private static final float SCROLLBAR_WIDTH_RATIO = 0.10f;
+	private static final float BUTTON_WIDTH_RATIO = 0.40f;
+	private static final float SCROLLBAR_WIDTH_RATIO = 0.20f;
+	private static final float SCROLLBAR_HEIGHT_RATIO = 0.30f;
 	private static final float KEYBOARD_BUTTON_HEIGHT_RATIO = 0.10f;
 	
 	/**
@@ -21,7 +22,7 @@ public class TouchPadView extends PadView {
      * @param context
      * @param remotaService
      */
-	public TouchPadView(Context context) {
+	public MotionPadView(Context context) {
 		super(context);
 	}
 	
@@ -31,8 +32,8 @@ public class TouchPadView extends PadView {
 		RectF rectf = new RectF(
 				0.0f,
 				0.0f,
-				mCanvasWidth * (0.5f - (SCROLLBAR_WIDTH_RATIO / 2.0f)),
-				mCanvasHeight * BUTTON_HEIGHT_RATIO
+				mCanvasWidth * BUTTON_WIDTH_RATIO,
+				mCanvasHeight * (1.0f - KEYBOARD_BUTTON_HEIGHT_RATIO)
 		);
 		
 		return rectf;
@@ -42,10 +43,10 @@ public class TouchPadView extends PadView {
 	@Override
 	public RectF getRightButtonRectF() {
 		RectF rectf = new RectF(
-				mCanvasWidth * (0.5f - (SCROLLBAR_WIDTH_RATIO / 2.0f)),
+				mCanvasWidth * (BUTTON_WIDTH_RATIO + SCROLLBAR_WIDTH_RATIO),
 				0.0f,
-				mCanvasWidth * (1.0f - SCROLLBAR_WIDTH_RATIO),
-				mCanvasHeight * BUTTON_HEIGHT_RATIO
+				mCanvasWidth,
+				mCanvasHeight * (1.0f - KEYBOARD_BUTTON_HEIGHT_RATIO)
 		);
 		
 		return rectf;
@@ -55,10 +56,10 @@ public class TouchPadView extends PadView {
 	@Override
 	public RectF getScrollBarRectF() {
 		RectF rectf = new RectF(
-				mCanvasWidth * (1.0f - SCROLLBAR_WIDTH_RATIO),
-				0.0f,
-				mCanvasWidth,
-				mCanvasHeight
+				mCanvasWidth * BUTTON_WIDTH_RATIO,
+				mCanvasHeight * (1.0f - KEYBOARD_BUTTON_HEIGHT_RATIO - SCROLLBAR_HEIGHT_RATIO),
+				mCanvasWidth * (BUTTON_WIDTH_RATIO + SCROLLBAR_WIDTH_RATIO),
+				mCanvasHeight * (1.0f - KEYBOARD_BUTTON_HEIGHT_RATIO)
 		);
 		
 		return rectf;
@@ -70,7 +71,7 @@ public class TouchPadView extends PadView {
 		RectF rectf = new RectF(
 				0.0f,
 				mCanvasHeight * (1.0f - KEYBOARD_BUTTON_HEIGHT_RATIO),
-				mCanvasWidth * (1.0f - SCROLLBAR_WIDTH_RATIO),
+				mCanvasWidth,
 				mCanvasHeight
 		);
 		
@@ -81,10 +82,10 @@ public class TouchPadView extends PadView {
 	@Override
 	public RectF getMovePadRectF() {
 		RectF rectf = new RectF(
-				0.0f,
-				mCanvasHeight * BUTTON_HEIGHT_RATIO,
-				mCanvasWidth * (1.0f - SCROLLBAR_WIDTH_RATIO),
-				mCanvasHeight * (1.0f - KEYBOARD_BUTTON_HEIGHT_RATIO)
+				mCanvasWidth * BUTTON_WIDTH_RATIO,
+				0,
+				mCanvasWidth * (BUTTON_WIDTH_RATIO + SCROLLBAR_WIDTH_RATIO),
+				mCanvasHeight * (1.0f - KEYBOARD_BUTTON_HEIGHT_RATIO - SCROLLBAR_HEIGHT_RATIO)
 		);
 		
 		return rectf;
@@ -102,16 +103,16 @@ public class TouchPadView extends PadView {
 			shader = new LinearGradient(
 					rectf.left, rectf.top, 
 					rectf.left, rectf.bottom,
-					getResources().getColor(R.color.button0),
-					getResources().getColor(R.color.button1),
+					getResources().getColor(R.color.button0_m),
+					getResources().getColor(R.color.button1_m),
 					TileMode.REPEAT
 			);
 		} else {
 			shader = new LinearGradient(
 					rectf.left, rectf.top, 
 					rectf.left, rectf.bottom,
-					getResources().getColor(R.color.button1),
-					getResources().getColor(R.color.button0),
+					getResources().getColor(R.color.button1_m),
+					getResources().getColor(R.color.button0_m),
 					TileMode.REPEAT
 			);
 		}
@@ -132,16 +133,16 @@ public class TouchPadView extends PadView {
 			shader = new LinearGradient(
 					rectf.left, rectf.top, 
 					rectf.left, rectf.bottom,
-					getResources().getColor(R.color.button0),
-					getResources().getColor(R.color.button1),
+					getResources().getColor(R.color.button0_m),
+					getResources().getColor(R.color.button1_m),
 					TileMode.REPEAT
 			);
 		} else {
 			shader = new LinearGradient(
 					rectf.left, rectf.top, 
 					rectf.left, rectf.bottom,
-					getResources().getColor(R.color.button1), 
-					getResources().getColor(R.color.button0),
+					getResources().getColor(R.color.button1_m), 
+					getResources().getColor(R.color.button0_m),
 					TileMode.REPEAT
 			);
 		}
@@ -162,16 +163,16 @@ public class TouchPadView extends PadView {
 			shader = new LinearGradient(
 					rectf.left, rectf.top, 
 					rectf.left, rectf.bottom / 2.0f,
-					getResources().getColor(R.color.button1),
-					getResources().getColor(R.color.button0),
+					getResources().getColor(R.color.button1_m),
+					getResources().getColor(R.color.button0_m),
 					TileMode.MIRROR
 			);
 		} else {
 			shader = new LinearGradient(
 					rectf.left, rectf.top, 
 					rectf.left, rectf.bottom / 2.0f,
-					getResources().getColor(R.color.button0), 
-					getResources().getColor(R.color.button1),
+					getResources().getColor(R.color.button0_m), 
+					getResources().getColor(R.color.button1_m),
 					TileMode.MIRROR
 			);
 		}
@@ -192,16 +193,16 @@ public class TouchPadView extends PadView {
 			shader = new LinearGradient(
 					rectf.left, rectf.top, 
 					rectf.left, rectf.bottom,
-					getResources().getColor(R.color.button0),
-					getResources().getColor(R.color.button1),
+					getResources().getColor(R.color.button0_m),
+					getResources().getColor(R.color.button1_m),
 					TileMode.REPEAT
 			);
 		} else {
 			shader = new LinearGradient(
 					rectf.left, rectf.top, 
 					rectf.left, rectf.bottom,
-					getResources().getColor(R.color.button1),
-					getResources().getColor(R.color.button0),
+					getResources().getColor(R.color.button1_m),
+					getResources().getColor(R.color.button0_m),
 					TileMode.REPEAT
 			);
 		}
@@ -214,8 +215,28 @@ public class TouchPadView extends PadView {
 	@Override
 	public Paint getMovePadPaint() {
 		Paint paint = new Paint();
-		paint.setColor(getResources().getColor(R.color.touchpad));
+		paint.setColor(Color.WHITE);
 		paint.setStyle(Paint.Style.FILL);
+		RectF rectf = getMovePadRectF();
+		LinearGradient shader;
+		if (mTouchState.getMovePadState() == TouchState.NOT_PRESSED) {
+			shader = new LinearGradient(
+					rectf.left, rectf.top, 
+					rectf.left, rectf.bottom / 2.0f,
+					getResources().getColor(R.color.button1_m),
+					getResources().getColor(R.color.button0_m),
+					TileMode.MIRROR
+			);
+		} else {
+			shader = new LinearGradient(
+					rectf.left, rectf.top, 
+					rectf.left, rectf.bottom / 2.0f,
+					getResources().getColor(R.color.button0_m), 
+					getResources().getColor(R.color.button1_m),
+					TileMode.MIRROR
+			);
+		}
+		paint.setShader(shader);
 		
 		return paint;
 	}

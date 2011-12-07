@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
       package="jp.gr.java_conf.remota.android"
-      android:versionCode="00000201"
-      android:versionName="00.02.01" android:installLocation="auto">
+      android:versionCode="00000300"
+      android:versionName="00.03.00" android:installLocation="auto">
       
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
     <uses-permission android:name="android.permission.BLUETOOTH" />
@@ -21,15 +21,18 @@
         </activity>
         <activity android:name="DeviceListActivity" android:label="@string/app_name">
         </activity>
-        <activity android:name="TouchPadActivity" android:label="@string/app_name">
+        <activity android:name="TouchPadActivity" android:label="@string/app_name"
+            android:configChanges="orientation">
         </activity>
         <activity android:name="InformationActivity" android:label="@string/app_name">
         </activity>
-        <activity android:name="SettingsActivity" android:label="@string/app_name">
+        <activity android:name="SettingsActivity" android:label="@string/app_name"
+            android:configChanges="orientation">
         </activity>
         <activity android:name="HelpActivity" android:label="@string/app_name">
         </activity>
         <activity android:name="KeyboardActivity" android:label="@string/app_name"></activity>
+        <activity android:label="@string/app_name" android:name="MotionPadActivity"></activity>
 
     </application>
 </manifest>

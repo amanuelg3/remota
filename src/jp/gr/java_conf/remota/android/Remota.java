@@ -4,11 +4,13 @@ import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -56,8 +58,15 @@ public class Remota extends Activity {
 				if (DBG) Log.i(TAG, "MESSAGE_CONNECTION_STATE_CHANGE: " + msg.arg1);
 				switch (msg.arg1) {
 				case RemotaService.STATE_CONNECTED:
-					// Launch the TouchPadActivity
-					Intent serverIntent = new Intent(Remota.this, TouchPadActivity.class);
+					// Launch the TouchPadActivity or MotionPadActivity
+					SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(Remota.this);
+					String mode = sp.getString(getString(R.string.mode_key), getString(R.string.touch_pad_mode));
+					Intent serverIntent;
+					if (mode.equals(getString(R.string.motion_mode))) {
+						serverIntent = new Intent(Remota.this, MotionPadActivity.class);
+					} else {
+						serverIntent = new Intent(Remota.this, TouchPadActivity.class);
+					}
 					startActivityForResult(serverIntent, REQUEST_VIEW_TOUCH_PAD);
 					break;
 				case RemotaService.STATE_CONNECTING:

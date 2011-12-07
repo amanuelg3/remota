@@ -8,4 +8,6 @@
     <color name="button0">#FF444444</color>
     <color name="button1">#FF000000</color>
     <color name="stroke">#FF444444</color>
+    <color name="button0_m">#FF001144</color>
+    <color name="button1_m">#FF000000</color>
 </resources>
