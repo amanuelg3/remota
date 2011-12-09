@@ -12,6 +12,10 @@ import android.inputmethodservice.Keyboard;
 import android.inputmethodservice.KeyboardView;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.ViewGroup;
+import android.view.ViewGroup.LayoutParams;
+import android.widget.LinearLayout;
 
 public class KeyboardActivity extends Activity implements KeyboardView.OnKeyboardActionListener {
 	// Debugging
@@ -41,13 +45,20 @@ public class KeyboardActivity extends Activity implements KeyboardView.OnKeyboar
 		
 		if (DBG) Log.i(TAG, "+++ ON CREATE +++");
 		
-		// Set up the KeyboardView. 
+		// Set up the KeyboardView.
+		LinearLayout linearLayout = new LinearLayout(this);
+		linearLayout.setGravity(Gravity.BOTTOM);
+		linearLayout.setLayoutParams(
+				new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT)
+		);
 		mKeyboard = new Keyboard(this, R.xml.qwerty);
 		mKeyboardView = new KeyboardView(this, null);
 		mKeyboardView.setKeyboard(mKeyboard);
 		mKeyboardView.setOnKeyboardActionListener(this);
+		linearLayout.addView(mKeyboardView);
 		
-		setContentView(mKeyboardView);
+		//setContentView(mKeyboardView);
+		setContentView(linearLayout);
 		
 		// Register for broadcasts when device is disconnected
 		IntentFilter filter = new IntentFilter(BluetoothDevice.ACTION_ACL_DISCONNECTED);
