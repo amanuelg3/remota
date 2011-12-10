@@ -77,9 +77,9 @@ public class MotionPadView extends PadView {
 		if (mTouchState.getMovePadState() != TouchState.NOT_PRESSED) {
 			rectf = new RectF(
 					mTouchState.getPrevFX() - (BUTTON_SIZE_DIP * mDensity),
-					0.0f,
+					mTouchState.getPrevFY() + (BUTTON_SIZE_DIP * mDensity),
 					mTouchState.getPrevFX() + (BUTTON_SIZE_DIP * mDensity),
-					mTouchState.getPrevFY() - (BUTTON_SIZE_DIP * mDensity)
+					mCanvasHeight
 			);
 		} else {
 			rectf = new RectF(0.0f, 0.0f, 0.0f, 0.0f);
@@ -95,9 +95,9 @@ public class MotionPadView extends PadView {
 		if (mTouchState.getMovePadState() != TouchState.NOT_PRESSED) {
 			rectf = new RectF(
 					mTouchState.getPrevFX() - (BUTTON_SIZE_DIP * mDensity),
-					mTouchState.getPrevFY() + (BUTTON_SIZE_DIP * mDensity),
+					0.0f,
 					mTouchState.getPrevFX() + (BUTTON_SIZE_DIP * mDensity),
-					mCanvasHeight
+					mTouchState.getPrevFY() - (BUTTON_SIZE_DIP * mDensity)
 			);
 		} else {
 			rectf = new RectF(0.0f, 0.0f, 0.0f, 0.0f);
@@ -189,16 +189,16 @@ public class MotionPadView extends PadView {
 		LinearGradient shader;
 		if (mTouchState.getScrollBarState() == TouchState.NOT_PRESSED) {
 			shader = new LinearGradient(
-					rectf.left, rectf.top,
 					rectf.left, rectf.bottom,
+					rectf.left, rectf.top,
 					getResources().getColor(R.color.button0_m),
 					getResources().getColor(R.color.button1_m),
 					TileMode.REPEAT
 			);
 		} else {
 			shader = new LinearGradient(
-					rectf.left, rectf.top, 
-					rectf.left, rectf.bottom,
+					rectf.left, rectf.bottom, 
+					rectf.left, rectf.top,
 					getResources().getColor(R.color.button1_m), 
 					getResources().getColor(R.color.button0_m),
 					TileMode.REPEAT
@@ -219,16 +219,16 @@ public class MotionPadView extends PadView {
 		LinearGradient shader;
 		if (mTouchState.getKeyboardButtonState() == TouchState.NOT_PRESSED) {
 			shader = new LinearGradient(
-					rectf.left, rectf.bottom, 
-					rectf.left, rectf.top,
+					rectf.left, rectf.top, 
+					rectf.left, rectf.bottom,
 					getResources().getColor(R.color.button0_m),
 					getResources().getColor(R.color.button1_m),
 					TileMode.REPEAT
 			);
 		} else {
 			shader = new LinearGradient(
-					rectf.left, rectf.bottom, 
-					rectf.left, rectf.top,
+					rectf.left, rectf.top, 
+					rectf.left, rectf.bottom,
 					getResources().getColor(R.color.button1_m),
 					getResources().getColor(R.color.button0_m),
 					TileMode.REPEAT
