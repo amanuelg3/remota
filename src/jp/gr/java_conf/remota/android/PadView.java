@@ -2,6 +2,7 @@ package jp.gr.java_conf.remota.android;
 
 import android.content.Context;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.PointF;
 import android.graphics.RectF;
@@ -16,6 +17,7 @@ public abstract class PadView extends SurfaceView implements SurfaceHolder.Callb
 	protected float mCanvasHeight = 0.0f;
 	protected float mCanvasWidth  = 0.0f;
 	protected TouchState mTouchState = null;
+	protected int mBackgroundColor = Color.BLACK;
 	
 	/**
 	 * Constructor
@@ -125,6 +127,9 @@ public abstract class PadView extends SurfaceView implements SurfaceHolder.Callb
 	
 	// Draw all components
 	protected void drawAll(Canvas canvas) {
+		//canvas.drawColor(Color.TRANSPARENT);
+		canvas.drawColor(mBackgroundColor);
+		
 		canvas.drawRect(getLeftButtonRectF(), getLeftButtonPaint());
 		canvas.drawRect(getRightButtonRectF(), getRightButtonPaint());
 		canvas.drawRect(getScrollBarRectF(), getScrollBarPaint());

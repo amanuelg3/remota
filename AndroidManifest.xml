@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
       package="jp.gr.java_conf.remota.android"
-      android:versionCode="00000300"
-      android:versionName="00.03.00" android:installLocation="auto">
+      android:versionCode="00000400"
+      android:versionName="00.04.00" android:installLocation="auto">
       
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
     <uses-permission android:name="android.permission.BLUETOOTH" />

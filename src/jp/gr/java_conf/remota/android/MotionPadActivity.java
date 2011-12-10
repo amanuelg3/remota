@@ -176,7 +176,7 @@ public class MotionPadActivity extends Activity implements View.OnTouchListener,
 						", history:" + event.getHistorySize()
 				);
 			}
-
+			
 			fx = event.getX(actionId);
 			fy = event.getY(actionId);
 			x = (int)(fx * event.getXPrecision());
@@ -218,7 +218,7 @@ public class MotionPadActivity extends Activity implements View.OnTouchListener,
 					}
 				} else if (PadView.pointFIsInRectF(point, mMotionPadView.getKeyboardButtonRectF())) { 
 					if (mTouchState.getKeyboardButtonState() == TouchState.NOT_PRESSED) {
-						//mTouchState.setKeyboardButtonState(id);
+						mTouchState.setKeyboardButtonState(id);
 						Intent intent = new Intent(this, KeyboardActivity.class);
 						startActivityForResult(intent, REQUEST_SHOW_KEYBOARD);
 					}
@@ -228,6 +228,9 @@ public class MotionPadActivity extends Activity implements View.OnTouchListener,
 						
 						// Turn on the move mode
 						mOnMoveMode = true;
+						
+						mTouchState.setPrevFX(fx);
+						mTouchState.setPrevFY(fy);
 					}
 				}
 			// Check whether a touch up event occurs
@@ -237,18 +240,22 @@ public class MotionPadActivity extends Activity implements View.OnTouchListener,
 				// Check where the touch up event occurs
 				if (mTouchState.getLeftButtonState()== id) {
 					mTouchState.setLeftButtonState(TouchState.NOT_PRESSED);
+					mTouchState.setMovePadState(TouchState.NOT_PRESSED);
 					service.sendMouseEvent(
 							new MouseEvent(MouseEvent.FLAG_LEFT_UP, 0, 0, 0)
 					);
 				} else if (mTouchState.getRightButtonState() == id) {
 					mTouchState.setRightButtonState(TouchState.NOT_PRESSED);
+					mTouchState.setMovePadState(TouchState.NOT_PRESSED);
 					service.sendMouseEvent(
 							new MouseEvent(MouseEvent.FLAG_RIGHT_UP, 0, 0, 0)
 					);
 				} else if (mTouchState.getScrollBarState() == id) {
 					mTouchState.setScrollBarState(TouchState.NOT_PRESSED);
+					mTouchState.setMovePadState(TouchState.NOT_PRESSED);
 				} else	if (mTouchState.getKeyboardButtonState() == id) {
 					mTouchState.setKeyboardButtonState(TouchState.NOT_PRESSED);
+					mTouchState.setMovePadState(TouchState.NOT_PRESSED);
 				} else if (mTouchState.getMovePadState() == id) {
 					mTouchState.setMovePadState(TouchState.NOT_PRESSED);
 				}
@@ -266,6 +273,31 @@ public class MotionPadActivity extends Activity implements View.OnTouchListener,
 				}
 			// Check whether a touch move event occurs
 			} else if (actionMasked == MotionEvent.ACTION_MOVE) {
+				if (PadView.pointFIsInRectF(point, mMotionPadView.getLeftButtonRectF())) {
+					if (mTouchState.getLeftButtonState() == TouchState.NOT_PRESSED) {
+						mTouchState.setLeftButtonState(id);
+						service.sendMouseEvent(
+								new MouseEvent(MouseEvent.FLAG_LEFT_DOWN, 0, 0, 0)
+						);
+					}
+				} else if (PadView.pointFIsInRectF(point, mMotionPadView.getRightButtonRectF())) {
+					if (mTouchState.getRightButtonState() == TouchState.NOT_PRESSED) {
+						mTouchState.setRightButtonState(id);
+						service.sendMouseEvent(
+								new MouseEvent(MouseEvent.FLAG_RIGHT_DOWN, 0, 0, 0)
+						);
+					}
+				} else if (PadView.pointFIsInRectF(point, mMotionPadView.getScrollBarRectF())) { 
+					if (mTouchState.getScrollBarState() == TouchState.NOT_PRESSED) {
+						mTouchState.setScrollBarState(id);
+					}
+				} else if (PadView.pointFIsInRectF(point, mMotionPadView.getKeyboardButtonRectF())) { 
+					if (mTouchState.getKeyboardButtonState() == TouchState.NOT_PRESSED) {
+						mTouchState.setKeyboardButtonState(id);
+						Intent intent = new Intent(this, KeyboardActivity.class);
+						startActivityForResult(intent, REQUEST_SHOW_KEYBOARD);
+					}
+				}
 			}
 		}
 		
@@ -347,6 +379,10 @@ public class MotionPadActivity extends Activity implements View.OnTouchListener,
 	@Override
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if (DBG) Log.i(TAG, "+++ ON ACTIVITY RESULT +++ :" + resultCode);
+		switch (requestCode) {
+		case REQUEST_SHOW_KEYBOARD:
+			mTouchState.setKeyboardButtonState(TouchState.NOT_PRESSED);
+		}
 	}
 	
 	private void startListenSensor() {

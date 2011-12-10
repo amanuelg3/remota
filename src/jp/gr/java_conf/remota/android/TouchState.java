@@ -20,6 +20,8 @@ public class TouchState {
 	private int mPrevX;
 	private int mPrevY;
 	private int mPrevWheelY;
+	private float mPrevFX;
+	private float mPrevFY;
 	
 	private TouchState() {
 		
@@ -164,5 +166,38 @@ public class TouchState {
 	public synchronized void setPrevWheelY(int prevWheelY) {
 		mPrevWheelY = prevWheelY;
 	}
-
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public float getPrevFX() {
+		return mPrevFX;
+	}
+	
+	/**
+	 * 
+	 * @param prevY
+	 */
+	public synchronized void setPrevFX(float prevFX) {
+		mPrevFX = prevFX;
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public float getPrevFY() {
+		return mPrevFY;
+	}
+	
+	/**
+	 * 
+	 * @param prevY
+	 */
+	public synchronized void setPrevFY(float prevFY) {
+		mPrevFY = prevFY;
+	}
+	
+	
 }
