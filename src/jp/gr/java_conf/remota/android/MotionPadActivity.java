@@ -9,6 +9,7 @@ import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
+import android.content.res.Resources.Theme;
 import android.graphics.PointF;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
@@ -30,6 +31,9 @@ public class MotionPadActivity extends Activity implements View.OnTouchListener,
 	private static final String TAG = "MotionPadActivity";
 	private static final boolean DBG = true;
 	
+	// Constants
+	private static final long THRESHOLD_TIME_FOR_TAP = 100l; // [msec]
+	
 	// Intent request codes
 	private static final int REQUEST_SHOW_KEYBOARD = 1;
 	
@@ -43,6 +47,7 @@ public class MotionPadActivity extends Activity implements View.OnTouchListener,
 	private float mPrevGX = 0.0f;
 	private float mPrevGZ = 0.0f;
 	private long mPrevTimeStamp = 0l;
+	private long mMovePadDownTime = 0l;
 	
 	// The BroadcastReceiver that listens for disconnection
 	private final BroadcastReceiver mReceiver = new BroadcastReceiver() {
@@ -231,6 +236,9 @@ public class MotionPadActivity extends Activity implements View.OnTouchListener,
 						
 						mTouchState.setPrevFX(fx);
 						mTouchState.setPrevFY(fy);
+						
+						// The event time for a recognition of a tap
+						mMovePadDownTime = event.getEventTime();
 					}
 				}
 			// Check whether a touch up event occurs
@@ -258,6 +266,18 @@ public class MotionPadActivity extends Activity implements View.OnTouchListener,
 					mTouchState.setMovePadState(TouchState.NOT_PRESSED);
 				} else if (mTouchState.getMovePadState() == id) {
 					mTouchState.setMovePadState(TouchState.NOT_PRESSED);
+					
+					// Check whether the event is a tap
+					if ((event.getEventTime() - mMovePadDownTime) <= THRESHOLD_TIME_FOR_TAP) {
+						// Send a mouse left button click event
+						service.sendMouseEvent(
+								new MouseEvent(MouseEvent.FLAG_LEFT_DOWN, 0, 0, 0)
+						);
+						
+						service.sendMouseEvent(
+								new MouseEvent(MouseEvent.FLAG_LEFT_UP, 0, 0, 0)
+						);
+					}
 				}
 				
 				if (mTouchState.getLeftButtonState() == TouchState.NOT_PRESSED &&

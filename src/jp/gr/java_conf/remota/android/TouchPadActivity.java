@@ -26,12 +26,16 @@ public class TouchPadActivity extends Activity implements View.OnTouchListener {
 	private static final String TAG = "TouchPadActivity";
 	private static final boolean DBG = false;
 	
+	// Constants
+	private static final long THRESHOLD_TIME_FOR_TAP = 100l; // [msec]
+	
 	// Intent request codes
 	private static final int REQUEST_SHOW_KEYBOARD = 1;
 	
 	// Member fields
 	private TouchPadView mTouchPadView;
 	private TouchState mTouchState;
+	private long mMovePadDownTime = 0l;
 	
 	// The BroadcastReceiver that listens for disconnection
 	private final BroadcastReceiver mReceiver = new BroadcastReceiver() {
@@ -168,6 +172,9 @@ public class TouchPadActivity extends Activity implements View.OnTouchListener {
 						mTouchState.setMovePadState(id);
 						mTouchState.setPrevX(x);
 						mTouchState.setPrevY(y);
+						
+						// The event time for a recognition of a tap
+						mMovePadDownTime = event.getEventTime();
 					}
 				}
 			// Check whether a touch up event occurs
@@ -191,6 +198,18 @@ public class TouchPadActivity extends Activity implements View.OnTouchListener {
 					mTouchState.setKeyboardButtonState(TouchState.NOT_PRESSED);
 				} else if (mTouchState.getMovePadState() == id) {
 					mTouchState.setMovePadState(TouchState.NOT_PRESSED);
+					
+					// Check whether the event is a tap
+					if ((event.getEventTime() - mMovePadDownTime) <= THRESHOLD_TIME_FOR_TAP) {
+						// Send a mouse left button click event
+						service.sendMouseEvent(
+								new MouseEvent(MouseEvent.FLAG_LEFT_DOWN, 0, 0, 0)
+						);
+						
+						service.sendMouseEvent(
+								new MouseEvent(MouseEvent.FLAG_LEFT_UP, 0, 0, 0)
+						);
+					}
 				}
 			// Check whether a touch move event occurs
 			} else if (actionMasked == MotionEvent.ACTION_MOVE) {
