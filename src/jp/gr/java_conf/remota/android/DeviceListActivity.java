@@ -107,6 +107,8 @@ public class DeviceListActivity extends Activity {
 				v.setVisibility(View.GONE);
 			}
 		});
+		scanButton.setEnabled(false);
+		scanButton.setVisibility(View.INVISIBLE);
 
 		// Initialize array adapters. One for already paired devices and
 		// one for newly discovered devices
