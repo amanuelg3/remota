@@ -1,0 +1,168 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+          "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<meta http-equiv="content-script-type" content="text/javascript" />
+<meta http-equiv="content-style-type" content="text/css" />
+<link rel="stylesheet" type="text/css" href="./default.css" />
+</head>
+
+<body>
+<h1>Introduction</h1>
+Remota is an application which can be used as an air mouse and an air keyboard.
+You can remote control your host PC with simple user interfaces like a touch pad or Nintendo Wii motion plus.
+
+<h1>Requirements</h1>
+<ul>
+<li>A Bluetooth dongle on your host PC</li>
+<li>An application on your host PC</li>
+</ul>
+
+Remota runs on the Bluetooth Serial Port Profile(SPP), so you need a Bluetooth dongle.
+Packets from your mobile device to your host PC go on a Bluetooth serial port as general data,
+so your host PC needs an application for analyze this data.
+
+<h1>Preparations</h1>
+<h2>Pairing</h2>
+First, you need pairing your mobile device to your host PC with the following steps.
+
+<p>
+Case the Windows bluetooth stack:
+<ol>
+<li>Press the menu key and select "Make discoverable"</li>
+<li>Search your mobile device from your host PC</li>
+  <ol>
+  <li>Press "Bluetooth" on the tasktray</li>
+  <li>Press "Add a new Bluetooth Device"</li>
+  <li>Select your mobile device</li>
+  </ol>
+<li>Enter pairing passkey</li>
+</ol>
+</p>
+
+<p>
+Case the Toshiba bluetooth stack:
+<ol>
+<li>Host PC: Make your host PC discoverble</li>
+  <ol>
+  <li>Start -> All Programs -> TOSHIBA -> Bluetooth -> Bluetooth Settings -> Bluetooth -> Options -> Security -> Custom Level</li>
+  <li>Check off all options in the "Mode" section</li>
+  </ol>
+<li>Run Remota, press the menu key and press "Connect a device"</li>
+<li>Press "Scan for devices"</li>
+<li>Select your host PC in the "New devices" section</li>
+<li>Enter pairing passkey</li>
+</ol>
+</p>
+
+<h2>Install server application</h2>		
+Second, install the server application from the following URL to your host PC.
+
+<p>
+<a href="http://code.google.com/p/remota/">Remota project<br>http://code.google.com/p/remota/</a>
+</p>
+
+<h1>How to use</h1>
+<h2>Find the incoming COM port</h2>
+<a name="find_incoming_port">
+The server application on your host PC must listen the incoming COM port to receive packets from Remota.
+The incoming COM port number can be found by the following steps.
+
+<p>
+Case the Windows bluetooth stack:
+<ol>
+<li>Press "Bluetooth" on the tasktray</li>
+<li>Press "Open Bluetooth Settings"</li>
+<li>Press the "COM Ports" tab</li>
+<li>Find the COM port whose name is your mobile device and direction is incoming</li>
+</ol>
+</p>
+
+<p>
+Case the Toshiba bluetooth stack:
+<ol>
+<li>Open the control panel</li>
+<li>Press "Bluetooth Local COM"</li>
+<li>Find the COM port whose owner is "LocalCOM-Server[SerialPort(LocalCOM)]</li>
+</ol>
+</p>
+
+<h2>Connect</h2>
+Connect your mobile device to your host PC in the following steps.
+If your mobile device has a gyroscope, 
+you can select the motion pad mode before connect(Press the menu key and select "Settings" and tap "Mode"): 
+
+<ol>
+<li>Host PC: Run the server application on your host PC</li>
+<li>Host PC: Select the incoming COM port which can be found by <a href="help.html#find_incoming_port">this steps</a></li>
+<li>Host PC: Press the start button</li>
+<li>Press the menu key, select "Connect a device" and select your host PC</li>
+</ol>
+
+When the connection is complete, the screen corresponding the selected mode will appear.
+
+<h2>Touch pad mode</h2>
+<a name="touch_pad">
+
+The touch pad screen has the five areas: the left button, the right button, the keyboard button, the scroll area and the touch pad area.
+
+<div class="figure">
+<p><img src="images/touch_pad_l_text.png" width="550" align="center"></p>
+<p>The touch pad screen</p>
+</div>
+
+<dl>
+<dt>Move</dt>
+<dd>Move a finger in the touch pad area</dd>
+<dt>Left button click</dt>
+<dd>Tap at the touch pad or the left button</dd>
+<dt>Right button click</dt>
+<dd>Tap at the right button</dd>
+<dt>Drag and drop</dt>
+<dd>Touch down the left button and move another finger in the touch pad area</dd>
+<dt>Scroll</dt>
+<dd>Move a finger in the scroll area</dd>
+<dt>Input keys</dt>
+<dd>Touch down the keyboard button, then the following keyboard screen will appear</dd>
+</dl>
+
+<div class="figure">
+<p><img src="images/keyboard_l.png" width="550" align="center"></p>
+<p>The keyboard screen</p>
+</div>
+
+<h2>Motion pad mode</h2>
+<a name="motion_pad">
+<div class="caution">
+Requiring a gyroscope.
+</div>
+
+When the screen is touched down, the four areas will appear around the touch down point : 
+the left button, the right button, the keyboard button and the scroll button.
+
+<div class="figure">
+<p><img src="images/motion_pad_touched_text.png"
+     height="450"
+     align="center"></p>
+<p>the buttons which appear if the screen is touched down</p>
+</div>
+
+<dl>
+<dt>Move</dt>
+<dd>Touch down the screen and shake your mobile device holding the finger down</dd>
+<dt>Left button click</dt>
+<dd>Tap at the screen or the following left-flick gesture: touch down the screen, move to the left button and left the finger</dd>
+<dt>Right button click</dt>
+<dd>Right-flick: touch down the screen, move to the right button and left the finger</dd>
+<dt>Drag and drop</dt>
+<dd>Touch down the screen, move to the left button and shake your mobile device holding the finger down</dd>
+<dt>Scroll</dt>
+<dd>Touch down the screen, move to the scroll button and shake your mobile device holding the finger down</dd>
+<dt>Input keys</dt>
+<dd>Touch down the screen and move to the keyboard button</dd>
+</dl>
+
+</body>
+</html>
