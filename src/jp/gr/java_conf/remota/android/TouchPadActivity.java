@@ -63,11 +63,13 @@ public class TouchPadActivity extends Activity implements View.OnTouchListener {
 		}
 		
 		// Set the screen orientation
-		String orientation = sp.getString(getString(R.string.orientation_key), getString(R.string.orientation_system));
+		String orientation = sp.getString(getString(R.string.touch_pad_orientation_key), getString(R.string.orientation_auto));
 		if (orientation.equals(getString(R.string.orientation_portrait))) {
 			setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 		} else if (orientation.equals(getString(R.string.orientation_landscape))) {
 			setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+		} else if (orientation.equals(getString(R.string.orientation_auto))) {
+			setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
 		}
 
 		mTouchPadView = new TouchPadView(this);

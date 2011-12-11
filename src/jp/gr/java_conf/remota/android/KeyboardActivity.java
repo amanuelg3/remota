@@ -8,12 +8,16 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
+import android.content.pm.ActivityInfo;
 import android.inputmethodservice.Keyboard;
 import android.inputmethodservice.KeyboardView;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.LinearLayout;
 
@@ -57,6 +61,22 @@ public class KeyboardActivity extends Activity implements KeyboardView.OnKeyboar
 		mKeyboardView.setOnKeyboardActionListener(this);
 		linearLayout.addView(mKeyboardView);
 		
+		// To full screen
+		SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
+		if (sp.getBoolean(getString(R.string.fullscreen_key), false)) {
+			getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
+		}
+		
+		// Set the screen orientation
+		String orientation = sp.getString(getString(R.string.keyboard_orientation_key), getString(R.string.orientation_auto));
+		if (orientation.equals(getString(R.string.orientation_portrait))) {
+			setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+		} else if (orientation.equals(getString(R.string.orientation_landscape))) {
+			setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+		} else if (orientation.equals(getString(R.string.orientation_auto))) {
+			setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
+		}
+		
 		//setContentView(mKeyboardView);
 		setContentView(linearLayout);
 		
@@ -72,6 +92,8 @@ public class KeyboardActivity extends Activity implements KeyboardView.OnKeyboar
 		super.onDestroy();
         
 		if(DBG) Log.i(TAG, "+++ ON DESTROY +++");
+		
+		unregisterReceiver(mReceiver);
 	}
 	
 	public void onKey(int primaryCode, int[] keyCodes) {

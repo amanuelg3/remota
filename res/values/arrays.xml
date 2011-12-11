@@ -2,11 +2,12 @@
 <resources>
     <string-array name="mode_list_entries">
         <item >@string/touch_pad_mode</item>
-        <item >@string/motion_mode</item>
+        <item >@string/motion_pad_mode</item>
     </string-array>
     <string-array name="orientation_list_entries">
         <item >@string/orientation_portrait</item>
         <item >@string/orientation_landscape</item>
+        <item >@string/orientation_auto</item>
         <item >@string/orientation_system</item>
     </string-array>
 
