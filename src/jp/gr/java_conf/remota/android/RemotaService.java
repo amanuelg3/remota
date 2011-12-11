@@ -26,7 +26,7 @@ import android.util.Log;
 public class RemotaService {
 	// Debugging
 	private static final String TAG = "RemotaService";
-	private static final boolean DBG = true;
+	private static final boolean DBG = false;
     
 	// Service name for the SDP
 	private static final String SERVICE_NAME = "Serial Port";

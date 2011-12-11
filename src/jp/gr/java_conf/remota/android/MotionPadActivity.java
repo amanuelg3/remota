@@ -29,7 +29,7 @@ import android.view.WindowManager;
 public class MotionPadActivity extends Activity implements View.OnTouchListener, SensorEventListener {
 	// Debugging
 	private static final String TAG = "MotionPadActivity";
-	private static final boolean DBG = true;
+	private static final boolean DBG = false;
 	
 	// Constants
 	private static final long THRESHOLD_TIME_FOR_TAP = 100l; // [msec]

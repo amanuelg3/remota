@@ -20,7 +20,7 @@ import android.widget.LinearLayout;
 public class KeyboardActivity extends Activity implements KeyboardView.OnKeyboardActionListener {
 	// Debugging
 	private static final String TAG = "KeyboardActivity";
-	private static final boolean DBG = true;
+	private static final boolean DBG = false;
 
 	// Member fields
 	private Keyboard mKeyboard;

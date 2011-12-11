@@ -24,7 +24,7 @@ import android.widget.Toast;
 public class Remota extends Activity {
 	// Debugging
 	private static final String TAG = "Remota";
-	private static final boolean DBG = true;
+	private static final boolean DBG = false;
 	
 	// Message types sent from the RemotaService handler
 	/* package */ static final int MESSAGE_CONNECTION_STATE_CHANGE = 1;
@@ -96,11 +96,10 @@ public class Remota extends Activity {
     	
     	WebView webView = new WebView(this);
 		String html = 
-			"<html><head><body bgcolor=\"black\" text=\"white\">" +
-			getString(R.string.help_introduction) +
-			getString(R.string.help_first_use) +
-			getString(R.string.help_how_to_use) +
-			"</body></head></html>";
+			"<html><head></head><body bgcolor=\"black\" text=\"white\">" +
+			getString(R.string.introduction) +
+			getString(R.string.for_first_use) +
+			"</body></html>";
 		webView.loadData(html, "text/html", "UTF-8");
 		
 		setContentView(webView);
