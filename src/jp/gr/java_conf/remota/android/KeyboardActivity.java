@@ -25,7 +25,7 @@ public class KeyboardActivity extends Activity implements KeyboardView.OnKeyboar
 	// Debugging
 	private static final String TAG = "KeyboardActivity";
 	private static final boolean DBG = false;
-
+	
 	// Member fields
 	private Keyboard mKeyboard;
 	private KeyboardView mKeyboardView;

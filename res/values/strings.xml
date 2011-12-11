@@ -16,6 +16,8 @@
     <string name="help">Help</string>
     <string name="support_url">http://code.google.com/p/remota/</string>
     <string name="help_url">file:///android_asset/help/help.html</string>
+    <string name="label_how_to_use_touch_pad">touch_pad</string>
+    <string name="label_how_to_use_motion_pad">motion_pad</string>
     <string name="close">close</string>
     <string name="hz">H/Z</string>
     <string name="done">Done</string>

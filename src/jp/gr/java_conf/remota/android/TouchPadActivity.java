@@ -13,6 +13,9 @@ import android.graphics.PointF;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
@@ -31,6 +34,7 @@ public class TouchPadActivity extends Activity implements View.OnTouchListener {
 	
 	// Intent request codes
 	private static final int REQUEST_SHOW_KEYBOARD = 1;
+	private static final int REQUEST_SHOW_HELP = 2;
 	
 	// Member fields
 	private TouchPadView mTouchPadView;
@@ -97,6 +101,28 @@ public class TouchPadActivity extends Activity implements View.OnTouchListener {
 		if(DBG) Log.i(TAG, "+++ ON DESTROY +++");
 		
 		unregisterReceiver(mReceiver);
+	}
+	
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		MenuInflater inflater = getMenuInflater();
+		inflater.inflate(R.menu.option_menu_connected, menu);
+		return true;
+	}
+    
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+    	switch (item.getItemId()) {
+   		case R.id.help_connected:
+   			// Show help
+   			Intent helpIntent = new Intent(this, HelpActivity.class);
+   			helpIntent.putExtra(
+   					HelpActivity.KEY_ANCHOR_LABEL,
+   					getResources().getString(R.string.label_how_to_use_touch_pad)
+   			);
+   			startActivityForResult(helpIntent, REQUEST_SHOW_HELP);
+    	}
+    	return false;
 	}
 	
 	/**
