@@ -133,30 +133,15 @@ public class TouchPadActivity extends Activity implements View.OnTouchListener {
 			if (DBG) Log.d(TAG, "Pointer count:" + event.getPointerCount());
 			
 			RemotaService service = RemotaService.getInstance();
-			int c = event.getPointerCount();
 			int x, y;
 			float fx, fy;
-			int id, action, actionMasked, actionId;
-			String str = "";
-		
-			// the action information
-			action = event.getAction();
-		
+			int id, actionMasked, actionId;
+
 			// the action information without the pointer index
 			actionMasked = event.getActionMasked();
 		
 			// the index of the pointer that has gone down or up
 			actionId = event.getActionIndex();
-
-			// For debugging
-			if (DBG) {
-				Log.d(TAG, 
-						", action:" + action +
-						", actionMasked:" + actionMasked +
-						", actionId:" + actionId +
-						", history:" + event.getHistorySize()
-				);
-			}
 
 			fx = event.getX(actionId);
 			fy = event.getY(actionId);
@@ -201,7 +186,7 @@ public class TouchPadActivity extends Activity implements View.OnTouchListener {
 						mTouchState.setPrevX(x);
 						mTouchState.setPrevY(y);
 						
-						// The event time for a recognition of a tap
+						// The event time for recognition of a tap
 						mMovePadDownTime = event.getEventTime();
 					}
 				}
@@ -262,46 +247,6 @@ public class TouchPadActivity extends Activity implements View.OnTouchListener {
 							)
 					);
 					mTouchState.setPrevWheelY(y);
-				}
-			}
-		
-			// For debugging
-			float hx, hy;
-			for (int i = 0; i < c; i++){
-				fx = event.getX(i);
-				fy = event.getY(i);
-				id = event.getPointerId(i);
-				point = new PointF(x, y);
-			
-				if (TouchPadView.pointFIsInRectF(point, mTouchPadView.getLeftButtonRectF())) {
-					str = "left";
-				}
-				else if (TouchPadView.pointFIsInRectF(point, mTouchPadView.getRightButtonRectF())) {
-					str = "right";
-				}
-				else if (TouchPadView.pointFIsInRectF(point, mTouchPadView.getScrollBarRectF())) {
-					str = "scroll";
-				}
-				else if (TouchPadView.pointFIsInRectF(point, mTouchPadView.getKeyboardButtonRectF())) {
-					str = "keyboard";
-				}
-				
-				if (DBG) {
-					Log.d(TAG, 
-							"X" + i + ":" + fx +
-							",Y" + i + ":" + fy +
-							", id:" + id +
-							"," + str);
-				}
-				
-				if (DBG) {
-					if (event.getHistorySize() >= 1) {
-						hx = event.getHistoricalX(i, 1);
-						hy = event.getHistoricalY(i, 1);
-						Log.d(TAG, 
-								"HX" + i + 1 + ":" + hx +
-								"HY" + i + 1 + ":" + hy);
-					}
 				}
 			}
 		}

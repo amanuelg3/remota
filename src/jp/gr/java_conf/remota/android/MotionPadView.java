@@ -12,10 +12,6 @@ import android.graphics.Shader.TileMode;
  */
 public class MotionPadView extends PadView {
 	// Constants
-	private static final float BUTTON_WIDTH_RATIO = 0.40f;
-	private static final float SCROLLBAR_WIDTH_RATIO = 0.20f;
-	private static final float SCROLLBAR_HEIGHT_RATIO = 0.30f;
-	private static final float KEYBOARD_BUTTON_HEIGHT_RATIO = 0.10f;
 	private static final float BUTTON_SIZE_DIP = 30.0f;
 	
 	// Member fields

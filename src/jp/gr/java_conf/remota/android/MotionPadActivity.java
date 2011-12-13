@@ -184,12 +184,8 @@ public class MotionPadActivity extends Activity implements View.OnTouchListener,
 			if (DBG) Log.d(TAG, "Pointer count:" + event.getPointerCount());
 			
 			RemotaService service = RemotaService.getInstance();
-			int x, y;
 			float fx, fy;
-			int id, action, actionMasked, actionId;
-		
-			// the action information
-			action = event.getAction();
+			int id, actionMasked, actionId;
 		
 			// the action information without the pointer index
 			actionMasked = event.getActionMasked();
@@ -197,20 +193,8 @@ public class MotionPadActivity extends Activity implements View.OnTouchListener,
 			// the index of the pointer that has gone down or up
 			actionId = event.getActionIndex();
 
-			// For debugging
-			if (DBG) {
-				Log.d(TAG, 
-						", action:" + action +
-						", actionMasked:" + actionMasked +
-						", actionId:" + actionId +
-						", history:" + event.getHistorySize()
-				);
-			}
-			
 			fx = event.getX(actionId);
 			fy = event.getY(actionId);
-			x = (int)(fx * event.getXPrecision());
-			y = (int)(fy * event.getYPrecision());
 			id = event.getPointerId(actionId);
 			PointF point = new PointF(fx, fy);
 
@@ -262,7 +246,7 @@ public class MotionPadActivity extends Activity implements View.OnTouchListener,
 						mTouchState.setPrevFX(fx);
 						mTouchState.setPrevFY(fy);
 						
-						// The event time for a recognition of a tap
+						// The event time for recognition of a tap
 						mMovePadDownTime = event.getEventTime();
 					}
 				}
@@ -389,11 +373,7 @@ public class MotionPadActivity extends Activity implements View.OnTouchListener,
 				deltaZ = (float)(deltaZ * 180.0f / Math.PI); // [rad] -> [deg]
 				deltaX *= 10.0f;
 				deltaZ *= 10.0f;
-				
-				if (DBG) {
-					Log.i(TAG, "dt:" + deltaTime + ",dx:" + deltaX + ",dz:" + deltaZ);
-				}
-				
+
 				MouseEvent event;
 				if (mTouchState.getScrollBarState() != TouchState.NOT_PRESSED) {
 					event = new MouseEvent(MouseEvent.FLAG_WHELL, 0, 0, (int)deltaX);
