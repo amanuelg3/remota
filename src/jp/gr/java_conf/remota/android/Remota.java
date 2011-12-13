@@ -61,7 +61,7 @@ public class Remota extends Activity {
 					SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(Remota.this);
 					String mode = sp.getString(getString(R.string.mode_key), getString(R.string.touch_pad_mode));
 					Intent serverIntent;
-					if (mode.equals(getString(R.string.motion_pad_mode))) {
+					if (mode.equals(getString(R.string.motion_pad_mode_value))) {
 						serverIntent = new Intent(Remota.this, MotionPadActivity.class);
 					} else {
 						serverIntent = new Intent(Remota.this, TouchPadActivity.class);
