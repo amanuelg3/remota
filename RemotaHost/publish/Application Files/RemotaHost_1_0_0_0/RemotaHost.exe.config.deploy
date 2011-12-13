@@ -4,9 +4,6 @@
     <sectionGroup name="userSettings" type="System.Configuration.UserSettingsGroup, System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" >
         <section name="RemotaHost.Properties.Settings" type="System.Configuration.ClientSettingsSection, System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" allowExeDefinition="MachineToLocalUser" requirePermission="false" />
     </sectionGroup>
-    <sectionGroup name="applicationSettings" type="System.Configuration.ApplicationSettingsGroup, System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" >
-        <section name="RemotaHost.Properties.Settings" type="System.Configuration.ClientSettingsSection, System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" requirePermission="false" />
-    </sectionGroup>
 </configSections>
 <startup><supportedRuntime version="v2.0.50727" sku="Client"/></startup><userSettings>
         <RemotaHost.Properties.Settings>
@@ -16,22 +13,9 @@
             <setting name="WheelSensitivity" serializeAs="String">
                 <value>100</value>
             </setting>
-            <setting name="OpenOnStarted" serializeAs="String">
+            <setting name="OpenAtStarted" serializeAs="String">
                 <value>False</value>
-            </setting>
-            <setting name="COMPort" serializeAs="String">
-                <value>COM1</value>
             </setting>
         </RemotaHost.Properties.Settings>
     </userSettings>
-    <applicationSettings>
-        <RemotaHost.Properties.Settings>
-            <setting name="MoveSensitivityDefault" serializeAs="String">
-                <value>100</value>
-            </setting>
-            <setting name="WheelSensitivityDefault" serializeAs="String">
-                <value>100</value>
-            </setting>
-        </RemotaHost.Properties.Settings>
-    </applicationSettings>
 </configuration>
