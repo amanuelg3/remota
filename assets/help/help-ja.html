@@ -1,0 +1,169 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+          "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<meta http-equiv="content-script-type" content="text/javascript" />
+<meta http-equiv="content-style-type" content="text/css" />
+<link rel="stylesheet" type="text/css" href="./default.css" />
+<title>Remotaのヘルプ</title>
+</head>
+
+<body>
+<h1>はじめに</h1>
+Remotaはエアマウスやエアキーボードとして使用できるアプリケーションです。
+タッチパッドや任天堂のWii motion plusのようなシンプルなユーザインタフェースで、ホストPCを遠隔操作できます。
+
+<h1>必要なもの</h1>
+<ul>
+<li>ホストPC上のBluetoothドングル</li>
+<li>ホストPC上のサーバアプリケーション</li>
+</ul>
+
+RemotaはBluetooth Serial Port Profile(SPP)上で動作します。そのため、Bluetoothドングルが必要です。
+携帯機器からホストPCへのデータは、Bluetoothシリアルポート上を一般的なデータとして流れます。
+このデータを解析するためのサーバアプリケーションが必要です。
+
+<h1>準備</h1>
+<h2>ペアリング</h2>
+まずはじめに、携帯機器とホストPCを次の手順でペアリングする必要があります。
+
+<p>
+Windows bluetoothスタックの場合:
+<ol>
+<li>メニューキーを押下し、"発見可能にする"を選択する</li>
+<li>ホストPCから携帯機器をサーチする</li>
+  <ol>
+  <li>タスクトレイ上のBluetoothアイコンを押下する</li>
+  <li>"デバイスを追加"を押下する</li>
+  <li>携帯機器を選択する</li>
+  </ol>
+<li>ペアリングのパスキーを入力する</li>
+</ol>
+</p>
+
+<p>
+Toshiba bluetoothスタックの場合:
+<ol>
+<li>ホストPC: ホストPCを発見可能にする</li>
+  <ol>
+  <li>スタート -> すべてのプログラム -> TOSHIBA -> Bluetooth -> Bluetooth設定 -> Bluetooth -> オプション -> セキュリティ -> レベルのカスタマイズ</li>
+  <li>モードのすべてのチェックを外す</li>
+  </ol>
+<li>Remotaを起動し、 メニューキーを押下して、"デバイスと接続"を選択する</li>
+<li>"デバイスをスキャン"を押下する</li>
+<li>"新しいデバイス"にあるホストPCを選択する</li>
+<li>ペアリングのパスキーを入力する</li>
+</ol>
+</p>
+
+<h2>サーバアプリケーションのインストール</h2>		
+次に、サーバアプリケーションを次のURLからホストPCにインストールします。
+
+<p>
+<a href="http://code.google.com/p/remota/">Remota project<br>http://code.google.com/p/remota/</a>
+</p>
+
+<h1>使用方法</h1>
+<h2>着信COMポートを探す</h2>
+<a name="find_incoming_port">
+ホストPC上のサーバアプリケーションは、Remotaからのデータを受けとるために着信COMポートを監視しなければなりません。
+着信COMポートは次の手順で探せます。
+
+<p>
+Windows bluetoothスタックの場合:
+<ol>
+<li>タスクトレイ上のBluetoothアイコンを押下する</li>
+<li>"設定を開く"を押下する</li>
+<li>"COMポート"タブを押下する</li>
+<li>ポート名が携帯機器で、向きが着信になっているCOMポートを探す</li>
+</ol>
+</p>
+
+<p>
+Toshiba bluetoothスタックの場合:
+<ol>
+<li>コントロールパネルを開く</li>
+<li>"Bluetooth Local COM"を押下する</li>
+<li>所有者が"LocalCOM-Server[SerialPort(LocalCOM)]"となっているCOMポートを探す</li>
+</ol>
+</p>
+
+<h2>接続</h2>
+次の手順で携帯機器をホストPCに接続してください。
+もし携帯機器にジャイロセンサが搭載されている場合、
+モーションパッドモードを使用できます（接続する前に、
+メニューキーを押下して"設定"を選択し、"モード"で"モーションパッドモード"を選択してください）。
+
+<ol>
+<li>ホストPC: サーバアプリケーションを起動する</li>
+<li>ホストPC: 着信COMポートを選択する：着信COMポートは<a href="help.html#find_incoming_port">この手順</a>で確認できます</li>
+<li>ホストPC: スタートボタンを押下する</li>
+<li>メニューキーを押下し、"デバイスと接続"を選択して、"ペア設定済み"にあるホストPCを選択する</li>
+</ol>
+
+接続が確立されると、選択したモードに応じた画面が表示されます。
+
+<h2>タッチパッドモード</h2>
+<a name="touch_pad">
+
+タッチパッド画面には、次の五つの領域があります：左ボタン、右ボタン、キーボードボタン、スクロール領域とタッチパッド領域
+
+<div class="figure">
+<p><img src="images/touch_pad_l_text.png" width="550" align="center"></p>
+<p>タッチパッド画面</p>
+</div>
+
+<dl>
+<dt>移動</dt>
+<dd>タッチパッド領域で指を移動させる</dd>
+<dt>左ボタンクリック</dt>
+<dd>タッチパッド領域をタップする、または、左ボタンをタップする</dd>
+<dt>右ボタンクリック</dt>
+<dd>右ボタンをタップする</dd>
+<dt>ドラッグアンドドロップ</dt>
+<dd>左ボタンを指で押さえ、別の指をタッチパッド領域で移動させる</dd>
+<dt>スクロール</dt>
+<dd>スクロール領域で指を移動させる</dd>
+<dt>キー入力</dt>
+<dd>キーボードボタンをタッチすると次のようなキーボード画面が表示される</dd>
+</dl>
+
+<div class="figure">
+<p><img src="images/keyboard_l.png" width="550" align="center"></p>
+<p>キーボード画面</p>
+</div>
+
+<h2>モーションパッドモード</h2>
+<a name="motion_pad">
+<div class="caution">
+ジャイロセンサが必要です。
+</div>
+
+画面をタッチすると、次の四つの領域がタッチした位置のまわりに表示されます：左ボタン、右ボタン、キーボードボタンとスクロールボタン
+
+<div class="figure">
+<p><img src="images/motion_pad_touched_text.png"
+     height="450"
+     align="center"></p>
+<p>画面をタッチすると表示されるボタン</p>
+</div>
+
+<dl>
+<dt>移動</dt>
+<dd>画面をタッチしたまま、携帯機器を振る</dd>
+<dt>左ボタンクリック</dt>
+<dd>画面をタップする、または、次のような左フリックジェスチャーをする： 画面をタッチし、左ボタンまで指を移動し、指を離す</dd>
+<dt>右ボタンクリック</dt>
+<dd>次のような右フリックジェスチャーをする：画面をタッチし、右ボタンまで指を移動し、指を離す</dd>
+<dt>ドラッグアンドドロップ</dt>
+<dd>画面をタッチし、左ボタンまで指を移動し、左ボタンをタッチしたまま携帯機器を振る</dd>
+<dt>スクロール</dt>
+<dd>画面をタッチし、スクロールボタンまで指を移動し、スクロールボタンをタッチしたまま携帯機器を振る</dd>
+<dt>キー入力</dt>
+<dd>画面をタッチし、キーボードボタンまで指を移動する</dd>
+</dl>
+
+</body>
+</html>

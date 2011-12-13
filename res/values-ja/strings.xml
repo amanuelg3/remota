@@ -1,20 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-	<string name="key1">半/全</string>
-	<string name="key7">6 &amp;</string>
-	<string name="key8">7 \'</string>
-	<string name="key9">8 (</string>
-	<string name="key10">9 )</string>
-	<string name="key11">0</string>
-	<string name="key12">- =</string>
-	<string name="key13">^ ~</string>
-	<string name="key14">\\ |</string>
-	<string name="key27">\@ `</string>
-	<string name="key28">[ {</string>
-	<string name="key30">Caps Lock</string>
-	<string name="key40">; +</string>
-	<string name="key41">: *</string>
-	<string name="key42">] }</string>
-	<string name="key56">\\ _</string>
+    <string name="make_discoverable">発見可能にする</string>
+    <string name="none_paired">ペア設定されたデバイスはありません</string>
+    <string name="connect_device">デバイスと接続</string>
+    <string name="scan_device">デバイスをスキャン</string>
+    <string name="scanning">デバイスを探しています...</string>
+    <string name="title_new_devices">新しいデバイス</string>
+    <string name="title_paired_devices">ペア設定済みデバイス</string>
+    <string name="select_device">接続するデバイスを選択</string>
+    <string name="none_found">デバイスが見つかりませんでした</string>
+    <string name="settings">設定</string>
+    <string name="information">情報</string>
+    <string name="help">ヘルプ</string>
+    <string name="help_url">file:///android_asset/help/help-ja.html</string>
+    <string name="hello_url">file:///android_asset/help/hello-ja.html</string>
+
+    <string name="touch_pad_mode">タッチパッドモード</string>
+    <string name="motion_pad_mode">モーションパッドモード</string>
+
+    <string name="orientation_portrait">縦画面</string>
+    <string name="orientation_landscape">横画面</string>
+    <string name="orientation_system">システム設定に依存</string>
+    <string name="orientation_auto">自動</string>
+
+    <string name="pref_mode">モード</string>
+    <string name="pref_mode_summery">ユーザインタフェースモードを選択</string>
+    <string name="pref_fullscreen">フルスクリーン</string>
+    <string name="pref_fullscreen_summery">フルスクリーンに設定する</string>
+    <string name="pref_touch_pad_orientation">タッチパッドの向き</string>
+    <string name="pref_touch_pad_orientation_summery">タッチパッドモードの画面の向きを設定</string>
+    <string name="pref_keyboard_orientation">キーボードの向き</string>
+    <string name="pref_keyboard_orientation_summery">キーボードの向きを設定</string>
+
+    <string name="key1">半/全</string>
+    <string name="key7">6 &amp;</string>
+    <string name="key8">7 \'</string>
+    <string name="key9">8 (</string>
+    <string name="key10">9 )</string>
+    <string name="key11">0</string>
+    <string name="key12">- =</string>
+    <string name="key13">^ ~</string>
+    <string name="key14">\\ |</string>
+    <string name="key27">\@ `</string>
+    <string name="key28">[ {</string>
+    <string name="key30">Caps Lock</string>
+    <string name="key40">; +</string>
+    <string name="key41">: *</string>
+    <string name="key42">] }</string>
+    <string name="key56">\\ _</string>
 </resources>
 

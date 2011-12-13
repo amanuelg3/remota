@@ -1,8 +1,15 @@
 body {
-    margin: 0;
+    margin: 0.5em;
     padding: 0;
-    background-color: #ceffee;
+    background-color: #ceccee;
     color: black;
+}
+
+body.hello {
+    margin: 0.5em;
+    padding: 0;
+    background-color: black;
+    color: white;
 }
 
 dt {
@@ -20,6 +27,5 @@ div.figure {
 
 div.figure p {
     font-style: italic;
-    text-align: center;
     text-indent: 0;
 }

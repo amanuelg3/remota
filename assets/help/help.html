@@ -7,6 +7,7 @@
 <meta http-equiv="content-script-type" content="text/javascript" />
 <meta http-equiv="content-style-type" content="text/css" />
 <link rel="stylesheet" type="text/css" href="./default.css" />
+<title>Help for Remota</title>
 </head>
 
 <body>
@@ -17,12 +18,12 @@ You can remote control your host PC with simple user interfaces like a touch pad
 <h1>Requirements</h1>
 <ul>
 <li>A Bluetooth dongle on your host PC</li>
-<li>An application on your host PC</li>
+<li>A server application on your host PC</li>
 </ul>
 
 Remota runs on the Bluetooth Serial Port Profile(SPP), so you need a Bluetooth dongle.
 Packets from your mobile device to your host PC go on a Bluetooth serial port as general data,
-so your host PC needs an application for analyze this data.
+so your host PC needs a server application for analyze this data.
 
 <h1>Preparations</h1>
 <h2>Pairing</h2>
@@ -34,7 +35,7 @@ Case the Windows bluetooth stack:
 <li>Press the menu key and select "Make discoverable"</li>
 <li>Search your mobile device from your host PC</li>
   <ol>
-  <li>Press "Bluetooth" on the tasktray</li>
+  <li>Press the Bluetooth icon on the tasktray</li>
   <li>Press "Add a new Bluetooth Device"</li>
   <li>Select your mobile device</li>
   </ol>
@@ -58,7 +59,7 @@ Case the Toshiba bluetooth stack:
 </p>
 
 <h2>Install server application</h2>		
-Second, install the server application from the following URL to your host PC.
+Next, install the server application from the following URL to your host PC.
 
 <p>
 <a href="http://code.google.com/p/remota/">Remota project<br>http://code.google.com/p/remota/</a>
@@ -73,7 +74,7 @@ The incoming COM port number can be found by the following steps.
 <p>
 Case the Windows bluetooth stack:
 <ol>
-<li>Press "Bluetooth" on the tasktray</li>
+<li>Press the Bluetooth icon on the tasktray</li>
 <li>Press "Open Bluetooth Settings"</li>
 <li>Press the "COM Ports" tab</li>
 <li>Find the COM port whose name is your mobile device and direction is incoming</li>
@@ -92,10 +93,11 @@ Case the Toshiba bluetooth stack:
 <h2>Connect</h2>
 Connect your mobile device to your host PC in the following steps.
 If your mobile device has a gyroscope, 
-you can select the motion pad mode before connect(Press the menu key and select "Settings" and tap "Mode"): 
+you can use the motion pad mode(before connect, 
+press the menu key and select "Settings", tap "Mode" and select "Motion pad mode").
 
 <ol>
-<li>Host PC: Run the server application on your host PC</li>
+<li>Host PC: Run the server application</li>
 <li>Host PC: Select the incoming COM port which can be found by <a href="help.html#find_incoming_port">this steps</a></li>
 <li>Host PC: Press the start button</li>
 <li>Press the menu key, select "Connect a device" and select your host PC in the "Paired devices" section</li>
@@ -106,7 +108,7 @@ When the connection is complete, the screen corresponding the selected mode will
 <h2>Touch pad mode</h2>
 <a name="touch_pad">
 
-The touch pad screen has the five areas: the left button, the right button, the keyboard button, the scroll area and the touch pad area.
+The touch pad screen has the following five areas: the left button, the right button, the keyboard button, the scroll area and the touch pad area.
 
 <div class="figure">
 <p><img src="images/touch_pad_l_text.png" width="550" align="center"></p>
@@ -139,7 +141,7 @@ The touch pad screen has the five areas: the left button, the right button, the 
 Requiring a gyroscope.
 </div>
 
-When the screen is touched down, the four areas will appear around the touch down point : 
+When the screen is touched down, the following four areas will appear around the touch down point : 
 the left button, the right button, the keyboard button and the scroll button.
 
 <div class="figure">
@@ -153,13 +155,13 @@ the left button, the right button, the keyboard button and the scroll button.
 <dt>Move</dt>
 <dd>Touch down the screen and shake your mobile device holding the finger down</dd>
 <dt>Left button click</dt>
-<dd>Tap at the screen or the following left-flick gesture: touch down the screen, move to the left button and left the finger</dd>
+<dd>Tap at the screen or perform the following left-flick gesture: touch down the screen, move to the left button and left the finger</dd>
 <dt>Right button click</dt>
-<dd>Right-flick: touch down the screen, move to the right button and left the finger</dd>
+<dd>Perform the following right-flick gesture: touch down the screen, move to the right button and left the finger</dd>
 <dt>Drag and drop</dt>
-<dd>Touch down the screen, move to the left button and shake your mobile device holding the finger down</dd>
+<dd>Touch down the screen, move to the left button and shake your mobile device holding the finger down on the left button</dd>
 <dt>Scroll</dt>
-<dd>Touch down the screen, move to the scroll button and shake your mobile device holding the finger down</dd>
+<dd>Touch down the screen, move to the scroll button and shake your mobile device holding the finger down on the scroll button</dd>
 <dt>Input keys</dt>
 <dd>Touch down the screen and move to the keyboard button</dd>
 </dl>

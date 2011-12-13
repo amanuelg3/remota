@@ -6,7 +6,6 @@ import android.bluetooth.BluetoothDevice;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -95,12 +94,13 @@ public class Remota extends Activity {
     	//setContentView(R.layout.main);
     	
     	WebView webView = new WebView(this);
-		String html = 
-			"<html><head></head><body bgcolor=\"black\" text=\"white\">" +
-			getString(R.string.introduction) +
-			getString(R.string.for_first_use) +
-			"</body></html>";
-		webView.loadData(html, "text/html", "UTF-8");
+    	webView.loadUrl(getResources().getString(R.string.hello_url));
+		//String html = 
+		//	"<html><head><meta http-equiv=\"content-type\" content=\"text/html; charset=utf-8\" /></head><body bgcolor=\"black\" text=\"white\">" +
+		//	getString(R.string.introduction) +
+		//	getString(R.string.for_first_use) +
+		//	"</body></html>";
+		//webView.loadData(html, "text/html", "UTF-8");
 		
 		setContentView(webView);
         

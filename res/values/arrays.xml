@@ -10,6 +10,16 @@
         <item >@string/orientation_auto</item>
         <item >@string/orientation_system</item>
     </string-array>
+    <string-array name="mode_list_values">
+        <item >@string/touch_pad_mode_value</item>
+        <item >@string/motion_pad_mode_value</item>
+    </string-array>
+    <string-array name="orientation_list_values">
+        <item >@string/orientation_portrait_value</item>
+        <item >@string/orientation_landscape_value</item>
+        <item >@string/orientation_auto_value</item>
+        <item >@string/orientation_system_value</item>
+    </string-array>
 
     
 </resources>
