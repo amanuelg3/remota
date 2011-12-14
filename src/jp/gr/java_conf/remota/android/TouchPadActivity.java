@@ -30,7 +30,7 @@ public class TouchPadActivity extends Activity implements View.OnTouchListener {
 	private static final boolean DBG = false;
 	
 	// Constants
-	private static final long THRESHOLD_TIME_FOR_TAP = 100l; // [msec]
+	private static final long THRESHOLD_TIME_FOR_TAP = 200l; // [msec]
 	
 	// Intent request codes
 	private static final int REQUEST_SHOW_KEYBOARD = 1;
