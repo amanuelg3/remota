@@ -1,4 +1,4 @@
-ï»¿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <asmv1:assembly xsi:schemaLocation="urn:schemas-microsoft-com:asm.v1 assembly.adaptive.xsd" manifestVersion="1.0" xmlns:asmv3="urn:schemas-microsoft-com:asm.v3" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#" xmlns:co.v2="urn:schemas-microsoft-com:clickonce.v2" xmlns="urn:schemas-microsoft-com:asm.v2" xmlns:asmv1="urn:schemas-microsoft-com:asm.v1" xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:co.v1="urn:schemas-microsoft-com:clickonce.v1">
   <asmv1:assemblyIdentity name="RemotaHost.exe" version="1.0.0.1" publicKeyToken="0000000000000000" language="neutral" processorArchitecture="x86" type="win32" />
   <description asmv2:iconFile="icon.ico" xmlns="urn:schemas-microsoft-com:asm.v1" />
@@ -15,16 +15,16 @@
       </applicationRequestMinimum>
       <requestedPrivileges xmlns="urn:schemas-microsoft-com:asm.v3">
         <!--
-          UAC ãƒžãƒ‹ãƒ•ã‚§ã‚¹ãƒˆ ã‚ªãƒ—ã‚·ãƒ§ãƒ³
-          Windows ã®ãƒ¦ãƒ¼ã‚¶ãƒ¼ ã‚¢ã‚«ã‚¦ãƒ³ãƒˆåˆ¶å¾¡ã®ãƒ¬ãƒ™ãƒ«ã‚’å¤‰æ›´ã™ã‚‹ã«ã¯ã€
-          requestedExecutionLevel ãƒŽãƒ¼ãƒ‰ã‚’ä»¥ä¸‹ã®ã„ãšã‚Œã‹ã§ç½®æ›ã—ã¾ã™ã€‚
+          UAC ƒ}ƒjƒtƒFƒXƒg ƒIƒvƒVƒ‡ƒ“
+          Windows ‚Ìƒ†[ƒU[ ƒAƒJƒEƒ“ƒg§Œä‚ÌƒŒƒxƒ‹‚ð•ÏX‚·‚é‚É‚ÍA
+          requestedExecutionLevel ƒm[ƒh‚ðˆÈ‰º‚Ì‚¢‚¸‚ê‚©‚Å’uŠ·‚µ‚Ü‚·B
 
         <requestedExecutionLevel  level="asInvoker" uiAccess="false" />
         <requestedExecutionLevel  level="requireAdministrator" uiAccess="false" />
         <requestedExecutionLevel  level="highestAvailable" uiAccess="false" />
 
-         ä¸‹ä½äº’æ›æ€§ã‚’ä¿ã¤ãŸã‚ã«ãƒ•ã‚¡ã‚¤ãƒ«ãŠã‚ˆã³ãƒ¬ã‚¸ã‚¹ãƒˆãƒªã®ä»®æƒ³åŒ–ã‚’ä½¿ç”¨ã™ã‚‹å ´åˆã€
-         requestedExecutionLevel ãƒŽãƒ¼ãƒ‰ã‚’å‰Šé™¤ã—ã¾ã™ã€‚
+         ‰ºˆÊŒÝŠ·«‚ð•Û‚Â‚½‚ß‚Éƒtƒ@ƒCƒ‹‚¨‚æ‚ÑƒŒƒWƒXƒgƒŠ‚Ì‰¼‘z‰»‚ðŽg—p‚·‚éê‡A
+         requestedExecutionLevel ƒm[ƒh‚ðíœ‚µ‚Ü‚·B
     -->
         <requestedExecutionLevel level="asInvoker" uiAccess="false" />
       </requestedPrivileges>
