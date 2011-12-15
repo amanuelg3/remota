@@ -38,7 +38,7 @@
     </Row>
     
     <Row>
-        <Key android:codes="16" android:keyLabel="@string/key16"
+        <Key android:codes="15" android:keyLabel="@string/key16"
         		  android:keyWidth="7.5%p" android:keyEdgeFlags="left"/>
         <Key android:codes="30" android:keyLabel="@string/key31"
         		   android:isRepeatable="true" android:horizontalGap="0%p"/> 
