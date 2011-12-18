@@ -94,10 +94,18 @@
                 android:isModifier="true"
                 android:isSticky="true"/>
         <Key android:codes="57" android:keyLabel="@string/key61"
-                android:keyWidth="30%p" android:isRepeatable="true"/>
-        <Key android:codes="14" android:keyLabel="@string/key15"
                 android:keyWidth="20%p" android:isRepeatable="true"/>
-        <Key android:codes="-3" android:keyLabel="@string/done"
-                android:keyWidth="20%p" android:keyEdgeFlags="right"/>
+        <Key android:codes="75" android:keyLabel="@string/key79"
+                android:isRepeatable="true"/>
+        <Key android:codes="77" android:keyLabel="@string/key89"
+                android:isRepeatable="true"/>
+        <Key android:codes="80" android:keyLabel="@string/key84"
+                android:isRepeatable="true"/>
+        <Key android:codes="72" android:keyLabel="@string/key83"
+                android:isRepeatable="true"/>
+        <Key android:codes="14" android:keyLabel="@string/key15"
+                android:keyWidth="10%p" android:isRepeatable="true"/>
+        <!--<Key android:codes="-3" android:keyLabel="@string/done"
+                android:keyWidth="20%p" android:keyEdgeFlags="right"/>-->
     </Row>
 </Keyboard>
