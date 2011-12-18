@@ -237,6 +237,8 @@ public class TouchPadActivity extends Activity implements View.OnTouchListener {
 					);
 					mTouchState.setPrevX(x);
 					mTouchState.setPrevY(y);
+					// Cancel recognition of a tap
+					mMovePadDownTime = 0;
 				} else if (mTouchState.getScrollBarState() == id) {
 					service.sendMouseEvent(
 							new MouseEvent(

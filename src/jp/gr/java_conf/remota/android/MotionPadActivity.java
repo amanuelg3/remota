@@ -326,6 +326,9 @@ public class MotionPadActivity extends Activity implements View.OnTouchListener,
 						Intent intent = new Intent(this, KeyboardActivity.class);
 						startActivityForResult(intent, REQUEST_SHOW_KEYBOARD);
 					}
+				} else if (PadView.pointFIsInRectF(point, mMotionPadView.getMovePadRectF())) {
+					// Cancel recognition of a tap
+					mMovePadDownTime = 0;
 				}
 			}
 		}
