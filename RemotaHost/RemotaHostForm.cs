@@ -49,6 +49,10 @@ namespace RemotaHost
             {
                 this.log(exception.Message);
             }
+            catch (System.IO.IOException exception)
+            {
+                this.log(exception.Message);
+            }
         }
 
         private void onStopButtonClicked(object sender, EventArgs e)
@@ -209,6 +213,7 @@ namespace RemotaHost
         private void onExitMenuSelected(object sender, EventArgs e)
         {
             notifyMainIcon.Visible = false;
+            this.serialPort.Close();
             Application.Exit();
         }
 
@@ -216,8 +221,13 @@ namespace RemotaHost
         {
             if (e.CloseReason != CloseReason.ApplicationExitCall)
             {
+                // This application is not killed when the main form is closed
                 e.Cancel = true;
                 this.Visible = false;
+            }
+            else
+            {
+                this.serialPort.Close();
             }
 
             global::RemotaHost.Properties.Settings.Default.Save();
@@ -257,6 +267,17 @@ namespace RemotaHost
                 // Perform the start button
                 this.startButton.PerformClick();
             }
+        }
+
+        private void onErrorReceived(object sender, System.IO.Ports.SerialErrorReceivedEventArgs e)
+        {
+            Log l = new Log(this.log);
+            this.logTextBox.BeginInvoke(l, "Error received");
+        }
+
+        private void onPinChanged(object sender, System.IO.Ports.SerialPinChangedEventArgs e)
+        {
+
         }
     }
 }

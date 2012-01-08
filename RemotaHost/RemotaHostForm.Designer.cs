@@ -63,6 +63,8 @@
             // 
             // serialPort
             // 
+            this.serialPort.ErrorReceived += new System.IO.Ports.SerialErrorReceivedEventHandler(this.onErrorReceived);
+            this.serialPort.PinChanged += new System.IO.Ports.SerialPinChangedEventHandler(this.onPinChanged);
             this.serialPort.DataReceived += new System.IO.Ports.SerialDataReceivedEventHandler(this.onDataReceived);
             // 
             // startButton
@@ -84,7 +86,7 @@
             this.serialPortListLabel.Name = "serialPortListLabel";
             this.serialPortListLabel.Size = new System.Drawing.Size(143, 17);
             this.serialPortListLabel.TabIndex = 2;
-            this.serialPortListLabel.Text = global::RemotaHost.Properties.Resources.SelectComPort;
+            this.serialPortListLabel.Text = "Select a COM port";
             // 
             // logTextBox
             // 
@@ -141,7 +143,7 @@
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(126, 17);
             this.label1.TabIndex = 6;
-            this.label1.Text = global::RemotaHost.Properties.Resources.MoveSensitivity;
+            this.label1.Text = "Move sensitivity";
             // 
             // label2
             // 
@@ -151,7 +153,7 @@
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(131, 17);
             this.label2.TabIndex = 7;
-            this.label2.Text = global::RemotaHost.Properties.Resources.WheelSensitivity;
+            this.label2.Text = "Wheel sensitivity";
             // 
             // wheelSensitivity
             // 
