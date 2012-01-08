@@ -9,10 +9,7 @@ public class KeyboardState {
 	
 	// Member fields
 	private int mPressedScanCode = NOT_PRESSED;
-	private boolean mShiftPressed = false;
-	private boolean mCtrlPressed  = false;
-	private boolean mAltPressed   = false;
-	
+
 	private KeyboardState() {
 	}
 	
@@ -34,29 +31,5 @@ public class KeyboardState {
 	
 	public int getPressedScanCode() {
 		return mPressedScanCode;
-	}
-	
-	public void setShiftPressed(boolean shiftPressed) {
-		mShiftPressed = shiftPressed;
-	}
-	
-	public boolean getShiftPressed() {
-		return mShiftPressed;
-	}
-	
-	public void setCtrlPressed(boolean ctrlPressed) {
-		mCtrlPressed = ctrlPressed;
-	}
-	
-	public boolean getCtrlPressed() {
-		return mCtrlPressed;
-	}
-	
-	public void setAltPressed(boolean altPressed) {
-		mAltPressed = altPressed;
-	}
-	
-	public boolean getAltPressed() {
-		return mAltPressed;
 	}
 }

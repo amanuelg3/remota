@@ -1,6 +1,8 @@
 package jp.gr.java_conf.remota.android;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.ListIterator;
 
 import android.app.Activity;
 import android.bluetooth.BluetoothDevice;
@@ -12,6 +14,7 @@ import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.inputmethodservice.Keyboard;
 import android.inputmethodservice.KeyboardView;
+import android.inputmethodservice.Keyboard.Key;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
@@ -28,6 +31,7 @@ public class KeyboardActivity extends Activity implements KeyboardView.OnKeyboar
 	// Member fields
 	private Keyboard mKeyboard;
 	private KeyboardView mKeyboardView;
+	private List<Key> mStickyKeys;
 	
 	// The BroadcastReceiver that listens for disconnection
 	private final BroadcastReceiver mReceiver = new BroadcastReceiver() {
@@ -59,6 +63,17 @@ public class KeyboardActivity extends Activity implements KeyboardView.OnKeyboar
 		mKeyboardView.setKeyboard(mKeyboard);
 		mKeyboardView.setOnKeyboardActionListener(this);
 		linearLayout.addView(mKeyboardView);
+		
+		// Set up the list of the sticky keys
+		mStickyKeys = new ArrayList<Key>();
+		List<Key> keys = mKeyboard.getKeys();
+		Key key = null;
+		for (ListIterator<Key> it = keys.listIterator(); it.hasNext();) {
+			key = it.next();
+			if (key.sticky) {
+				mStickyKeys.add(key);
+			}
+		}
 		
 		// To full screen
 		SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
@@ -95,6 +110,21 @@ public class KeyboardActivity extends Activity implements KeyboardView.OnKeyboar
 		unregisterReceiver(mReceiver);
 	}
 	
+	@Override
+	public void onPause(){
+		super.onPause();
+    	
+    	if (DBG) Log.i(TAG, "+++ ON PAUSE +++");
+    	
+    	// Send keyup events for the sticky keys
+    	ArrayList<KeyboardEvent> keyboardEvents = new ArrayList<KeyboardEvent>();
+    	RemotaService service = RemotaService.getInstance();
+    	
+    	if (addStickyKeyReleasedEvents(keyboardEvents) != 0) {
+    		service.sendKeyboardEvent(keyboardEvents);
+    	}
+	}
+	
 	public void onKey(int primaryCode, int[] keyCodes) {
 		if (DBG) Log.d(TAG, "+++ ON KEY +++");
 	}
@@ -108,56 +138,35 @@ public class KeyboardActivity extends Activity implements KeyboardView.OnKeyboar
 		
 		if (primaryCode == KeyboardEvent.SCANCODE_DONE) {
 			// if the DONE key is pressed, do nothing.
-		} else if (
-				primaryCode == KeyboardEvent.SCANCODE_SHIFT ||
-				primaryCode == KeyboardEvent.SCANCODE_CTRL ||
-				primaryCode == KeyboardEvent.SCANCODE_ALT
-		) {
-			int flag;
-			
-			if (
-					(state.getAltPressed() && primaryCode == KeyboardEvent.SCANCODE_ALT) ||
-					(state.getCtrlPressed() && primaryCode == KeyboardEvent.SCANCODE_CTRL) ||
-					(state.getShiftPressed() && primaryCode == KeyboardEvent.SCANCODE_SHIFT)
-			) {
-				flag = KeyboardEvent.FLAG_kEYUP;
-			} else {
-				flag = KeyboardEvent.FLAG_KEYDOWN;
-			}
-			KeyboardEvent keyboardEvent = new KeyboardEvent(flag, primaryCode);
-		
-			keyboardEvents.add(keyboardEvent);
-			
-			service.sendKeyboardEvent(keyboardEvents);
-			
-			if (primaryCode == KeyboardEvent.SCANCODE_SHIFT) {
-				if (state.getShiftPressed()) {
-					state.setShiftPressed(false);
-				} else {
-					state.setShiftPressed(true);
-				}
-			} else if (primaryCode == KeyboardEvent.SCANCODE_CTRL) {
-				if (state.getCtrlPressed()) {
-					state.setCtrlPressed(false);
-				} else {
-					state.setCtrlPressed(true);
-				}
-			} else if (primaryCode == KeyboardEvent.SCANCODE_ALT) {
-				if (state.getAltPressed()) {
-					state.setAltPressed(false);
-				} else {
-					state.setAltPressed(true);
-				}
-			}
 		} else {
+			// Check whether the pressed key is sticky and on
+			Key key = null;
+			int flag = KeyboardEvent.FLAG_KEYDOWN;
+			for (ListIterator<Key> it = mStickyKeys.listIterator(); it.hasNext();) {
+				key = it.next();
+				if (key.codes[0] == primaryCode) {
+					if (key.on) {
+						flag = KeyboardEvent.FLAG_kEYUP;
+					}
+				}
+				if (key.on) {
+					Log.d(TAG, "pressed code" + key.codes[0] + ",on");
+				} else {
+					Log.d(TAG, "pressed code" + key.codes[0] + ",off");
+				}
+			}
+			
 			KeyboardEvent keyboardEvent = new KeyboardEvent(
-					KeyboardEvent.FLAG_KEYDOWN,
+					flag,
 					primaryCode
 			);
 			
 			keyboardEvents.add(keyboardEvent);
 			
-			addStickyKeyPressedEvents(keyboardEvents);
+			if (flag != KeyboardEvent.FLAG_kEYUP) {
+				addStickyKeyPressedEvents(keyboardEvents);
+			}
+			Log.d(TAG, "events size:" + keyboardEvents.size());
 
 			service.sendKeyboardEvent(keyboardEvents);
 			
@@ -172,24 +181,31 @@ public class KeyboardActivity extends Activity implements KeyboardView.OnKeyboar
 		KeyboardState state = KeyboardState.getInstance();
 		ArrayList<KeyboardEvent> keyboardEvents = new ArrayList<KeyboardEvent>();
 		
+		// Check whether the released key is sticky
+		Key key = null;
+		boolean releasedKeyIsSticky = false;
+		for (ListIterator<Key> it = mStickyKeys.listIterator(); it.hasNext();) {
+			key = it.next();
+			
+			if (key.codes[0] == primaryCode) {
+				releasedKeyIsSticky = true;
+			}
+		}
+		
 		if (primaryCode == KeyboardEvent.SCANCODE_DONE) {
 			// if the DONE key is released, do finish this activity.
 			finish();
-		} else if (
-				primaryCode != KeyboardEvent.SCANCODE_ALT &&
-				primaryCode != KeyboardEvent.SCANCODE_CTRL && 
-				primaryCode != KeyboardEvent.SCANCODE_SHIFT
-		) {
+		} else if (releasedKeyIsSticky == false) {
 			if	(state.getPressedScanCode() == KeyboardState.NOT_PRESSED) {
 				// This case is a key repeat
-			
+
 				KeyboardEvent keyboardEvent = new KeyboardEvent(
 						KeyboardEvent.FLAG_KEYDOWN,
 						primaryCode
 				);
-			
+				
 				keyboardEvents.add(keyboardEvent);
-			
+				
 				addStickyKeyPressedEvents(keyboardEvents);
 				
 				service.sendKeyboardEvent(keyboardEvents);
@@ -206,11 +222,12 @@ public class KeyboardActivity extends Activity implements KeyboardView.OnKeyboar
 			
 				state.setPressedScanCode(KeyboardState.NOT_PRESSED);
 			} else {
+				// This case is not a key repeat 
 				KeyboardEvent keyboardEvent = new KeyboardEvent(
 						KeyboardEvent.FLAG_kEYUP,
 						primaryCode
 				);
-			
+				
 				keyboardEvents.add(keyboardEvent);
 		
 				service.sendKeyboardEvent(keyboardEvents);
@@ -240,32 +257,43 @@ public class KeyboardActivity extends Activity implements KeyboardView.OnKeyboar
 		if (DBG) Log.d(TAG, "+++ ON SWIPE RIGHT +++");
 	}
 	
-	private void addStickyKeyPressedEvents(ArrayList<KeyboardEvent> keyboardEvents) {
-		KeyboardState state = KeyboardState.getInstance();
+	private int addStickyKeyPressedEvents(ArrayList<KeyboardEvent> keyboardEvents) {
 		KeyboardEvent keyboardEvent = null;
-		
-		if (state.getAltPressed()) {
-			keyboardEvent = new KeyboardEvent(
-					KeyboardEvent.FLAG_KEYDOWN,
-					KeyboardEvent.SCANCODE_ALT
-			);
-			keyboardEvents.add(keyboardEvent);
+		Key key = null;
+		int counts = 0;
+		for (ListIterator<Key> it = mStickyKeys.listIterator(); it.hasNext();) {
+			key = it.next();
+			
+			if (key.on) {
+				keyboardEvent = new KeyboardEvent(
+						KeyboardEvent.FLAG_KEYDOWN,
+						key.codes[0]
+				);
+				keyboardEvents.add(keyboardEvent);
+				counts++;
+			}
 		}
 		
-		if (state.getCtrlPressed()) {
-			keyboardEvent = new KeyboardEvent(
-					KeyboardEvent.FLAG_KEYDOWN,
-					KeyboardEvent.SCANCODE_CTRL
-			);
-			keyboardEvents.add(keyboardEvent);
+		return counts;
+	}
+	
+	private int addStickyKeyReleasedEvents(ArrayList<KeyboardEvent> keyboardEvents) {
+		KeyboardEvent keyboardEvent = null;
+		Key key = null;
+		int counts = 0;
+		for (ListIterator<Key> it = mStickyKeys.listIterator(); it.hasNext();) {
+			key = it.next();
+			
+			if (key.on == false) {
+				keyboardEvent = new KeyboardEvent(
+						KeyboardEvent.FLAG_kEYUP,
+						key.codes[0]
+				);
+				keyboardEvents.add(keyboardEvent);
+				counts++;
+			}
 		}
 		
-		if (state.getShiftPressed()) {
-			keyboardEvent = new KeyboardEvent(
-					KeyboardEvent.FLAG_KEYDOWN,
-					KeyboardEvent.SCANCODE_SHIFT
-			);
-			keyboardEvents.add(keyboardEvent);
-		}
+		return counts;
 	}
 }
