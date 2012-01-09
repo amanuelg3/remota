@@ -112,17 +112,17 @@ public class KeyboardActivity extends Activity implements KeyboardView.OnKeyboar
 	
 	@Override
 	public void onPause(){
-		super.onPause();
-    	
-    	if (DBG) Log.i(TAG, "+++ ON PAUSE +++");
-    	
-    	// Send keyup events for the sticky keys
+		// Send keyup events for the sticky keys
     	ArrayList<KeyboardEvent> keyboardEvents = new ArrayList<KeyboardEvent>();
     	RemotaService service = RemotaService.getInstance();
     	
     	if (addStickyKeyReleasedEvents(keyboardEvents) != 0) {
     		service.sendKeyboardEvent(keyboardEvents);
     	}
+		
+		super.onPause();
+    	
+    	if (DBG) Log.i(TAG, "+++ ON PAUSE +++");
 	}
 	
 	public void onKey(int primaryCode, int[] keyCodes) {
@@ -149,11 +149,6 @@ public class KeyboardActivity extends Activity implements KeyboardView.OnKeyboar
 						flag = KeyboardEvent.FLAG_kEYUP;
 					}
 				}
-				if (key.on) {
-					Log.d(TAG, "pressed code" + key.codes[0] + ",on");
-				} else {
-					Log.d(TAG, "pressed code" + key.codes[0] + ",off");
-				}
 			}
 			
 			KeyboardEvent keyboardEvent = new KeyboardEvent(
@@ -164,9 +159,8 @@ public class KeyboardActivity extends Activity implements KeyboardView.OnKeyboar
 			keyboardEvents.add(keyboardEvent);
 			
 			if (flag != KeyboardEvent.FLAG_kEYUP) {
-				addStickyKeyPressedEvents(keyboardEvents);
+				//addStickyKeyPressedEvents(keyboardEvents);
 			}
-			Log.d(TAG, "events size:" + keyboardEvents.size());
 
 			service.sendKeyboardEvent(keyboardEvents);
 			
@@ -206,7 +200,7 @@ public class KeyboardActivity extends Activity implements KeyboardView.OnKeyboar
 				
 				keyboardEvents.add(keyboardEvent);
 				
-				addStickyKeyPressedEvents(keyboardEvents);
+				//addStickyKeyPressedEvents(keyboardEvents);
 				
 				service.sendKeyboardEvent(keyboardEvents);
 			
@@ -284,7 +278,7 @@ public class KeyboardActivity extends Activity implements KeyboardView.OnKeyboar
 		for (ListIterator<Key> it = mStickyKeys.listIterator(); it.hasNext();) {
 			key = it.next();
 			
-			if (key.on == false) {
+			if (key.on) {
 				keyboardEvent = new KeyboardEvent(
 						KeyboardEvent.FLAG_kEYUP,
 						key.codes[0]

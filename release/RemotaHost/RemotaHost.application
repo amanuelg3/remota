@@ -3,15 +3,18 @@
   <assemblyIdentity name="RemotaHost.application" version="1.0.0.1" publicKeyToken="0000000000000000" language="neutral" processorArchitecture="x86" xmlns="urn:schemas-microsoft-com:asm.v1" />
   <description asmv2:publisher="RemotaHost" asmv2:product="RemotaHost" xmlns="urn:schemas-microsoft-com:asm.v1" />
   <deployment install="true" mapFileExtensions="true" />
+  <compatibleFrameworks xmlns="urn:schemas-microsoft-com:clickonce.v2">
+    <framework targetVersion="4.0" profile="Full" supportedRuntime="4.0.30319" />
+  </compatibleFrameworks>
   <dependency>
-    <dependentAssembly dependencyType="install" codebase="RemotaHost.exe.manifest" size="5596">
+    <dependentAssembly dependencyType="install" codebase="RemotaHost.exe.manifest" size="4724">
       <assemblyIdentity name="RemotaHost.exe" version="1.0.0.1" publicKeyToken="0000000000000000" language="neutral" processorArchitecture="x86" type="win32" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-        <dsig:DigestValue>7TF6kESzyuD0DHuxzxyfh16d7N0=</dsig:DigestValue>
+        <dsig:DigestValue>5ShphRa1Z7/CO2nGKV2bcjkiyMc=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
