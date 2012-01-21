@@ -337,6 +337,9 @@ public class RemotaService {
     			} catch (IOException e) {
     				Log.e(TAG, "accept() failed", e);
     				break;
+    			} catch (NullPointerException e) {
+    				Log.e(TAG, "accept() failed", e);
+    				break;
     			}
 
     			// If a connection was accepted
