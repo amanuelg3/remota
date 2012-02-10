@@ -1,4 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+/* Copyright (C) 2011-2012 Test Muroi (test.muroi@gmail.com)
+ *
+ * This program is free software: you can redistribute it and/or modify 
+ * it under the terms of the GNU General Public License as published by 
+ * the Free Software Foundation, either version 3 of the License, or 
+ * (at your option) any later version.
+ */
+-->
 <resources>
     <string name="hello">Remota is an application which can be used as an air mouse and an air keyboard. First, go "help" menu item.</string>
     <string name="app_name">Remota</string>
@@ -117,4 +126,3 @@
       For first use, you need some preparations. Please go to the Help page (Press the menu key and select "Help".
     </string>
 </resources>
-
