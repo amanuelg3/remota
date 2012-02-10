@@ -1,4 +1,0 @@
-
-1. 端末からオープン
-2. Bluetooth→オプション→その他→Bluetooth Local Com→LocalCOM Server(SerialPort)でポート番号調べる
-3. PC側でオープン
