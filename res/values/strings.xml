@@ -116,6 +116,18 @@
     <string name="key83">↑</string>
     <string name="key84">↓</string>
     <string name="key89">→</string>
+    <string name="key112">F1</string>
+    <string name="key113">F2</string>
+    <string name="key114">F3</string>
+    <string name="key115">F4</string>
+    <string name="key116">F5</string>
+    <string name="key117">F6</string>
+    <string name="key118">F7</string>
+    <string name="key119">F8</string>
+    <string name="key120">F9</string>
+    <string name="key121">F10</string>
+    <string name="key122">F11</string>
+    <string name="key123">F12</string>
         
     <string name="introduction">
       Remota is an application which can be used as an air mouse and an air keyboard.

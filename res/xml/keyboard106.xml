@@ -14,6 +14,23 @@
     android:verticalGap="0px"
     android:keyHeight="@dimen/key_height">
 
+	<Row android:keyWidth="8%p">
+        <Key android:codes="112" android:keyLabel="@string/key112"
+        		   android:isRepeatable="true" android:keyEdgeFlags="left"/>
+        <Key android:codes="113" android:keyLabel="@string/key113" android:isRepeatable="true"/>
+        <Key android:codes="114" android:keyLabel="@string/key114" android:isRepeatable="true"/>
+        <Key android:codes="115" android:keyLabel="@string/key115" android:isRepeatable="true"/>
+        <Key android:codes="116" android:keyLabel="@string/key116" android:isRepeatable="true"/>
+        <Key android:codes="117" android:keyLabel="@string/key117" android:isRepeatable="true"/>
+        <Key android:codes="118" android:keyLabel="@string/key118" android:isRepeatable="true"/>
+        <Key android:codes="119" android:keyLabel="@string/key119" android:isRepeatable="true"/>
+        <Key android:codes="120" android:keyLabel="@string/key120" android:isRepeatable="true"/>
+        <Key android:codes="121" android:keyLabel="@string/key121" android:isRepeatable="true"/>
+        <Key android:codes="122" android:keyLabel="@string/key122" android:isRepeatable="true"/>
+        <Key android:codes="123" android:keyLabel="@string/key123"
+        		   android:isRepeatable="true" android:keyEdgeFlags="right"/>
+    </Row>
+
     <Row>
         <Key android:codes="2" android:keyLabel="@string/key2"
         		   android:isRepeatable="true" android:keyEdgeFlags="left"/>
