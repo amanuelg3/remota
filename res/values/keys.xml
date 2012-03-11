@@ -13,4 +13,5 @@
     <string name="fullscreen_key">FULLSCREEN_KEY</string>
     <string name="touch_pad_orientation_key">TOUCH_PAD_ORIENTATION_KEY</string>
     <string name="keyboard_orientation_key">KEYBOARD_ORIENTATION_KEY</string>
+    <string name="keyboard_key_height_key">KEYBOARD_KEY_HEIGHT_KEY</string>
 </resources>

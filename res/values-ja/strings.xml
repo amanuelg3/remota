@@ -32,14 +32,24 @@
     <string name="orientation_system">システム設定に依存</string>
     <string name="orientation_auto">自動</string>
 
+    <string name="pref_category_general">全般</string>
     <string name="pref_mode">モード</string>
     <string name="pref_mode_summery">ユーザインタフェースモードを選択</string>
     <string name="pref_fullscreen">フルスクリーン</string>
     <string name="pref_fullscreen_summery">フルスクリーンに設定する</string>
+    <string name="pref_category_touch_pad">タッチパッド設定</string>
     <string name="pref_touch_pad_orientation">タッチパッドの向き</string>
     <string name="pref_touch_pad_orientation_summery">タッチパッドモードの画面の向きを設定</string>
+    <string name="pref_category_keyboard">キーボード設定</string>
     <string name="pref_keyboard_orientation">キーボードの向き</string>
     <string name="pref_keyboard_orientation_summery">キーボードの向きを設定</string>
+    <string name="pref_keyboard_key_height">キーの高さ</string>
+    <string name="pref_keyboard_key_height_summery">キーの高さを設定する</string>
+    <string name="pref_keyboard_key_height_dialog_message">
+        キーの高さ[dip]を設定してください。
+        デフォルト値は45[dip]です。
+        画面に応じた高さに自動調節するには、0に設定してください。
+    </string>
 
     <string name="key1">半/全</string>
     <string name="key7">6 &amp;</string>
