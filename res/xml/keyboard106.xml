@@ -12,7 +12,7 @@
     android:keyWidth="10%p"
     android:horizontalGap="0px"
     android:verticalGap="0px"
-    android:keyHeight="@dimen/key_height">
+    android:keyHeight="14.2%p">
 
 	<Row android:keyWidth="8%p">
         <Key android:codes="112" android:keyLabel="@string/key112"

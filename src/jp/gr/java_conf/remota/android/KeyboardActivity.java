@@ -24,9 +24,12 @@ import android.inputmethodservice.Keyboard;
 import android.inputmethodservice.KeyboardView;
 import android.inputmethodservice.Keyboard.Key;
 import android.os.Bundle;
+import android.os.Handler;
 import android.preference.PreferenceManager;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.Window;
 import android.view.WindowManager;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.LinearLayout;
@@ -34,12 +37,62 @@ import android.widget.LinearLayout;
 public class KeyboardActivity extends Activity implements KeyboardView.OnKeyboardActionListener {
 	// Debugging
 	private static final String TAG = "KeyboardActivity";
-	private static final boolean DBG = false;
+	private static final boolean DBG = true;
+	
+	private static final int NUM_KEYBOARD_ROWS = 7;
 	
 	// Member fields
 	private Keyboard mKeyboard;
 	private KeyboardView mKeyboardView;
 	private List<Key> mStickyKeys;
+	
+	private Handler mHandler = new Handler();
+	
+	private Runnable mUpdateKeyboardTask = new Runnable() {
+		public void run() {
+			SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(KeyboardActivity.this);
+			// Get the keyboard key witdh dip
+			String keyHeightSetting = sp.getString(
+					getString(R.string.keyboard_key_height_key), 
+					getString(R.string.pref_keyboard_key_height_default_value)
+			);
+			if (DBG) Log.d(TAG, "keyheightsetting:" + keyHeightSetting);
+			int keyHeightDip;
+			try {
+				keyHeightDip = Integer.parseInt(keyHeightSetting);
+			} catch (NumberFormatException e) {
+				keyHeightDip = 0;
+			}
+			
+			// Calculate the key height value
+			DisplayMetrics dm = new DisplayMetrics();
+			getWindowManager().getDefaultDisplay().getMetrics(dm);
+			float keyHeight;
+			if (keyHeightDip <= 0) {
+				if (DBG) Log.d(TAG, "keyboard height:" + mKeyboard.getHeight());
+				keyHeight = mKeyboard.getHeight() / NUM_KEYBOARD_ROWS;
+			} else {
+				// keyHeightDip > 0
+				keyHeight = keyHeightDip * dm.density;
+			}
+
+			// Set up the list of the sticky keys and key width
+			mStickyKeys = new ArrayList<Key>();
+			List<Key> keys = mKeyboard.getKeys();
+			Key key = null;
+			int rowIndex = 0;
+			for (ListIterator<Key> it = keys.listIterator(); it.hasNext();) {
+				key = it.next();
+				rowIndex = (int)(key.y / key.height);
+				key.height = (int)keyHeight;
+				key.y = (int)(keyHeight * rowIndex);
+				if (DBG) Log.d(TAG, "keyheight: " + key.height + ":" + keyHeightDip + ":" + rowIndex);
+				if (key.sticky) {
+					mStickyKeys.add(key);
+				}
+			}
+		}
+	};
 	
 	// The BroadcastReceiver that listens for disconnection
 	private final BroadcastReceiver mReceiver = new BroadcastReceiver() {
@@ -66,28 +119,15 @@ public class KeyboardActivity extends Activity implements KeyboardView.OnKeyboar
 		linearLayout.setLayoutParams(
 				new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT)
 		);
-		mKeyboard = new Keyboard(this, R.xml.qwerty);
-		mKeyboardView = new KeyboardView(this, null);
-		mKeyboardView.setKeyboard(mKeyboard);
-		mKeyboardView.setOnKeyboardActionListener(this);
-		linearLayout.addView(mKeyboardView);
-		
-		// Set up the list of the sticky keys
-		mStickyKeys = new ArrayList<Key>();
-		List<Key> keys = mKeyboard.getKeys();
-		Key key = null;
-		for (ListIterator<Key> it = keys.listIterator(); it.hasNext();) {
-			key = it.next();
-			if (key.sticky) {
-				mStickyKeys.add(key);
-			}
-		}
 		
 		// To full screen
 		SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
-		if (sp.getBoolean(getString(R.string.fullscreen_key), false)) {
+		//if (sp.getBoolean(getString(R.string.fullscreen_key), false)) {
 			getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
-		}
+		//}
+
+		// Hide the title
+		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		
 		// Set the screen orientation
 		String orientation = sp.getString(getString(R.string.keyboard_orientation_key), getString(R.string.orientation_landscape_value));
@@ -99,6 +139,16 @@ public class KeyboardActivity extends Activity implements KeyboardView.OnKeyboar
 			setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
 		}
 		
+		// Set the keyboard
+		mKeyboard = new Keyboard(this, R.xml.qwerty);
+		mKeyboardView = new KeyboardView(this, null);
+		mKeyboardView.setKeyboard(mKeyboard);
+		mKeyboardView.setOnKeyboardActionListener(this);
+		linearLayout.addView(mKeyboardView);
+		
+		// Update the keyboard information
+		mHandler.post(mUpdateKeyboardTask);
+		
 		//setContentView(mKeyboardView);
 		setContentView(linearLayout);
 		
@@ -107,6 +157,16 @@ public class KeyboardActivity extends Activity implements KeyboardView.OnKeyboar
 		registerReceiver(mReceiver, filter);
 
 		setResult(Activity.RESULT_OK);
+	}
+	
+	@Override
+	public synchronized void onResume(){
+		super.onResume();
+		
+		if(DBG) Log.i(TAG, "+++ ON RESUME +++");
+		
+		// Update the keyboard information
+		mHandler.post(mUpdateKeyboardTask);
 	}
 	
 	@Override
