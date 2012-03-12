@@ -9,13 +9,45 @@
  */
 -->
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
-    <PreferenceCategory android:title="@string/pref_category_general"><ListPreference android:entryValues="@array/mode_list_values" android:entries="@array/mode_list_entries" android:key="@string/mode_key" android:defaultValue="@string/touch_pad_mode_value" android:title="@string/pref_mode" android:summary="@string/pref_mode_summery" /><CheckBoxPreference android:key="@string/fullscreen_key" android:defaultValue="false" android:summary="@string/pref_fullscreen_summery" android:title="@string/pref_fullscreen" /></PreferenceCategory>
+    <PreferenceCategory android:title="@string/pref_category_general">
+        <ListPreference 
+            android:entryValues="@array/mode_list_values" 
+            android:entries="@array/mode_list_entries" 
+            android:key="@string/mode_key" 
+            android:defaultValue="@string/touch_pad_mode_value" 
+            android:title="@string/pref_mode" 
+            android:summary="@string/pref_mode_summery" />
+        <CheckBoxPreference 
+            android:key="@string/fullscreen_key" 
+            android:defaultValue="false" 
+            android:summary="@string/pref_fullscreen_summery" 
+            android:title="@string/pref_fullscreen" />
+    </PreferenceCategory>
     
-    <PreferenceCategory android:title="@string/pref_category_touch_pad"><ListPreference android:entryValues="@array/orientation_list_values" android:entries="@array/orientation_list_entries" android:key="@string/touch_pad_orientation_key" android:defaultValue="@string/orientation_landscape_value" android:title="@string/pref_touch_pad_orientation" android:summary="@string/pref_touch_pad_orientation_summery" /></PreferenceCategory>
+    <PreferenceCategory android:title="@string/pref_category_touch_pad">
+        <ListPreference 
+            android:entryValues="@array/orientation_list_values" 
+            android:entries="@array/orientation_list_entries" 
+            android:key="@string/touch_pad_orientation_key" 
+            android:defaultValue="@string/orientation_landscape_value" 
+            android:title="@string/pref_touch_pad_orientation" 
+            android:summary="@string/pref_touch_pad_orientation_summery" />
+    </PreferenceCategory>
     
-    <PreferenceCategory android:title="@string/pref_category_keyboard"><ListPreference android:entries="@array/orientation_list_entries" android:entryValues="@array/orientation_list_values" android:summary="@string/pref_keyboard_orientation_summery" android:title="@string/pref_keyboard_orientation" android:key="@string/keyboard_orientation_key" android:defaultValue="@string/orientation_landscape_value" />
-    <EditTextPreference android:summary="@string/pref_keyboard_key_height_summery" android:title="@string/pref_keyboard_key_height" android:key="@string/keyboard_key_height_key" android:defaultValue="@string/pref_keyboard_key_height_default_value" android:dialogMessage="@string/pref_keyboard_key_height_dialog_message"/>
-</PreferenceCategory>
-    
-    
+    <PreferenceCategory android:title="@string/pref_category_keyboard">
+        <ListPreference 
+            android:entries="@array/orientation_list_entries" 
+            android:entryValues="@array/orientation_list_values" 
+            android:summary="@string/pref_keyboard_orientation_summery" 
+            android:title="@string/pref_keyboard_orientation" 
+            android:key="@string/keyboard_orientation_key" 
+            android:defaultValue="@string/orientation_landscape_value" />
+        <EditTextPreference 
+            android:summary="@string/pref_keyboard_key_height_summery" 
+            android:title="@string/pref_keyboard_key_height" 
+            android:key="@string/keyboard_key_height_key" 
+            android:defaultValue="@string/pref_keyboard_key_height_default_value" 
+            android:inputType="number"
+            android:dialogMessage="@string/pref_keyboard_key_height_dialog_message"/>
+    </PreferenceCategory>
 </PreferenceScreen>
