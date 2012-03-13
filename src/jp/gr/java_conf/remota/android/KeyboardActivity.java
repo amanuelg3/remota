@@ -326,16 +326,18 @@ public class KeyboardActivity extends Activity implements KeyboardView.OnKeyboar
 		KeyboardEvent keyboardEvent = null;
 		Key key = null;
 		int counts = 0;
-		for (ListIterator<Key> it = mStickyKeys.listIterator(); it.hasNext();) {
-			key = it.next();
+		if (mStickyKeys != null) {
+			for (ListIterator<Key> it = mStickyKeys.listIterator(); it.hasNext();) {
+				key = it.next();
 			
-			if (key.on) {
-				keyboardEvent = new KeyboardEvent(
-						KeyboardEvent.FLAG_KEYDOWN,
-						key.codes[0]
-				);
-				keyboardEvents.add(keyboardEvent);
-				counts++;
+				if (key.on) {
+					keyboardEvent = new KeyboardEvent(
+							KeyboardEvent.FLAG_KEYDOWN,
+							key.codes[0]
+					);
+					keyboardEvents.add(keyboardEvent);
+					counts++;
+				}
 			}
 		}
 		
@@ -346,16 +348,18 @@ public class KeyboardActivity extends Activity implements KeyboardView.OnKeyboar
 		KeyboardEvent keyboardEvent = null;
 		Key key = null;
 		int counts = 0;
-		for (ListIterator<Key> it = mStickyKeys.listIterator(); it.hasNext();) {
-			key = it.next();
+		if (mStickyKeys != null) {
+			for (ListIterator<Key> it = mStickyKeys.listIterator(); it.hasNext();) {
+				key = it.next();
 			
-			if (key.on) {
-				keyboardEvent = new KeyboardEvent(
-						KeyboardEvent.FLAG_kEYUP,
-						key.codes[0]
-				);
-				keyboardEvents.add(keyboardEvent);
-				counts++;
+				if (key.on) {
+					keyboardEvent = new KeyboardEvent(
+							KeyboardEvent.FLAG_kEYUP,
+							key.codes[0]
+					);
+					keyboardEvents.add(keyboardEvent);
+					counts++;
+				}
 			}
 		}
 		
