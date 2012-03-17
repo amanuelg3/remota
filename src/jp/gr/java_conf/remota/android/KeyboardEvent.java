@@ -21,6 +21,7 @@ public class KeyboardEvent extends InputEvent {
 	public static final int SCANCODE_CTRL  = 29;
 	public static final int SCANCODE_ALT   = 56;
 	public static final int SCANCODE_DONE  = -3;
+	public static final int SCANCODE_FN    = -2;
 	
 	// Member fields
 	private int mFlag;

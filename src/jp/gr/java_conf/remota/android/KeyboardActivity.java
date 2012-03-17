@@ -41,17 +41,28 @@ public class KeyboardActivity extends Activity implements KeyboardView.OnKeyboar
 	
 	private static final int NUM_KEYBOARD_ROWS = 7;
 	
+	private static final String KEY_KEYBOARD_MODE = "KEY_KEYBOARD_MODE";
+	
 	// Member fields
 	private Keyboard mKeyboard;
+	private Keyboard mKeyboardFn;
 	private KeyboardView mKeyboardView;
+	private LinearLayout mLinearLayout;
 	private List<Key> mStickyKeys;
 	private boolean mUpdated = false;
+	private int mKeyboardMode = 0;
 	
 	private Handler mHandler = new Handler();
 	
 	private Runnable mUpdateKeyboardTask = new Runnable() {
 		public void run() {
-			if (mUpdated == false) { 
+			if (mUpdated == false) {
+				Keyboard keyboard = null;
+				if (mKeyboardMode == getResources().getInteger(R.integer.keyboard_mode_fn)) {
+					keyboard = mKeyboardFn;
+				} else {
+					keyboard = mKeyboard;
+				}
 				SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(KeyboardActivity.this);
 				// Get the keyboard key witdh dip
 				String keyHeightSetting = sp.getString(
@@ -71,7 +82,7 @@ public class KeyboardActivity extends Activity implements KeyboardView.OnKeyboar
 				float density = dm.density;
 				float keyHeight;
 				if (keyHeightDip <= 0) {
-					keyHeight = mKeyboard.getHeight() / NUM_KEYBOARD_ROWS;
+					keyHeight = keyboard.getHeight() / NUM_KEYBOARD_ROWS;
 				} else {
 					// keyHeightDip > 0
 					keyHeight = keyHeightDip * density;
@@ -79,20 +90,22 @@ public class KeyboardActivity extends Activity implements KeyboardView.OnKeyboar
 
 				// Set up the list of the sticky keys and key width
 				mStickyKeys = new ArrayList<Key>();
-				List<Key> keys = mKeyboard.getKeys();
+				List<Key> keys = keyboard.getKeys();
 				Key key = null;
 				int rowIndex = 0;
 				for (ListIterator<Key> it = keys.listIterator(); it.hasNext();) {
 					key = it.next();
 					rowIndex = (int)(key.y / key.height);
 					key.height = (int)keyHeight;
-					key.y = (int)(keyHeight * (-NUM_KEYBOARD_ROWS + rowIndex) + mKeyboard.getHeight());
+					key.y = (int)(keyHeight * (-NUM_KEYBOARD_ROWS + rowIndex) + keyboard.getHeight());
 					if (key.sticky) {
 						mStickyKeys.add(key);
 					}
 				}
 				
 				mUpdated = true;
+				mKeyboardView.setKeyboard(keyboard);
+				mKeyboardView.invalidate();
 			}
 		}
 	};
@@ -116,13 +129,6 @@ public class KeyboardActivity extends Activity implements KeyboardView.OnKeyboar
 		
 		if (DBG) Log.i(TAG, "+++ ON CREATE +++");
 		
-		// Set up the KeyboardView.
-		LinearLayout linearLayout = new LinearLayout(this);
-		linearLayout.setGravity(Gravity.BOTTOM);
-		linearLayout.setLayoutParams(
-				new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT)
-		);
-		
 		// To full screen
 		SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
 		//if (sp.getBoolean(getString(R.string.fullscreen_key), false)) {
@@ -142,18 +148,35 @@ public class KeyboardActivity extends Activity implements KeyboardView.OnKeyboar
 			setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
 		}
 		
+		// Set up the KeyboardView.
+		mLinearLayout = new LinearLayout(this);
+		mLinearLayout.setGravity(Gravity.BOTTOM);
+		mLinearLayout.setLayoutParams(
+				new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT)
+		);
+		
 		// Set the keyboard
-		mKeyboard = new Keyboard(this, R.xml.qwerty);
+		mKeyboardMode = getResources().getInteger(R.integer.keyboard_mode_normal);
+		int modeFn = getResources().getInteger(R.integer.keyboard_mode_fn);
+		try {
+			if (savedInstanceState.getInt(KEY_KEYBOARD_MODE) == modeFn) {
+				mKeyboardMode = modeFn;
+			}
+		} catch (NullPointerException e) {
+			
+		}
+		mKeyboard = new Keyboard(this, R.xml.qwerty, R.integer.keyboard_mode_normal);
+		mKeyboardFn = new Keyboard(this, R.xml.qwerty, R.integer.keyboard_mode_fn);
 		mKeyboardView = new KeyboardView(this, null);
 		mKeyboardView.setKeyboard(mKeyboard);
 		mKeyboardView.setOnKeyboardActionListener(this);
-		linearLayout.addView(mKeyboardView);
+		mLinearLayout.addView(mKeyboardView);
 		
 		// Update the keyboard information
 		mHandler.post(mUpdateKeyboardTask);
 		
 		//setContentView(mKeyboardView);
-		setContentView(linearLayout);
+		setContentView(mLinearLayout);
 		
 		// Register for broadcasts when device is disconnected
 		IntentFilter filter = new IntentFilter(BluetoothDevice.ACTION_ACL_DISCONNECTED);
@@ -169,7 +192,7 @@ public class KeyboardActivity extends Activity implements KeyboardView.OnKeyboar
 		if(DBG) Log.i(TAG, "+++ ON RESUME +++");
 		
 		// Update the keyboard information
-		mHandler.post(mUpdateKeyboardTask);
+		//mHandler.post(mUpdateKeyboardTask);
 	}
 	
 	@Override
@@ -196,6 +219,20 @@ public class KeyboardActivity extends Activity implements KeyboardView.OnKeyboar
     	if (DBG) Log.i(TAG, "+++ ON PAUSE +++");
 	}
 	
+	@Override
+	protected void onSaveInstanceState(Bundle outState) {
+		super.onSaveInstanceState(outState);
+		
+		outState.putInt(KEY_KEYBOARD_MODE, mKeyboardMode);
+	}
+	
+	@Override
+	protected void onRestoreInstanceState(Bundle savedInstanceState) {
+		super.onRestoreInstanceState(savedInstanceState);
+		
+		mKeyboardMode = savedInstanceState.getInt(KEY_KEYBOARD_MODE);
+	}
+	
 	public void onKey(int primaryCode, int[] keyCodes) {
 		if (DBG) Log.d(TAG, "+++ ON KEY +++");
 	}
@@ -209,7 +246,8 @@ public class KeyboardActivity extends Activity implements KeyboardView.OnKeyboar
 		
 		if (primaryCode == KeyboardEvent.SCANCODE_DONE) {
 			// if the DONE key is pressed, do nothing.
-		} else {
+		} else if (primaryCode == KeyboardEvent.SCANCODE_FN) {
+		} else {			
 			// Check whether the pressed key is sticky and on
 			Key key = null;
 			int flag = KeyboardEvent.FLAG_KEYDOWN;
@@ -260,6 +298,20 @@ public class KeyboardActivity extends Activity implements KeyboardView.OnKeyboar
 		if (primaryCode == KeyboardEvent.SCANCODE_DONE) {
 			// if the DONE key is released, do finish this activity.
 			finish();
+		} else if (primaryCode == KeyboardEvent.SCANCODE_FN) {
+			int modeNormal = getResources().getInteger(R.integer.keyboard_mode_normal);
+			int modeFn = getResources().getInteger(R.integer.keyboard_mode_fn);
+			if (mKeyboardMode == modeNormal) {
+				mKeyboardMode = modeFn;
+				//mKeyboardView.setKeyboard(mKeyboardFn);
+			} else {
+				mKeyboardMode = modeNormal;
+				//mKeyboardView.setKeyboard(mKeyboard);
+			}
+			mUpdated = false;
+			
+			// Update the keyboard information
+			mHandler.post(mUpdateKeyboardTask);
 		} else if (releasedKeyIsSticky == false) {
 			if	(state.getPressedScanCode() == KeyboardState.NOT_PRESSED) {
 				// This case is a key repeat

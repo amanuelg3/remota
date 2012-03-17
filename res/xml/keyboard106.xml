@@ -14,9 +14,10 @@
     android:verticalGap="0px"
     android:keyHeight="14.2%p">
 
-	<Row android:keyWidth="8%p">
-        <Key android:codes="59" android:keyLabel="@string/key112"
+    <Row android:keyWidth="7.1%p">
+        <Key android:codes="1" android:keyLabel="@string/key110"
         		   android:isRepeatable="true" android:keyEdgeFlags="left"/>
+        <Key android:codes="59" android:keyLabel="@string/key112" android:isRepeatable="true"/>
         <Key android:codes="60" android:keyLabel="@string/key113" android:isRepeatable="true"/>
         <Key android:codes="61" android:keyLabel="@string/key114" android:isRepeatable="true"/>
         <Key android:codes="62" android:keyLabel="@string/key115" android:isRepeatable="true"/>
@@ -27,13 +28,14 @@
         <Key android:codes="67" android:keyLabel="@string/key120" android:isRepeatable="true"/>
         <Key android:codes="68" android:keyLabel="@string/key121" android:isRepeatable="true"/>
         <Key android:codes="87" android:keyLabel="@string/key122" android:isRepeatable="true"/>
-        <Key android:codes="88" android:keyLabel="@string/key123"
+        <Key android:codes="88" android:keyLabel="@string/key123" android:isRepeatable="true"/>
+        <Key android:codes="-8109" android:keyLabel="@string/key76"
         		   android:isRepeatable="true" android:keyEdgeFlags="right"/>
     </Row>
 
-    <Row>
-        <Key android:codes="2" android:keyLabel="@string/key2"
-        		   android:isRepeatable="true" android:keyEdgeFlags="left"/>
+    <Row android:keyWidth="8.3%p">
+        <Key android:codes="41" android:keyLabel="@string/key1"	android:keyWidth="7.0%p" android:keyEdgeFlags="left"/>
+        <Key android:codes="2" android:keyLabel="@string/key2" android:isRepeatable="true"/>
         <Key android:codes="3" android:keyLabel="@string/key3" android:isRepeatable="true"/>
         <Key android:codes="4" android:keyLabel="@string/key4" android:isRepeatable="true"/>
         <Key android:codes="5" android:keyLabel="@string/key5" android:isRepeatable="true"/>
@@ -43,11 +45,14 @@
         <Key android:codes="9" android:keyLabel="@string/key9" android:isRepeatable="true"/>
         <Key android:codes="10" android:keyLabel="@string/key10" android:isRepeatable="true"/>
         <Key android:codes="11" android:keyLabel="@string/key11"
-        		   android:isRepeatable="true" android:keyEdgeFlags="right"/>
+        		   android:isRepeatable="true"/>
+        <Key android:codes="14" android:keyLabel="@string/key15"
+                android:keyWidth="10%p" android:isRepeatable="true"
+                android:keyEdgeFlags="right"/>        		   
     </Row>
 
     <Row>
-        <!--<Key android:codes="16" android:keyLabel="Tab"
+	    <!--<Key android:codes="15" android:keyLabel="@string/key16"
         		  android:keyWidth="7.5%p" android:keyEdgeFlags="left"/>-->
         <Key android:codes="16" android:keyLabel="@string/key17"
         		   android:isRepeatable="true" android:keyEdgeFlags="left"/>
@@ -65,7 +70,9 @@
     
     <Row>
         <Key android:codes="15" android:keyLabel="@string/key16"
-        		  android:keyWidth="7.5%p" android:keyEdgeFlags="left"/>
+        		  android:keyWidth="7.5%p" android:keyEdgeFlags="left"/>    
+        <!--<Key android:codes="58" android:keyLabel="@string/key30"
+        		  android:keyEdgeFlags="left"/>-->
         <Key android:codes="30" android:keyLabel="@string/key31"
         		   android:isRepeatable="true" android:horizontalGap="0%p"/> 
         <Key android:codes="31" android:keyLabel="@string/key32" android:isRepeatable="true"/>
@@ -111,26 +118,54 @@
         		   android:isRepeatable="true" android:keyEdgeFlags="right"/>
     </Row>
     
-    <Row android:rowEdgeFlags="bottom">
-    	 <Key android:codes="41" android:keyLabel="@string/key1" android:keyEdgeFlags="left"/>
-    	 <Key android:codes="29" android:keyLabel="@string/key58"
-        		  android:isModifier="true"
-                android:isSticky="true"/>
-    	 <Key android:codes="56" android:keyLabel="@string/key60"
-                android:isModifier="true"
-                android:isSticky="true"/>
+    <Row android:keyWidth="9.0%p" 
+	    android:keyboardMode="@integer/keyboard_mode_normal" 
+	    android:rowEdgeFlags="bottom">
+		<Key android:codes="29" android:keyLabel="@string/key58"
+			android:isModifier="true"
+			android:keyEdgeFlags="left"
+			android:isSticky="true"/>
+		<Key android:codes="-2" android:keyLabel="@string/keyFn"/>
+		<Key android:codes="-8101" android:keyLabel="@string/keyWin"/>
+		<Key android:codes="56" android:keyLabel="@string/key60"
+			android:isModifier="true"
+			android:isSticky="true"/>
         <Key android:codes="57" android:keyLabel="@string/key61"
-                android:keyWidth="20%p" android:isRepeatable="true"/>
+			android:keyWidth="28%p" android:isRepeatable="true"/>
         <Key android:codes="75" android:keyLabel="@string/key79"
-                android:isRepeatable="true"/>
+			android:isRepeatable="true"/>
         <Key android:codes="77" android:keyLabel="@string/key89"
-                android:isRepeatable="true"/>
+			android:isRepeatable="true"/>
         <Key android:codes="80" android:keyLabel="@string/key84"
-                android:isRepeatable="true"/>
+			android:isRepeatable="true"/>
         <Key android:codes="72" android:keyLabel="@string/key83"
-                android:isRepeatable="true"/>
-        <Key android:codes="14" android:keyLabel="@string/key15"
-                android:keyWidth="10%p" android:isRepeatable="true"/>
+			android:isRepeatable="true"/>
+        <!--<Key android:codes="-3" android:keyLabel="@string/done"
+                android:keyWidth="20%p" android:keyEdgeFlags="right"/>-->
+    </Row>
+    
+    <Row android:keyWidth="9.0%p"
+		android:keyboardMode="@integer/keyboard_mode_fn" 
+		android:rowEdgeFlags="bottom">
+		<Key android:codes="29" android:keyLabel="@string/key58"
+			android:isModifier="true"
+			android:keyEdgeFlags="left"
+			android:isSticky="true"/>
+		<Key android:codes="-2" android:keyLabel="@string/keyFn"/>
+		<Key android:codes="-8101" android:keyLabel="@string/keyWin"/>
+		<Key android:codes="56" android:keyLabel="@string/key60"
+			android:isModifier="true"
+			android:isSticky="true"/>
+        <Key android:codes="57" android:keyLabel="@string/key61"
+			android:keyWidth="28%p" android:isRepeatable="true"/>
+        <Key android:codes="-8121" android:keyLabel="@string/key80"
+			android:isRepeatable="true"/>
+        <Key android:codes="-8113" android:keyLabel="@string/key81"
+			android:isRepeatable="true"/>
+        <Key android:codes="-8111" android:keyLabel="@string/key86"
+			android:isRepeatable="true"/>
+        <Key android:codes="-8119" android:keyLabel="@string/key85"
+			android:isRepeatable="true"/>
         <!--<Key android:codes="-3" android:keyLabel="@string/done"
                 android:keyWidth="20%p" android:keyEdgeFlags="right"/>-->
     </Row>

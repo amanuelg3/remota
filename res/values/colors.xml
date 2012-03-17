@@ -20,4 +20,5 @@
     <color name="button0_m">#FF001144</color>
     <color name="button1_m">#FF000000</color>
     <color name="background_m">#FF000009</color>
+    <color name="fn_key">#FF0000FF</color>
 </resources>
