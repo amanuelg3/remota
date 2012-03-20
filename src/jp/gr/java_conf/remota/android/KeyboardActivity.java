@@ -1,4 +1,4 @@
-/* Copyright (C) 2011-2012 Test Muroi (test.muroi@gmail.com)
+/* Copyright (C) 2011v-2012 Test Muroi (test.muroi@gmail.com)
  *
  * This program is free software: you can redistribute it and/or modify 
  * it under the terms of the GNU General Public License as published by 
@@ -39,8 +39,6 @@ public class KeyboardActivity extends Activity implements KeyboardView.OnKeyboar
 	private static final String TAG = "KeyboardActivity";
 	private static final boolean DBG = false;
 	
-	private static final int NUM_KEYBOARD_ROWS = 7;
-	
 	private static final String KEY_KEYBOARD_MODE = "KEY_KEYBOARD_MODE";
 	
 	// Member fields
@@ -58,11 +56,14 @@ public class KeyboardActivity extends Activity implements KeyboardView.OnKeyboar
 		public void run() {
 			if (mUpdated == false) {
 				Keyboard keyboard = null;
+				int numKeyboardRows = 0;
 				if (mKeyboardMode == getResources().getInteger(R.integer.keyboard_mode_fn)) {
 					keyboard = mKeyboardFn;
 				} else {
 					keyboard = mKeyboard;
 				}
+				numKeyboardRows = getNumKeyboardRows(keyboard);
+				
 				SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(KeyboardActivity.this);
 				// Get the keyboard key witdh dip
 				String keyHeightSetting = sp.getString(
@@ -75,14 +76,14 @@ public class KeyboardActivity extends Activity implements KeyboardView.OnKeyboar
 				} catch (NumberFormatException e) {
 					keyHeightDip = 0;
 				}
-			
+
 				// Calculate the key height value
 				DisplayMetrics dm = new DisplayMetrics();
 				getWindowManager().getDefaultDisplay().getMetrics(dm);
 				float density = dm.density;
 				float keyHeight;
 				if (keyHeightDip <= 0) {
-					keyHeight = keyboard.getHeight() / NUM_KEYBOARD_ROWS;
+					keyHeight = keyboard.getHeight() / numKeyboardRows;
 				} else {
 					// keyHeightDip > 0
 					keyHeight = keyHeightDip * density;
@@ -97,7 +98,7 @@ public class KeyboardActivity extends Activity implements KeyboardView.OnKeyboar
 					key = it.next();
 					rowIndex = (int)(key.y / key.height);
 					key.height = (int)keyHeight;
-					key.y = (int)(keyHeight * (-NUM_KEYBOARD_ROWS + rowIndex) + keyboard.getHeight());
+					key.y = (int)(keyHeight * (-numKeyboardRows + rowIndex) + keyboard.getHeight());
 					if (key.sticky) {
 						mStickyKeys.add(key);
 					}
@@ -165,8 +166,9 @@ public class KeyboardActivity extends Activity implements KeyboardView.OnKeyboar
 		} catch (NullPointerException e) {
 			
 		}
-		mKeyboard = new Keyboard(this, R.xml.qwerty, R.integer.keyboard_mode_normal);
-		mKeyboardFn = new Keyboard(this, R.xml.qwerty, R.integer.keyboard_mode_fn);
+		int layoutId = getPreferedKeyboardLayoutId();
+		mKeyboard = new Keyboard(this, layoutId, R.integer.keyboard_mode_normal);
+		mKeyboardFn = new Keyboard(this, layoutId, R.integer.keyboard_mode_fn);
 		mKeyboardView = new KeyboardView(this, null);
 		mKeyboardView.setKeyboard(mKeyboard);
 		mKeyboardView.setOnKeyboardActionListener(this);
@@ -416,5 +418,40 @@ public class KeyboardActivity extends Activity implements KeyboardView.OnKeyboar
 		}
 		
 		return counts;
+	}
+	
+	// Get the number of the rows in the keyboard
+	private static int getNumKeyboardRows(Keyboard keyboard) {
+		List<Key> keys = keyboard.getKeys();
+		Key key = null;
+		int maxRowIndex = 0;
+		int rowIndex = 0;
+		for (ListIterator<Key> it = keys.listIterator(); it.hasNext();) {
+			key = it.next();
+			rowIndex = (int)(key.y / key.height);
+			if (maxRowIndex < rowIndex) {
+				maxRowIndex = rowIndex;
+			}
+		}
+		return (maxRowIndex + 1);
+	}
+	
+	// Get the prefered keyboard layout xml id
+	private int getPreferedKeyboardLayoutId() {
+		SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
+		String keyboardLayout = sp.getString(
+				getString(R.string.keyboard_layout_key),
+				getString(R.string.keyboard_layout_default_value)
+		);
+		
+		if (getString(R.string.keyboard_layout_default_value).equals(keyboardLayout)) {
+			return R.xml.qwerty;
+		} else if (getString(R.string.keyboard_layout_104_value).equals(keyboardLayout)) {
+			return R.xml.keyboard104;
+		} else if (getString(R.string.keyboard_layout_109_value).equals(keyboardLayout)) {
+			return R.xml.keyboard109;
+		} else {
+			return R.xml.qwerty;
+		}
 	}
 }

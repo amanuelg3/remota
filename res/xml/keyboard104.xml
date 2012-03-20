@@ -170,11 +170,8 @@
 		<Key android:codes="@string/scancode60" android:keyLabel="@string/key60"
 			android:isModifier="true"
 			android:isSticky="true"/>
-		<Key android:codes="@string/scancode131" android:keyLabel="@string/key131" android:isRepeatable="true"/>
         <Key android:codes="@string/scancode61" android:keyLabel="@string/key61"
-			android:keyWidth="16%p" android:isRepeatable="true"/>
-        <Key android:codes="@string/scancode132" android:keyLabel="@string/key132" android:isRepeatable="true"/>
-        <Key android:codes="@string/scancode133" android:keyLabel="@string/key133" android:isRepeatable="true"/>
+			android:keyWidth="37%p" android:isRepeatable="true"/>
    		<Key android:codes="@string/scancode62" android:keyLabel="@string/key62"
 			android:isModifier="true"
 			android:isSticky="true"/>
@@ -191,7 +188,7 @@
                 android:keyWidth="20%p" android:keyEdgeFlags="right"/>-->
     </Row>
     
-    <Row android:keyWidth="7.0%p" 
+    <Row android:keyWidth="7.0%p"
 	    android:keyboardMode="@integer/keyboard_mode_fn" 
 	    android:rowEdgeFlags="bottom">
 		<Key android:codes="@string/scancode58" android:keyLabel="@string/key58"
@@ -204,11 +201,8 @@
 		<Key android:codes="@string/scancode60" android:keyLabel="@string/key60"
 			android:isModifier="true"
 			android:isSticky="true"/>
-		<Key android:codes="@string/scancode131" android:keyLabel="@string/key131" android:isRepeatable="true"/>
         <Key android:codes="@string/scancode61" android:keyLabel="@string/key61"
-			android:keyWidth="16%p" android:isRepeatable="true"/>
-        <Key android:codes="@string/scancode132" android:keyLabel="@string/key132" android:isRepeatable="true"/>
-        <Key android:codes="@string/scancode133" android:keyLabel="@string/key133" android:isRepeatable="true"/>
+			android:keyWidth="37%p" android:isRepeatable="true"/>
    		<Key android:codes="@string/scancode62" android:keyLabel="@string/key62"
 			android:isModifier="true"
 			android:isSticky="true"/>

@@ -49,5 +49,6 @@
             android:defaultValue="@string/pref_keyboard_key_height_default_value" 
             android:inputType="number"
             android:dialogMessage="@string/pref_keyboard_key_height_dialog_message"/>
+        <ListPreference android:entryValues="@array/keyboard_layout_list_values" android:entries="@array/keyboard_layout_list_entries" android:key="@string/keyboard_layout_key" android:title="@string/pref_keyboard_layout" android:summary="@string/pref_keyboard_layout_summery" android:defaultValue="@string/keyboard_layout_default_value"/>
     </PreferenceCategory>
 </PreferenceScreen>

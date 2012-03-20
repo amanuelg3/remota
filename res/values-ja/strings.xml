@@ -13,7 +13,8 @@
     <string name="none_paired">ペア設定されたデバイスはありません</string>
     <string name="connect_device">デバイスと接続</string>
     <string name="scan_device">デバイスをスキャン</string>
-    <string name="scanning">デバイスを探しています...</string>
+    <string name="scanning">デバイスを探しています\.\.\.</string>
+    <string name="preview_keyboard_layout">キーボードプレビュー</string>
     <string name="title_new_devices">新しいデバイス</string>
     <string name="title_paired_devices">ペア設定済みデバイス</string>
     <string name="select_device">接続するデバイスを選択</string>
@@ -32,6 +33,10 @@
     <string name="orientation_system">システム設定に依存</string>
     <string name="orientation_auto">自動</string>
 
+    <string name="keyboard_layout_default">デフォルト</string>
+    <string name="keyboard_layout_104">キーボード104</string>
+    <string name="keyboard_layout_109">キーボード109</string>
+
     <string name="pref_category_general">全般</string>
     <string name="pref_mode">モード</string>
     <string name="pref_mode_summery">ユーザインタフェースモードを選択</string>
@@ -44,11 +49,19 @@
     <string name="pref_keyboard_orientation">キーボードの向き</string>
     <string name="pref_keyboard_orientation_summery">キーボードの向きを設定</string>
     <string name="pref_keyboard_key_height">キーの高さ</string>
-    <string name="pref_keyboard_key_height_summery">キーの高さを設定する</string>
+    <string name="pref_keyboard_key_height_summery">
+        キーの高さを設定する。
+        設定後、メニューキー→キーボードプレビューで、プレビューできます。
+    </string>
     <string name="pref_keyboard_key_height_dialog_message">
         キーの高さ[dip]を設定してください。
         デフォルト値は45[dip]です。
         画面に応じた高さに自動調節するには、0に設定してください。
+    </string>
+    <string name="pref_keyboard_layout">キーボードレイアウト</string>
+    <string name="pref_keyboard_layout_summery">
+        キーボードレイアウトを設定する。
+        設定後、メニューキー→キーボードプレビューで、プレビューできます。
     </string>
 
     <string name="key1">半/全</string>
@@ -62,9 +75,14 @@
     <string name="key14">\\ |</string>
     <string name="key27">\@ `</string>
     <string name="key28">[ {</string>
-    <string name="key30">Caps Lock</string>
+    <string name="key30">CapsLK</string>
     <string name="key40">; +</string>
     <string name="key41">: *</string>
     <string name="key42">] }</string>
     <string name="key56">\\ _</string>
+    <!--<string name="key62">漢字</string>-->
+    <!--<string name="key64">カナ</string>-->
+    <string name="key131">無変換</string>
+    <string name="key132">変換</string>
+    <string name="key133">カ/ひ</string>
 </resources>

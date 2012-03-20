@@ -15,7 +15,8 @@
     <string name="none_paired">No devices have been paired</string>
     <string name="connect_device">Connect a device</string>
     <string name="scan_device">Scan for devices</string>
-    <string name="scanning">Scanning for devices...</string>
+    <string name="scanning">Scanning for devices\.\.\.</string>
+    <string name="preview_keyboard_layout">Preview keyboard</string>
     <string name="title_new_devices">New devices</string>
     <string name="title_paired_devices">Paired devices</string>
     <string name="select_device">Select a device to connect</string>
@@ -47,6 +48,13 @@
     <string name="orientation_system_value">DEPEND_ON_THE_SYSTEM_SETTING</string>
     <string name="orientation_auto_value">AUTO</string>
     
+    <string name="keyboard_layout_default">Default</string>
+    <string name="keyboard_layout_104">Keyboard 104</string>
+    <string name="keyboard_layout_109">Keyboard 109</string>
+    <string name="keyboard_layout_default_value">LAYOUT_DEFAULT</string>
+    <string name="keyboard_layout_104_value">LAYOUT_104</string>
+    <string name="keyboard_layout_109_value">LAYOUT_109</string>
+    
     <string name="pref_category_general">General settings</string>
     <string name="pref_mode">Mode</string>
     <string name="pref_mode_summery">Select a user interface mode</string>
@@ -59,14 +67,21 @@
     <string name="pref_keyboard_orientation">Keyboard orientation</string>
     <string name="pref_keyboard_orientation_summery">Set the keyboard orientation</string>
     <string name="pref_keyboard_key_height">Key height</string>
-    <string name="pref_keyboard_key_height_summery">Set the key height</string>
+    <string name="pref_keyboard_key_height_summery">
+        Set the key height.
+        After you choose a height, you can preview it by Menu key->Preview keyboard.
+    </string>
     <string name="pref_keyboard_key_height_default_value">45</string>
     <string name="pref_keyboard_key_height_dialog_message">
         Set the key height(dip). 
         The default value is 45[dip]. 
         To adjust the key height to the display size, set the value 0.
     </string>
-
+    <string name="pref_keyboard_layout">Keyboard layout</string>
+    <string name="pref_keyboard_layout_summery">
+        Set the keyboard layout.
+        After you choose a layout, you can preview it by Menu key->Preview keyboard.
+    </string>
     
     <string name="key1">` ~</string>
     <string name="scancode1">41</string>
@@ -176,12 +191,20 @@
     <string name="scancode55">53</string>
     <string name="key56"></string>
     <string name="scancode56">115</string>
+    <string name="key57">Shift</string>
+    <string name="scancode57">54</string>
     <string name="key58">Ctrl</string>
     <string name="scancode58">29</string>
     <string name="key60">Alt</string>
     <string name="scancode60">56</string>
     <string name="key61">Space</string>
     <string name="scancode61">57</string>
+    <string name="key62">Alt</string>
+    <string name="scancode62">-8136</string>
+    <string name="key64">Ctrl</string>
+    <string name="scancode64">-8163</string>
+    <string name="key75">Insert</string>
+    <string name="scancode75">-8110</string>
     <string name="key76">DEL</string>
     <string name="scancode76">-8109</string>
     <string name="key79">←</string>
@@ -200,6 +223,8 @@
     <string name="scancode86">-8111</string>
     <string name="key89">→</string>
     <string name="scancode89">77</string>
+    <string name="key90">NumLK</string>
+    <string name="scancode90">69</string>
     <string name="key110">ESC</string>
     <string name="scancode110">1</string>
     <string name="key112">F1</string>
@@ -226,6 +251,14 @@
     <string name="scancode122">87</string>
     <string name="key123">F12</string>
     <string name="scancode123">88</string>
+    <string name="key125">ScrLK</string>
+    <string name="scancode125">70</string>
+    <string name="key131"></string>
+    <string name="scancode131">123</string>
+    <string name="key132"></string>
+    <string name="scancode132">121</string>
+    <string name="key133"></string>
+    <string name="scancode133">112</string>
     <string name="keyFn">Fn</string>
     <string name="scancodeFn">-2</string>
     <string name="keyWin">Win</string>
