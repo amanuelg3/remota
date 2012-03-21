@@ -166,7 +166,8 @@
 			android:isSticky="true"/>
 		<Key android:codes="@string/scancodeFn" android:keyLabel="@string/keyFn"/>
 		<Key android:codes="@string/scancodeWin" android:keyLabel="@string/keyWin"
-		    android:isRepeatable="true"/>
+			android:isModifier="true"
+			android:isSticky="true"/>
 		<Key android:codes="@string/scancode60" android:keyLabel="@string/key60"
 			android:isModifier="true"
 			android:isSticky="true"/>
@@ -197,7 +198,8 @@
 			android:isSticky="true"/>
 		<Key android:codes="@string/scancodeFn" android:keyLabel="@string/keyFn"/>
 		<Key android:codes="@string/scancodeWin" android:keyLabel="@string/keyWin"
-		    android:isRepeatable="true"/>
+			android:isModifier="true"
+			android:isSticky="true"/>
 		<Key android:codes="@string/scancode60" android:keyLabel="@string/key60"
 			android:isModifier="true"
 			android:isSticky="true"/>
